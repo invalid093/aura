@@ -254,6 +254,15 @@ adopted before its licence is verified.
 
 ---
 
+## How this repository is maintained
+
+AURA publishes the scientific record, not the whole laboratory. What gets published, what stays
+local, and the privacy, security, data, literature and scientific-honesty rules that govern that
+decision are set out in [`docs/public_repository_policy.md`](docs/public_repository_policy.md).
+Every push runs the audit in
+[`infrastructure/public_release_checklist.md`](infrastructure/public_release_checklist.md), which
+carries a dated record of what was checked and what was found.
+
 ## Reading order for a new reader
 
 1. This README.

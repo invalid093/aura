@@ -86,7 +86,9 @@ adjust it and continue.
 The repository is a **public-facing research record**, not a mirror of the local environment.
 Governing rule: *publish the scientific record, not the entire laboratory.*
 
-Before any push, run `infrastructure/public_release_checklist.md`. If any item is uncertain:
+`docs/public_repository_policy.md` is **authoritative for all publication decisions**. Read it
+before any push, then run the audit in `infrastructure/public_release_checklist.md` — over the
+working tree **and** the git history, which are separate risks. If any item is uncertain:
 **do not push; flag it for researcher review.**
 
 Never commit:
