@@ -1,0 +1,222 @@
+# EXP-0002 configuration
+# All experimental parameters live here, not in code (infrastructure/reproducibility.md).
+# Pre-registered: see ../experiment_spec.md. Do not edit after results are produced --
+# create a new configuration and a new experiment ID instead.
+
+experiment_id: EXP-0002
+config_version: 1
+
+# ---------------------------------------------------------------------------
+# Aircraft: GFW-1, a generic fixed-wing 6-DOF model.
+#
+# ADR-0007: this is NOT a specific validated airframe. Parameters are physically
+# consistent and representative of a small fixed-wing UAS. No AURA result licenses
+# any claim about a real aircraft (assumption A-SIM-01, extended).
+#
+# Equation set: standard rigid-body 6-DOF with coefficient-form aerodynamics and a
+# blended stall model. Every equation is implemented in aircraft/gfw1.py with a
+# reference to the term it represents.
+# ---------------------------------------------------------------------------
+aircraft:
+  name: GFW-1
+  mass: 13.5          # kg
+  Jx: 0.8244          # kg m^2
+  Jy: 1.135
+  Jz: 1.759
+  Jxz: 0.1204
+  S: 0.55             # wing area, m^2
+  b: 2.90             # span, m
+  c: 0.19             # mean chord, m
+  e_oswald: 0.90
+  T_max: 50.0         # max thrust, N (thrust = T_max * throttle, along body x)
+
+  # Longitudinal aerodynamic coefficients
+  CL0: 0.28
+  CLa: 3.45
+  CLq: 0.0
+  CLde: 0.36
+  CD0: 0.030
+  CDde: 0.0
+  Cm0: -0.02338
+  Cma: -0.38
+  Cmq: -3.60
+  Cmde: -0.50
+
+  # Stall blending (standard sigmoid blend to a flat-plate lift model)
+  stall_M: 50.0       # blend sharpness
+  stall_a0: 0.35      # blend centre, rad (~20 deg)
+
+  # Lateral-directional aerodynamic coefficients
+  CYb: -0.98
+  CYp: 0.0
+  CYr: 0.0
+  CYda: 0.0
+  CYdr: -0.17
+  Clb: -0.12
+  Clp: -0.26
+  Clr: 0.14
+  Clda: 0.08
+  Cldr: 0.105
+  Cnb: 0.25
+  Cnp: 0.022
+  Cnr: -0.35
+  Cnda: 0.06
+  Cndr: -0.032
+
+environment:
+  g: 9.80665
+  rho0: 1.225                 # kg/m^3 at sea level
+  isa_lapse_coeff: 2.2557e-5  # ISA troposphere density model
+  isa_exponent: 4.2559
+  wind: none
+  turbulence: none
+
+# ---------------------------------------------------------------------------
+# Control-surface limits (rad) and actuator model.
+# Actuator dynamics are algebraic (no lag) -- see A-SIM-05; this is a stated
+# simplification for EXP-0002 and does not affect the distinguishability question,
+# because the same actuator model applies to every fault case.
+# ---------------------------------------------------------------------------
+actuator:
+  de_min: -0.436      # -25 deg
+  de_max: 0.436
+  da_min: -0.436
+  da_max: 0.436
+  dr_min: -0.436
+  dr_max: 0.436
+  throttle_min: 0.0
+  throttle_max: 1.0
+
+# ---------------------------------------------------------------------------
+# Closed-loop controller.
+#
+# A stabilising controller is REQUIRED for this experiment, not incidental:
+# in open loop a sensor fault would never reach the plant, and sensor-vs-actuator
+# ambiguity could not arise. All four faulted channels (q, az, Vt, alpha) are fed
+# back, so each fault propagates through the loop into every measurement.
+#
+# Gains are fixed across all runs and all flight conditions (no gain scheduling),
+# so that observed differences between conditions come from the aircraft, not the
+# controller.
+# ---------------------------------------------------------------------------
+controller:
+  K_q: 0.35           # pitch rate damping
+  K_theta: 1.60       # pitch attitude
+  K_alpha: 0.25       # angle-of-attack stabilisation
+  K_az: 0.012         # normal specific force
+  K_V: 0.030          # autothrottle proportional
+  K_Vi: 0.010         # autothrottle integral
+  K_phi: 0.90         # roll attitude (wings level)
+  K_p: 0.15           # roll damping
+  K_r: 0.20           # yaw damping
+
+# ---------------------------------------------------------------------------
+# Sensor suite. sigma values are PRE-DECLARED instrument properties used only to
+# normalise the distinguishability metric (experiment_spec.md 6.2). No noise is
+# simulated in EXP-0002 -- sigma sets the scale of "a meaningful difference",
+# not a realisation.
+# ---------------------------------------------------------------------------
+sensors:
+  channels: [p, q, r, ax, ay, az, Vt, alpha, beta, h, phi, theta, psi]
+  sigma:
+    p: 8.7266e-3      # 0.5 deg/s
+    q: 8.7266e-3
+    r: 8.7266e-3
+    ax: 0.05          # m/s^2
+    ay: 0.05
+    az: 0.05
+    Vt: 0.5           # m/s
+    alpha: 8.7266e-3  # 0.5 deg
+    beta: 8.7266e-3
+    h: 1.0            # m
+    phi: 3.4907e-3    # 0.2 deg
+    theta: 3.4907e-3
+    psi: 3.4907e-3
+  sample_rate_hz: 100
+
+# ---------------------------------------------------------------------------
+# Simulation
+# ---------------------------------------------------------------------------
+simulation:
+  integrator: rk4
+  dt: 0.002           # s, fixed step
+  duration: 20.0      # s
+  fault_onset: 2.0    # s
+  compare_from: 2.0   # s, start of the comparison interval (post-onset only)
+  dtype: float64
+  process_noise: none
+  measurement_noise: none
+
+# Excitation: identical at every flight condition, so that cross-condition
+# differences are attributable to the operating point. A pitch doublet is required --
+# a scale-factor fault on an identically-zero signal produces no response.
+excitation:
+  type: theta_doublet
+  amplitude_deg: 3.0
+  t1: 4.0             # +amplitude on [t1, t2)
+  t2: 7.0             # -amplitude on [t2, t3)
+  t3: 10.0
+
+# ---------------------------------------------------------------------------
+# Flight conditions. FC-2 and FC-3 are chosen to have similar dynamic pressure at
+# different altitude and airspeed, separating dynamic-pressure effects from
+# density/speed effects.
+# ---------------------------------------------------------------------------
+flight_conditions:
+  - {id: FC-1, altitude_m: 1000.0, airspeed_mps: 45.0, rationale: "High dynamic pressure, low trim alpha; maximum control effectiveness"}
+  - {id: FC-2, altitude_m: 1000.0, airspeed_mps: 28.0, rationale: "Low dynamic pressure, moderate alpha; low-speed high-density"}
+  - {id: FC-3, altitude_m: 5000.0, airspeed_mps: 35.0, rationale: "Control condition: dynamic pressure similar to FC-2 at different rho and V"}
+  - {id: FC-4, altitude_m: 5000.0, airspeed_mps: 24.0, rationale: "RETAINED BUT INVALID (FAIL-0001): intended as the high-alpha probe, but the nominal closed-loop run stalls and departs (alpha reaches 31.5 deg, dV 27.7 m/s, dh 353 m). Kept in the record and reported; excluded from the determination."}
+  - {id: FC-5, altitude_m: 5000.0, airspeed_mps: 28.0, rationale: "Replacement high-alpha probe (FAIL-0001). Highest trim alpha that remains controllable under the validity gate: alpha_trim 10.15 deg, alpha_max 11.65 deg, qbar 289 Pa. Selected by the validity rule below, applied BEFORE its distinguishability matrix was computed."}
+
+# ---------------------------------------------------------------------------
+# Validity gate (added after FAIL-0001).
+#
+# Trim convergence proves an equilibrium EXISTS; it says nothing about whether the
+# closed loop can hold that equilibrium through the commanded manoeuvre. FC-4 trimmed
+# to a residual of 2e-15 and then departed. Every condition's NOMINAL run must now
+# pass these checks or the condition is marked INVALID and excluded from the
+# determination.
+#
+# Thresholds were declared before any replacement condition's matrix was computed.
+# They test whether the aircraft is flying a controlled trimmed manoeuvre, not
+# whether the result is interesting.
+# ---------------------------------------------------------------------------
+validity:
+  alpha_max_deg: 12.0       # stall blend is centred at 20 deg; stay in the linear region
+  dtheta_max_deg: 10.0
+  dV_max_mps: 3.0
+  dh_max_m: 50.0
+
+# ---------------------------------------------------------------------------
+# Fault set. Magnitudes are referenced to the sensor sigma scale above, not tuned.
+# F5 (increased noise) is deliberately excluded -- in a deterministic noise-free
+# simulation its mean response is identical to nominal BY CONSTRUCTION, so including
+# it would inject a guaranteed ambiguous pair that is an artefact of the experimental
+# design rather than a property of the aircraft. See experiment_spec.md 4.
+# ---------------------------------------------------------------------------
+faults:
+  channels: [q, az, Vt, alpha]
+  bias_sigma_multiple: 10.0     # F1: b = 10 * sigma_k
+  scale_factor: 1.10            # F2: y = 1.10 * y_true
+  drift_end_sigma_multiple: 10.0  # F3: reaches 10 * sigma_k at t = duration
+  # F4 stuck: freeze at the value held at onset
+  elevator_effectiveness: 0.70  # F6: lambda
+
+# ---------------------------------------------------------------------------
+# Analysis (pre-declared -- experiment_spec.md 6)
+# ---------------------------------------------------------------------------
+analysis:
+  threshold_primary: 1.0
+  threshold_sweep: [0.1, 0.3, 1.0, 3.0, 10.0, 30.0, 100.0]
+  numerically_identical_tol: 1.0e-9
+
+sensitivity:
+  # dt must divide the 100 Hz sensor sample interval exactly, so that the recorded
+  # signal is a clean decimation and step size does not change WHICH samples are
+  # compared. dt=0.004 was specified originally but gives a non-integer decimation
+  # factor (2.5); corrected to 0.005 during pilot verification. Recorded here rather
+  # than silently changed -- see reports/technical/EXP-0002_STRUCTURAL_ISOLABILITY.md.
+  dt_sweep: [0.005, 0.002, 0.001]
+  magnitude_scale_sweep: [0.5, 1.0, 2.0]
+  duration_sweep: [10.0, 20.0]

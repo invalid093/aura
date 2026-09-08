@@ -1,0 +1,24 @@
+dataset_id: DS-0001
+name: exp0002-response-trajectories
+layer: derived
+source: simulation
+generation_date: '2026-09-08'
+generation_method: experiments/EXP-0002/run_exp0002.py
+software_version: aura 0.2.0
+git_commit: f0307495bb40214ac71fc7183a499dc82844865e
+git_dirty: true
+configuration: experiments/EXP-0002/config/exp0002.yaml
+configuration_sha256: b4bf7a875270c8f8a90e98512a18202fcb9ceee35448d489f67fc4d4b1577e00
+random_seed_base: null
+n_runs: 90
+parent_dataset: null
+checksum_manifest: data/manifests/DS-0001.sha256
+units: SI; angles in radians; altitude in metres positive up
+sampling_rate_hz: 100.0
+frozen: false
+license: internal
+total_bytes: 18574104
+description: 'Closed-loop measured-output trajectories for EXP-0002: 4 flight conditions
+  x 18 fault modes on the GFW-1 generic fixed-wing model. Deterministic and fully
+  regenerable from the configuration and code at the recorded commit -- not published
+  in Git per the data policy.'

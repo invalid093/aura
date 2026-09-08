@@ -1,0 +1,51 @@
+experiment_id: EXP-0002
+title: Response-based fault distinguishability across flight conditions
+hypothesis: H2
+purpose: >
+  Determine whether the GFW-1 aircraft and the Phase 0 fault set contain the
+  non-trivial, operating-condition-dependent ambiguity structure that the AURA
+  design assumes. This is a gate: a negative outcome invalidates the ground truth
+  for the evidential-ambiguity component and forces a design change.
+type: exploratory          # gate experiment; not a confirmatory test of H1
+status: COMPLETED
+is_gate: true
+gate_criterion: >
+  PASS requires all four: (1) binary distinguishability matrix not fully diagonal
+  at every condition; (2) not fully dense at every condition; (3) at least one
+  physically motivated indistinguishable pair; (4) structure differs across flight
+  conditions, evidenced both by binary verdict flips and by a threshold-free
+  Spearman rank correlation of the continuous distances materially below 1.
+primary_metric: >
+  Pairwise normalised RMS response distance d_ij(c) over the 13-channel measured
+  output vector, in multiples of per-sample per-channel RMS sensor noise;
+  thresholded at tau = 1.0 for the binary matrix.
+analysis_plan: experiments/EXP-0002/experiment_spec.md
+configuration: experiments/EXP-0002/config/exp0002.yaml
+configuration_sha256: null      # recorded in results/validation/EXP-0002/exp0002_results.json
+git_commit: null                # recorded in the results payload at run time
+dataset_ids: [DS-0001]
+random_seeds: none              # fully deterministic; no RNG in the pipeline
+parameters:
+  flight_conditions: 4
+  fault_modes: 18
+  primary_runs: 72
+  sensitivity_sweeps: [dt, threshold, magnitude, duration, determinism]
+methods: [response_distance]
+date_planned: 2026-09-08
+date_started: 2026-09-08
+date_completed: 2026-09-08
+results_location: results/validation/EXP-0002/
+analysis_version: analysis/isolability.py @ aura 0.2.0
+runtime_seconds: null           # recorded in the results payload
+storage_bytes: null             # recorded in data/manifests/DS-0001.yaml
+failure_ids: []
+supersedes: null
+superseded_by: null
+notes: >
+  Two deviations from the Phase 0 specification were documented BEFORE running,
+  not after: ADR-0007 (AeroBenchVVPython is GPL-3.0, so a self-contained GFW-1
+  model is used instead) and ADR-0008 (Phase 0 said "structural isolability", but
+  that quantity cannot depend on flight condition by construction; the experiment
+  measures response-based distinguishability). One technical fix was made during
+  pilot verification: the sensitivity dt sweep value 0.004 s does not divide the
+  100 Hz sample interval and was corrected to 0.005 s.

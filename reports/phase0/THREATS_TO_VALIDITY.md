@@ -103,6 +103,20 @@ One aircraft model, one sensor suite, seven fault modes.
 **Mitigation:** conclusions are scoped in language to the tested configuration. A second airframe
 (C5, small UAS) is a Phase 2 option, not a Phase 1 promise.
 
+### TV-D10 — The aircraft model is now self-implemented as well as single
+**Severity: HIGH. Unmitigated. Added 2026-09-08.**
+ADR-0007 substituted a self-contained model (GFW-1) for AeroBenchVVPython after the latter was
+found to be GPL-3.0. GFW-1's equations are standard and published, but its **parameter set was
+chosen by the same person running the experiment**. A result that depends on that parameter set
+cannot be distinguished from a result about aircraft in general.
+**Why it is worse than TV-D9:** TV-D9 is about generality across airframes. TV-D10 additionally
+removes the independence between the model and the experimenter.
+**Mitigation required before any EXP-0002 conclusion becomes load-bearing:** reproduce on an
+**independently sourced** airframe model — either accepting GPL-3.0 and using AeroBench, or
+obtaining a permissively-licensed published parameter set.
+**Partial mitigation in place:** every parameter is disclosed in version-controlled configuration,
+so a reader can check that the values are physically consistent and re-run with their own.
+
 ---
 
 ## M — Measurement threats

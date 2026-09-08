@@ -5,9 +5,9 @@
 > Independent computational research into uncertainty-aware fault diagnosis and autonomous health
 > management for high-performance uncrewed aircraft.
 
-**AURA is an ongoing independent research project.** It is at Phase 0. **There are no validated
-scientific results yet.** Everything in this repository is definition, design and reasoning — not
-findings.
+**AURA is an ongoing independent research project.** Phase 0 is complete and the first gate
+experiment has run. There is **one validated result** (EXP-0002) and **no result yet bearing on the
+central hypothesis**, which remains untested.
 
 ---
 
@@ -63,35 +63,59 @@ falsification condition. Replacing it is recorded in
 
 ## Current research status
 
-**Phase 0 complete (2026-09-08). Phase 1 not started.**
+**Phase 0 complete. EXP-0002 (the design gate) complete and PASSED — with qualifications.**
 
 | Phase | Content | Status |
 |---|---|---|
 | 0 | Reconnaissance, scientific definition, infrastructure | **Complete** |
-| 1a | **Gates:** systematic literature search; licence verification; runtime measurement; **structural isolability** | Not started |
-| 1b | Simulation, fault injection, estimator, residuals, baselines | Blocked on 1a |
+| 1a | **Gates:** licence verification ✔ (GPL-3.0, [ADR-0007](docs/decisions/ADR-0007-aircraft-model-licence-substitution.md)); runtime measurement ✔; **EXP-0002 distinguishability ✔ PASS**; systematic literature search — **still outstanding** | Mostly complete |
+| 1b | Simulation, fault injection, estimator, residuals, baselines | Blocked on EXP-0010 |
 | 1c | Pilot → medium → frozen test | Blocked on 1b |
 | 1d | External validity check, sensitivity analyses, reporting | Blocked on 1c |
 | 2 | Only if Phase 1 findings warrant it | — |
 
-Experiments run: **0.** Datasets generated: **0.**
+Experiments run: **1** (EXP-0002, 90 simulation runs + 5 sensitivity sweeps). Datasets: **1**
+(DS-0001, regenerable, not published — see Data policy).
 
-Each Phase 1a gate is cheap and each can end the project. The decisive one is **EXP-0002**: whether
-structural isolability actually varies with flight condition for this model and fault set. If it
-does not, the ambiguity component loses its ground truth and the design must change. No learning
-code is written before it passes.
+EXP-0002 was the decisive gate: does fault distinguishability actually vary with flight condition?
+**It does, but less than the design assumed.** No learning component, uncertainty estimator or
+decision layer is built until EXP-0010 establishes how much of that survives measurement noise.
 
 ## Validated findings
 
-**None.** No experiment has been run. This section will be populated only with results that have
-passed the confirmatory protocol in [`docs/methodology.md`](docs/methodology.md), and each will cite
-its experiment ID, dataset ID and configuration.
+**One.** [**EXP-0002**](reports/technical/EXP-0002_STRUCTURAL_ISOLABILITY.md) — response-based fault
+distinguishability in a nonlinear 6-DOF fixed-wing model (deterministic, noise-free):
+
+- A **stable five-member ambiguity group** persists at all four valid flight conditions: nominal, a
+  scale error on pitch rate, a scale error on angle of attack, a stuck angle-of-attack sensor and a
+  stuck airspeed sensor are mutually indistinguishable (10–11 ambiguous pairs of 153 at each
+  condition). The mechanism is textbook: a scale-factor fault is unobservable when the true signal
+  is near zero, and a stuck fault is nearly inert on a regulated channel.
+- **Distinguishability depends on operating condition, monotonically.** Cross-condition rank
+  correlation of the pairwise distances runs from 0.984 for the designed control pair (matched
+  dynamic pressure, different altitude and airspeed) down to 0.658 for the most separated pair —
+  6 of 6 condition pairs in strict rank order of operating-point separation.
+- **One ambiguity was predicted in closed form before the simulation and confirmed at r = 0.979.**
+  A bias fault and a scale fault on a regulated channel become identical at V\* = b/(k−1) = 50 m/s.
+
+Evidence: EXP-0002 → DS-0001 → `experiments/EXP-0002/config/exp0002.yaml` → commit recorded in
+`results/validation/EXP-0002/exp0002_results.json`. Robust to integration step, fault magnitude and
+run duration; all 90 runs bitwise reproducible.
+
+**What this does not show:** it says nothing about whether uncertainty-aware diagnosis works. It
+establishes only that ambiguity and condition-dependent diagnosability are real phenomena in this
+model — the substrate the research question presumes.
 
 ## Preliminary findings
 
-**None from experiment.** The following are *reconnaissance observations* from Phase 0 literature
-work — they characterise the state of the field, not AURA's results, and rest on abstract-level
-reading of most sources:
+**From experiment.** One Phase 0 assumption was **refuted in its specifics**: A-FLT-03 named a
+pitch-rate scale error and an elevator effectiveness loss as the flight-condition-dependent
+ambiguity pair. They are distinguishable at every valid condition. The pair that actually behaves
+that way is bias-versus-scale on airspeed. The assumption was right in general and wrong in detail.
+
+**From literature.** The following are *reconnaissance observations* from Phase 0 — they
+characterise the state of the field, not AURA's results, and rest on abstract-level reading of most
+sources:
 
 - The uncertainty-quantification-under-distribution-shift literature is mature but concentrated in
   rotating machinery. It has not been transferred to flight dynamics with a state estimator in the
@@ -126,13 +150,15 @@ secondary one supported.** The design is built so that combination is a publisha
 
 ## Open questions
 
-1. Does structural isolability actually vary with flight condition for this model, sensor suite and
-   fault set? **If not, the design fails.** (EXP-0002)
-2. Does a systematic database search close the identified gaps?
-3. Are the candidate model, toolbox and dataset licences suitable for research use?
-4. Should evidential ambiguity be defined over fault modes, or fault modes plus magnitude?
-5. Is expected decision cost the right primary metric, or should the decision layer be evaluated
-   another way?
+1. **How much of the measured distinguishability survives measurement noise** on a single
+   realisation? EXP-0002 is noise-free, so its distances are upper bounds. (EXP-0010)
+2. **Is one verdict flip in 153 pairs enough condition-dependence** to justify a condition-dependent
+   ambiguity model, rather than a single condition-independent ambiguity group? This is the open
+   question that most threatens the design.
+3. Does a systematic database search close the identified gaps? (still outstanding)
+4. Does the result reproduce on an **independently sourced** aircraft model? (TV-D10)
+5. Does excitation change the ambiguity matrix more than flight condition does?
+6. Is expected decision cost the right primary metric for the decision layer?
 
 ## Known limitations
 
@@ -146,7 +172,14 @@ unmitigated:**
 - **Residual simulation bias.** Even the strongest out-of-distribution axis stays within one
   aerodynamic data lineage. Whether real sensor faults resemble the injected fault models is not
   verifiable within scope.
-- **Single airframe, single sensor suite, seven fault modes.**
+- **Single airframe, single sensor suite** — and the airframe is now **self-implemented**, its
+  parameters chosen by the experimenter, after the intended model was found to be GPL-3.0 (TV-D10,
+  HIGH). Reproduction on an independently sourced model is required before EXP-0002's result becomes
+  load-bearing.
+- **EXP-0002 is deterministic and noise-free.** Every distance it reports is an upper bound on what
+  an estimator could achieve from one noisy realisation.
+- **One flight condition was invalidated** ([FAIL-0001](experiments/failures/FAIL-0001.md)) after it
+  produced the most favourable-looking numbers in the experiment by stalling.
 
 Further, of 70 indexed literature sources, **only 3 were read in full**. The literature index records
 the verification level of every entry, and sources with unconfirmed authorship are marked as such

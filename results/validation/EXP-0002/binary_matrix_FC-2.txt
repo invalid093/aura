@@ -1,0 +1,25 @@
+EXP-0002 response-based distinguishability -- FC-2
+tau = 1.0 (multiples of per-sample per-channel RMS sensor noise)
+
+          0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17
+F0        -         X     X             X X  
+F1_q        -                                
+F1_az         -                              
+F1_Vt           -                            
+F1_alpha          -                          
+F2_q      X         -     X             X X  
+F2_az                 -                      
+F2_Vt                   -                    
+F2_alpha  X         X     -             X X  
+F3_q                        -                
+F3_az                         -              
+F3_Vt                           -            
+F3_alpha                          -          
+F4_q                                -        
+F4_az                                 -      
+F4_Vt     X         X     X             - X  
+F4_alpha  X         X     X             X -  
+F6                                          -
+
+  X = indistinguishable (d <= tau)   blank = distinguishable   - = self
+  index: 0=F0, 1=F1_q, 2=F1_az, 3=F1_Vt, 4=F1_alpha, 5=F2_q, 6=F2_az, 7=F2_Vt, 8=F2_alpha, 9=F3_q, 10=F3_az, 11=F3_Vt, 12=F3_alpha, 13=F4_q, 14=F4_az, 15=F4_Vt, 16=F4_alpha, 17=F6

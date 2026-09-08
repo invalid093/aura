@@ -1,0 +1,12 @@
+{
+  "figure": "FIG-002-ambiguity-matrices",
+  "question_answered": "Which fault pairs are indistinguishable, and does the set change with condition?",
+  "experiment_id": "EXP-0002",
+  "results_file": "results/validation/EXP-0002/exp0002_results.json",
+  "dataset_ids": [
+    "DS-0001"
+  ],
+  "script": "visualization/plot_exp0002.py",
+  "git_commit": "f0307495bb40214ac71fc7183a499dc82844865e",
+  "generated_from_results_utc": "2026-09-08T09:53:40.976539+00:00"
+}
