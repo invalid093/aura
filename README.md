@@ -5,11 +5,18 @@
 > Independent computational research into uncertainty-aware fault diagnosis and autonomous health
 > management for high-performance uncrewed aircraft.
 
-**AURA is an ongoing independent research project.** Phase 0 is complete and four experiments have
-run. **Four experiments have now failed to find the diagnostic ambiguity the project was designed
-around.** A different problem *is* now supported by measurement — confident misdiagnosis arising
-from a wrong hypothesis space — but most of it turns out to be solvable **without machine
-learning**, which is the reason none has been built. See Validated findings.
+**AURA is an ongoing independent research project.** Phase 0 is complete, four experiments have run,
+and a [cumulative scientific review](research/cumulative_review/EXP_0002_0012_CUMULATIVE_REVIEW.md)
+of all four is complete.
+
+**That review found the project's original premise unsupported, and the programme substantially
+goalpost-shifting.** Four experiments looked for diagnostic ambiguity under progressively weaker
+assumptions and did not find it. A different problem *is* supported by measurement — confident
+misdiagnosis arising from a wrong hypothesis space — but most of it is solvable **without machine
+learning**, and **AURA cannot presently claim novelty for any of it**, because the systematic
+literature search Phase 0 declared a blocking gate has never been performed.
+
+**Next action is not an experiment.** `EXP-0013 DECISION: DEFER` · `ML PHASE: NOT JUSTIFIED`.
 
 ---
 
@@ -54,6 +61,13 @@ distinction is where the safety value sits, and it is where a scalar confidence 
 > confidence — and does that separation survive when regime shift and fault onset occur
 > simultaneously?**
 
+> **Status of this question (2026-09-08).** The cumulative review found RQ-1's motivating premise
+> — that diagnosis is limited by ambiguity among plausible fault hypotheses under realistic
+> uncertainty — **unsupported**. At the reference sensor specification, fault isolation is perfect
+> (P_iso = 1.000); unknown fault magnitude costs 0.0001 at full observation; and what ambiguity
+> exists is transient. RQ-1 is retained here **unedited and marked**, rather than rewritten, so the
+> record of what was asked and what was found stays legible.
+
 Full statement and definitions: [`docs/research_question.md`](docs/research_question.md)
 Hypotheses and falsification criteria: [`docs/hypotheses.md`](docs/hypotheses.md)
 
@@ -97,11 +111,13 @@ What happens when the true fault is **absent from the diagnostic library**?
 
 - **A reliability problem finally appears.** In **5.8% of cells (16.7% at full observation)** the
   system is confidently wrong *and the goodness-of-fit test stays silent*. **23 cells remain
-  confidently wrong at the full 18 s window**, covering all six unseen faults — **12 of them
+  confidently wrong at the full 18 s window** (range **14–32** across defensible confidence and
+  rejection thresholds — see the cumulative review), covering all six unseen faults — **12 of them
   diagnose a genuinely faulted aircraft as healthy**.
 - **Sharpest case:** a partially blocked pitot line is diagnosed as **"no fault"**, with confidence
   rising from **0.133 to 0.993** as more data arrives while the χ² test rejects only 14%.
-- **But the framework mostly protects itself, with no machine learning.** The χ² residual catches
+- **But a simple non-learning test catches most of it.** A χ² residual — added to the framework in
+  this experiment, not inherited from earlier ones — catches
   47–83% of mismatch, **exactly when a closed-form threshold predicts — 1502 of 1512 cells
   (99.3%)** — from a prediction registered before the run and not refitted.
 - A structural fact established before running: the posterior is *mathematically incapable* of

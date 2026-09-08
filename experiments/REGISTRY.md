@@ -19,7 +19,9 @@ Policy: `infrastructure/experiment_management.md`.
 | EXP-0010 | **Practical diagnosability under measurement uncertainty** | exploratory | H2, prerequisite for H3 | **`COMPLETED`** | Decision gate | `results/validation/EXP-0010/` · [report](../reports/technical/EXP-0010_MEASUREMENT_UNCERTAINTY.md) |
 | EXP-0011 | **Isolation with unknown fault magnitude (composite hypotheses)** | exploratory | H2 | **`COMPLETED`** | Decision gate | `results/validation/EXP-0011/` · [report](../reports/technical/EXP-0011_UNKNOWN_FAULT_MAGNITUDE.md) |
 | EXP-0012 | **Unseen faults / hypothesis-space mismatch** | exploratory | H2 | **`COMPLETED`** | **Gate: A and D simultaneously** | `results/validation/EXP-0012/` · [report](../reports/technical/EXP-0012_UNSEEN_FAULTS.md) |
-| EXP-0013 | **Can excitation design resolve the near-manifold residue?** | exploratory | H2 | `PLANNED` | **Yes — next** | — |
+| — | **Cumulative scientific review, EXP-0002 → EXP-0012** | review | — | **`COMPLETED`** | **`EXP-0013: DEFER` · `ML: NOT JUSTIFIED`** | [review](../research/cumulative_review/EXP_0002_0012_CUMULATIVE_REVIEW.md) |
+| — | **Systematic literature search (TV-N1)** | foundational | — | `PLANNED` | **Yes — next; blocking gate on any novelty claim** | — |
+| EXP-0013 | Excitation-limited identifiability of near-manifold faults | exploratory | H2 | **`DEFERRED`** | Deferred by the cumulative review pending TV-N1 | — |
 | EXP-0014 | Characterise the pre-isolation transient (first ~5 s) | exploratory | — | `PLANNED` | — | — |
 
 Note: H3 (shift/fault confounding) is evaluated from EXP-0007 data but is **method-independent** —

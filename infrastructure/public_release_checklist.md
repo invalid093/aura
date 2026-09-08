@@ -315,6 +315,49 @@ magnitudes; 1.83× spread).
 
 ---
 
+## 2026-09-08 — Sixth audit: cumulative scientific review (EXP-0002 → EXP-0012)
+
+**Scope:** three new documents (`research/cumulative_review/EXP_0002_0012_CUMULATIVE_REVIEW.md`,
+`research/cumulative_review/RESEARCH_DIRECTION_OPTIONS.md`,
+`handoffs/CUMULATIVE_RESEARCH_REVIEW_HANDOFF.md`) and six modified tracking/report files.
+**No code, configuration, results file or dataset was changed.** No new simulation was run.
+
+| # | Check | Result |
+|---|---|---|
+| 1 | Personal / identifying information | **PASS** — scans for name, email domains and local paths return only policy prose and the approved GitHub noreply identity |
+| 2 | Credentials and secrets | **PASS** — all matches are policy text; no key material, `.env` or tokens |
+| 3 | Git identity | **PASS** — `avni a <228505230+invalid093@users.noreply.github.com>`, sole author across all history |
+| 4 | Machine-specific paths | **PASS** — none in the new documents |
+| 5 | No licence added | **PASS** — no LICENSE/LICENCE file exists; policy §16 upheld |
+| 6 | No raw bulk data | **PASS** — nothing staged outside `.md`; datasets remain git-ignored |
+| 7 | Claims match evidence | **PASS**, and see below |
+| 8 | Direction change documented rather than silently rewritten (policy §22) | **PASS** |
+| 9 | Negative results retained and surfaced | **PASS** |
+
+**Two of the project's own prior public claims were corrected in this pass** — the more important
+outcome of the audit than any of the checks above:
+
+- **The χ² residual did not pre-exist EXP-0012.** Verified by direct inspection of
+  `analysis/practical_diagnosability.py` and the EXP-0010/EXP-0011 results files. The published
+  wording "the framework already contains a non-learning statistic" was wrong. Corrected in the
+  report, the EXP-0012 handoff, `FINDINGS.md` and the README, with a dated correction note added to
+  the report rather than a silent edit. The correction makes the project's "ML not needed"
+  conclusion **weaker**, not stronger.
+- **"23 persistent cells" is not robust as a number.** It ranges 14–32 across defensible confidence
+  thresholds and χ² rejection cuts. It is now always published with that range.
+
+**Publication decisions made deliberately:**
+- RQ-1 is **retained verbatim** in the README, marked with a dated status note recording that its
+  premise is unsupported — rather than being rewritten to match the findings. Policy §22.
+- The review states plainly that the programme was **substantially goalpost-shifting**, that AURA
+  **cannot presently claim novelty for anything** because TV-N1 was never closed, and that the
+  recommended next action is not an experiment. This is the most self-critical document in the
+  repository and it is linked from the README's status paragraph, not buried.
+
+**Blocking issues: none.**
+
+---
+
 # PUBLIC RELEASE: PASS
 
 Audited 2026-09-08 against `../docs/public_repository_policy.md`. First audit: all 24 items pass,
@@ -322,4 +365,6 @@ both blocking issues corrected before publication. Second audit (code + data + r
 pass. Third audit (EXP-0010): all items pass; one deliberate publication decision (compact derived
 result surface). Fourth audit (EXP-0011): all items pass; one portability defect found and fixed
 (Windows path separators in a published index). Fifth audit (EXP-0012): all items pass; one
-overstating word reworded. No blocking issues in audits two through five.
+overstating word reworded. Sixth audit (cumulative review): all items pass; **two prior published
+claims corrected**, both in the direction less favourable to the project. No blocking issues in
+audits two through six.

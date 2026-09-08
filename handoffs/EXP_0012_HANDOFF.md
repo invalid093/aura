@@ -150,14 +150,15 @@ library hypotheses** (τ→0 no fault, τ→∞ stuck sensor), so it can never b
 
 - **`FACT`** A reproducible, adversarially-tested reliability problem exists: confident wrong
   diagnosis of unseen faults, undetected by goodness-of-fit, persisting at full observation.
-- **`FACT`** The framework nevertheless catches 47–83% of mismatch with a statistic it already
+- **`FACT`** A simple non-learning statistic — the χ² residual, **added to the framework in
+  EXP-0012** (it did not exist in EXP-0010 or EXP-0011) — nevertheless catches 47–83% of mismatch, a
   computes, and the failure boundary is predictable to 99.3%.
 - **`INTERPRETATION`** The dangerous cases are exactly the near-manifold ones — the faults a designer
   is least likely to anticipate, because they resemble faults the library *does* contain.
 
 ## What the evidence does NOT support
 
-- It does **not** support building an ML OOD detector now. Most of the problem is already solved by a
+- It does **not** support building an ML OOD detector now. Most of the problem is solved by a
   non-learning statistic, and the remainder has not been shown beyond non-learning methods.
 - It does **not** show that unseen faults are generally undetectable — the opposite, for most.
 - It says nothing about real sensors, real aircraft, safer autonomy, or operational applicability.
@@ -173,7 +174,7 @@ library hypotheses** (τ→0 no fault, τ→∞ stuck sensor), so it can never b
 
 ## Decision gate
 
-**Gate D for the majority** — the framework already indicates poor fit, with an analytically
+**Gate D for the majority** — the framework indicates poor fit once the residual is added, with an analytically
 predictable boundary. **Gate A for a specific minority** — at least four physically meaningful unseen
 faults produce persistent, undetected, confident misdiagnosis. Both were permitted by the
 pre-registration and both are supported; forcing one verdict would misrepresent the evidence.
@@ -231,7 +232,7 @@ control=56/56 known faults correct, normalised residual 1.000
 validity_attacks=near-manifold strongest; easy OOD rejected 100% by the existing residual; pre-manoeuvre correctly labelled non-detection not misdiagnosis; effect survives noise x100 and magnitude x4
 decision_gate=A AND D simultaneously -- Gate D for the majority (framework self-protects, no ML needed), Gate A for a near-manifold minority (persistent, undetected, confident misdiagnosis)
 limitations=known template families (TV-M5); 6 unseen faults; one self-implemented aircraft (TV-D10); one excitation; equal priors; normal approximation to the chi2 tail
-research_implication=AURA's ORIGINAL premise (diagnostic ambiguity) remains unsupported after four experiments. A DIFFERENT problem is now supported by measurement: misplaced confidence from a wrong hypothesis support. But 47-83% of it is already solved by a non-learning statistic, so ML is NOT yet justified
+research_implication=AURA's ORIGINAL premise (diagnostic ambiguity) remains unsupported after four experiments. A DIFFERENT problem is now supported by measurement: misplaced confidence from a wrong hypothesis support. But 47-83% of it is solved by a simple non-learning statistic added in EXP-0012, so ML is NOT yet justified
 next_experiment=EXP-0013 -- test whether a second excitation designed to increase separation resolves the near-manifold residue, before considering any learning approach
 ```
 

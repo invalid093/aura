@@ -3,11 +3,19 @@
 **Experiment:** EXP-0012 · **Date:** 2026-09-08 · **Status:** COMPLETED
 **Pre-registration:** [`experiments/EXP-0012/experiment_spec.md`](../../experiments/EXP-0012/experiment_spec.md)
 **Results:** `results/validation/EXP-0012/exp0012_results.json` · **Data:** DS-0001, DS-0002, DS-0003
+> **Correction (2026-09-08, cumulative review §8B).** An earlier version of this report described the
+> χ² residual as a statistic the framework "already contains". That was wrong. Direct inspection of
+> `analysis/practical_diagnosability.py` and of the EXP-0010 and EXP-0011 results files confirms
+> that **no goodness-of-fit residual existed before EXP-0012** — it was added as part of this
+> experiment. The scientifically correct statement is: *a simple non-learning residual, added to the
+> framework in EXP-0012, catches most mismatch.* This distinction is preserved in all subsequent
+> documentation, and it makes the "ML not needed" conclusion weaker, not stronger.
+
 **Decision gate: A *and* D simultaneously** — the framework is mostly robust, and dangerously
 non-robust in a specific, physically meaningful minority of cases.
 
-> **Headline.** The physics-based framework already contains a non-learning statistic — the χ²
-> residual — that catches hypothesis-space mismatch in 47–83% of cases, and it does so **exactly
+> **Headline.** A simple non-learning statistic — the χ² residual, added to the framework in this
+> experiment — catches hypothesis-space mismatch in 47–83% of cases, and it does so **exactly
 > when a closed-form threshold predicts (1502 of 1512 cells, 99.3%)**. But in **5.8% of all cells
 > and 16.7% at full observation** the system is *confidently wrong and the residual does not
 > notice*. Every one of six unseen faults produces at least one such case that **persists at the
@@ -43,8 +51,9 @@ $\chi^2(KN)+\lVert\Delta_{\min}\rVert^2/\eta^2$ under mismatch. Mismatch is dete
 $$\lVert\Delta_{\min}\rVert/\eta \;>\; \sqrt{z_\alpha}\,(2KN)^{1/4}
 \qquad(\text{9.2 at 0.5 s, 13.0 at 2 s, }\mathbf{22.4}\text{ at 18 s})$$
 
-**This is a non-learning statistic the framework already computes.** Gate D was therefore a live
-possibility from the outset, and was pre-registered as such.
+**This is a non-learning statistic, added to the framework in this experiment.** Gate D was
+therefore a live possibility from the outset, and was pre-registered as such. It did not exist in
+EXP-0010 or EXP-0011; see the correction note above.
 
 ## 3. Unseen-fault taxonomy
 
@@ -188,7 +197,8 @@ Condition dependence is weak: 4–6 confidently-wrong cells of 42 at each of the
 
 *(Contestable.)*
 
-- **The framework is mostly self-protecting.** A statistic it already computes catches most
+- **The framework is mostly self-protecting, once the residual is added.** A single non-learning
+  statistic — introduced here, not inherited — catches most
   hypothesis-space mismatch, with no ML, and its failure boundary is analytically predictable. That
   is a stronger form of robustness than "we trained a detector".
 - **Where it fails, it fails silently and dangerously**, and the failures are exactly the
@@ -219,7 +229,8 @@ Condition dependence is weak: 4–6 confidently-wrong cells of 42 at each of the
 ## 15. Decision gate
 
 **Gate D holds for the majority.** The existing physics-based framework indicates poor fit for most
-unseen faults, via a statistic it already computes, with an analytically predictable boundary. **An
+unseen faults, via a non-learning statistic added in this experiment, with an analytically
+predictable boundary. **An
 ML OOD detector is not needed for those cases and inventing one would be unjustified.**
 
 **Gate A holds for a specific minority.** At least four physically meaningful unseen faults produce

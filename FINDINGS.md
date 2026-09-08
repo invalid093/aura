@@ -17,16 +17,30 @@ coverage than the best single-scalar confidence gate. Untested; gated on H2.
 H2's ground-truth premise has now been tested by EXP-0002.
 → `docs/hypotheses.md`
 
+**CUMULATIVE REVIEW (EXP-0002 → EXP-0012) — the most important entry in this file:**
+**AURA's original premise is UNSUPPORTED, and the programme was substantially goalpost-shifting.**
+Four experiments looked for diagnostic ambiguity under progressively weaker assumptions and did not
+find it. The replacement phenomenon — confident misdiagnosis under hypothesis-space mismatch — is
+real but its three components are close to textbook, and the **systematic literature search that
+Phase 0 declared a blocking gate on any novelty claim has still never been performed (TV-N1)**.
+Two of this project's own published claims were corrected by the review: the χ² residual did **not**
+pre-exist EXP-0012, and the "23 persistent cells" figure ranges **14–32** across defensible
+thresholds.
+`EXP-0013 DECISION: DEFER` · `ML PHASE: NOT JUSTIFIED`
+→ `research/cumulative_review/EXP_0002_0012_CUMULATIVE_REVIEW.md`
+
 **BEST VALIDATED RESULT:**
 **EXP-0012 — a reliability problem finally appears, and it is not the one AURA was designed
 around.** When the true fault is absent from the diagnostic library, the system is *confidently
 wrong and the goodness-of-fit test stays silent* in **5.8% of all cells and 16.7% at full
-observation**. **23 cells remain confidently wrong at the full 18 s window**, covering all six
+observation**. **23 cells remain confidently wrong at the full 18 s window** (range **14–32** across
+defensible thresholds), covering all six
 unseen faults; **12 of them diagnose a genuinely faulted aircraft as healthy.** Sharpest case: a
 partially blocked pitot line is diagnosed as "no fault" with confidence rising **0.133 -> 0.993**
 as more data arrives.
 
-**But the framework mostly protects itself, without any machine learning.** The chi-square residual
+**But a simple non-learning test catches most of it.** A chi-square residual, *added to the
+framework in EXP-0012* rather than inherited from EXP-0010/0011, 
 catches 47-83% of mismatch, and does so **exactly when a closed-form threshold predicts -- 1502 of
 1512 cells (99.3%)**, from a prediction registered before the run and not refitted. Control: 56/56
 known faults correct, normalised residual 1.000.
@@ -110,19 +124,24 @@ closed-loop boundedness at one condition only and mistook trim convergence for f
    verdict. The verdict rests on the continuous rank structure, not the binary matrix.
 4. Novelty remains unverified (TV-N1) — a systematic literature search is still outstanding.
 
-**NEXT SCIENTIFIC QUESTION:**
-**EXP-0013 — can a non-learning method fix the residue, before any ML is considered?** The dangerous
-cases are exactly those whose nearest-known distance falls below the chi-square detection threshold,
-where the residual is *provably* blind. Isolation has been excitation-driven in every experiment so
-far, so the obvious lever is a second excitation designed to increase separation: cheap, auditable,
-and non-learning. **Only if that fails is an ML/uncertainty approach scientifically justified** --
-and the target would then be precisely defined rather than assumed.
+**NEXT SCIENTIFIC QUESTION — revised by the cumulative review:**
+**Not an experiment.** The cumulative review deferred EXP-0013 in favour of the systematic
+literature search (TV-N1) that Phase 0 declared a *blocking gate on any novelty claim* and that four
+experiments have run past. At least three of AURA's findings are close to textbook, so nothing here
+can be claimed as novel until that gate is closed — and no excitation experiment can fix that.
+
+If the gate clears, the evidence *does* support an excitation direction: UF-003's
+distance/threshold ratio peaks at 0.80 when the manoeuvre ends and then **declines** to 0.74, which
+is direct evidence that near-manifold failure is excitation-limited rather than time-limited. The
+right form of that question is analytical identifiability (*can any admissible excitation succeed?*),
+not "try another doublet".
 
 **Four experiments in, AURA's original premise remains unsupported.** Diagnostic ambiguity is absent
 at realistic noise, absent under unknown magnitude, and transient where it exists. A *different*
 problem is now supported by measurement: misplaced confidence from a wrong hypothesis support. Still
 no learning component, uncertainty estimator or decision layer -- and EXP-0012 is the reason not to
-build one yet, since most of the problem is already solved without learning.
+build one yet, since most of the problem is solved by a simple non-learning residual added in
+EXP-0012.
 
 **AWAITING RESEARCHER DECISION:**
 - **Licensing (ADR-0007):** accept GPL-3.0 and use AeroBench, source a permissive airframe, or keep

@@ -18,6 +18,11 @@ evidence is not evidence of absence.
 **Mitigation:** a systematic search (Scopus/WoS/IEEE Xplore/AIAA ARC) plus forward/backward citation
 sweep from LIT-0004 and LIT-0005 is a **Phase 1 gate**. No novelty claim may be published first.
 **If the gap is closed:** re-scope, record in an ADR, do not proceed and claim novelty anyway.
+**Status 2026-09-08 (cumulative review):** **STILL UNMITIGATED after four experiments.** The gate was
+declared blocking and has been run past four times. The cumulative review found at least three of
+AURA's findings close to textbook, and concluded that **no novelty may presently be claimed for any
+part of the project**. Closing this is now the recommended next action, ahead of any experiment.
+See `research/cumulative_review/EXP_0002_0012_CUMULATIVE_REVIEW.md` §novelty.
 
 ### TV-N2 — LIT-0004's authors may close the gap first
 **Severity: MEDIUM. Unmitigable.**
