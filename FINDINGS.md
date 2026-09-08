@@ -17,6 +17,26 @@ coverage than the best single-scalar confidence gate. Untested; gated on H2.
 H2's ground-truth premise has now been tested by EXP-0002.
 → `docs/hypotheses.md`
 
+**TV-N1 NOVELTY GATE (2026-09-08): FAIL. This supersedes every open question below.**
+The blocking literature audit Phase 0 required has now been performed, and AURA did not pass it.
+Every substantive finding has established prior art: confident misdiagnosis when the true fault is
+outside the hypothesis set is **Berk (1966)**; the χ² residual is the classical model-based FDI
+consistency test (**Massoumnia et al. 1989** characterised undetectable faults geometrically in
+1989); the detectability threshold is the classical *minimum detectable fault* — a named research
+object with its own paper title (**Xu 2023, IEEE TAC**); quantitative noise-aware distinguishability
+is **Eriksson, Frisk & Krysander (2013)**, the same construct as AURA's deflection coefficient;
+near-class rejection failure is the *expected* result of open-set recognition; and excitation-limited
+diagnosability with active input design as the remedy is **Scott et al. (2014)** and
+**Kong, McMahon & Lahijanian (2025)** — the latter anticipating AURA's entire post-EXP-0012
+direction, with theorems, in an aerospace department.
+
+**AURA's own strongest result is the strongest evidence against its novelty:** a closed-form
+classical threshold predicts its blind spots in 1502 of 1512 cells (99.3%). A phenomenon predicted
+that well by a textbook expression is not an open question.
+
+`NOVELTY GATE: FAIL` · `EXP-0013: CANCEL` · `ML PHASE: NOT JUSTIFIED`
+→ `research/literature/TV-N1_LITERATURE_AUDIT.md`
+
 **CUMULATIVE REVIEW (EXP-0002 → EXP-0012) — the most important entry in this file:**
 **AURA's original premise is UNSUPPORTED, and the programme was substantially goalpost-shifting.**
 Four experiments looked for diagnostic ambiguity under progressively weaker assumptions and did not
@@ -123,6 +143,16 @@ closed-loop boundedness at one condition only and mistook trim convergence for f
 3. Condition-dependence is **modest at the pre-declared threshold**: only 1 pair of 153 changes
    verdict. The verdict rests on the continuous rank structure, not the binary matrix.
 4. Novelty remains unverified (TV-N1) — a systematic literature search is still outstanding.
+
+**NEXT SCIENTIFIC QUESTION — superseded by TV-N1 (2026-09-08):**
+**There is no scientifically justified next experiment in this branch.** The literature audit below
+was the recommended next action; it returned FAIL. EXP-0013 is cancelled, ML remains not justified,
+and no further experiment should be designed on the assumption that a novelty claim is available.
+Continuing would require either a new research question grounded in a gap the literature actually
+declares, or a decision by the researcher to continue for reasons other than novelty (for example
+as a methods exercise) — which should be recorded explicitly as such.
+
+*The pre-audit statement is preserved below, unedited, as the historical record:*
 
 **NEXT SCIENTIFIC QUESTION — revised by the cumulative review:**
 **Not an experiment.** The cumulative review deferred EXP-0013 in favour of the systematic

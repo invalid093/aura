@@ -137,8 +137,20 @@ unresolved.
 
 ## Current project state
 
-Phase 0 complete (2026-09-08). Phase 1a not started, and **gated** on:
-1. Systematic literature search (TV-N1) — blocks any novelty claim.
+Phase 0 complete (2026-09-08). Four experiments run (EXP-0002, 0010, 0011, 0012), followed by a
+cumulative review and the TV-N1 novelty audit.
+
+**TV-N1 is closed and returned `NOVELTY GATE: FAIL` (2026-09-08).** Every substantive AURA finding
+has established prior art; EXP-0013 is **cancelled** (solved in the literature); ML remains **not
+justified**. See `research/literature/TV-N1_LITERATURE_AUDIT.md` and
+`handoffs/TV-N1_LITERATURE_NOVELTY_HANDOFF.md`.
+
+**Do not design a new experiment in this branch on the assumption that a novelty claim is
+available — it is not.** A new direction requires either a gap the literature actually declares, or
+an explicit researcher decision to continue for non-novelty reasons, recorded as such in an ADR.
+
+Phase 1a not started. Historically it was **gated** on:
+1. Systematic literature search (TV-N1) — blocks any novelty claim. **CLOSED: FAIL.**
 2. EXP-0001 — runtime, storage and determinism measurement.
 3. **EXP-0002 — structural isolability. This can invalidate the whole design and must run before
    any learning code is written.**

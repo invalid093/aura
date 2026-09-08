@@ -24,6 +24,18 @@ AURA's findings close to textbook, and concluded that **no novelty may presently
 part of the project**. Closing this is now the recommended next action, ahead of any experiment.
 See `research/cumulative_review/EXP_0002_0012_CUMULATIVE_REVIEW.md` §novelty.
 
+**RESOLVED 2026-09-08 — `NOVELTY GATE: FAIL`.** The audit was performed
+(`research/literature/TV-N1_LITERATURE_AUDIT.md`). The threat was **realised, not mitigated**: every
+substantive AURA finding has established prior art, and the direction proposed next was published in
+2025 with proofs. Confident misdiagnosis under hypothesis-space mismatch is Berk (1966); the χ²
+residual is the classical FDI consistency test; the detectability threshold is the classical minimum
+detectable fault (a named research object — Xu 2023, *IEEE TAC*); quantitative noise-aware
+distinguishability is Eriksson et al. (2013); near-class rejection failure is the expected result of
+open-set recognition; and excitation-limited diagnosability with active input design as the remedy is
+Scott et al. (2014) and Kong et al. (2025). **AURA may not claim novelty for any current finding.**
+The audit's own search was narrower than this section specifies (no institutional database access) —
+recorded as a limitation, but one that could only deepen a FAIL, never reverse it.
+
 ### TV-N2 — LIT-0004's authors may close the gap first
 **Severity: MEDIUM. Unmitigable.**
 Mohammadi, Krysander, Jung & Frisk have the tools, the framework and the stated limitation. They

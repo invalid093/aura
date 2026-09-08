@@ -358,6 +358,43 @@ outcome of the audit than any of the checks above:
 
 ---
 
+## 2026-09-08 — Seventh audit: TV-N1 blocking literature & novelty audit
+
+**Scope:** four new documents (`research/literature/TV-N1_LITERATURE_AUDIT.md`,
+`TV-N1_EVIDENCE_MATRIX.md`, `TV-N1_NOVELTY_MATRIX.md`,
+`handoffs/TV-N1_LITERATURE_NOVELTY_HANDOFF.md`), 14 new literature-index entries
+(LIT-0071…LIT-0084), and five modified tracking documents. **No code, configuration, results file or
+dataset was changed. No simulation was run.**
+
+| # | Check | Result |
+|---|---|---|
+| 1 | Personal / identifying information | **PASS** — no matches in any new document |
+| 2 | Credentials and secrets | **PASS** — the only regex hits are `sk-` inside “risk-coverage” and “risk-control” |
+| 3 | Git identity | **PASS** — `avni a <228505230+invalid093@users.noreply.github.com>`, sole author across all history |
+| 4 | Machine-specific paths | **PASS** — none |
+| 5 | No licence added | **PASS** — no LICENSE/LICENCE file exists; policy §16 upheld |
+| 6 | **No copyrighted papers committed** | **PASS** — no PDFs in the tree. Source PDFs were read outside the repository; only citations, DOIs and original concise summaries are published |
+| 7 | Quotation limits | **PASS** — quoted fragments are short, attributed, and used to establish what a source demonstrates; no substantial reproduction |
+| 8 | Citations verified, none invented | **PASS** — every citation checked against Crossref or a publisher record; inspection depth recorded per entry (`FULL_TEXT_INSPECTED` / `ABSTRACT_VERIFIED_VERBATIM` / `METADATA_CROSSREF_VERIFIED`); Berk 1966 explicitly marked `SECONDARY (paper itself not read)` |
+| 9 | Claims match evidence | **PASS** — no N4 novelty claimed anywhere; the FAIL rests on positive prior-art hits, never on absence of search results |
+| 10 | Unfavourable result published, not buried (policy §22) | **PASS** — see below |
+| 11 | Search limitations disclosed | **PASS** — the absence of institutional database access is stated in the audit, the handoff and this record |
+
+**The result of this audit cycle is that the project failed its own blocking gate, and that failure
+is published prominently rather than absorbed quietly:**
+
+- `NOVELTY GATE: FAIL` appears in the README status paragraph, `FINDINGS.md`, the experiment
+  registry, `CLAUDE.md`, and both audit documents.
+- The realised threat is recorded against **TV-N1** in `THREATS_TO_VALIDITY.md` as *realised, not
+  mitigated*.
+- **EXP-0013 is marked `CANCELLED`** in the registry, with the superseding literature named.
+- RQ-1 remains published verbatim with its dated status note; no historical claim was rewritten to
+  match the outcome.
+
+**Blocking issues: none.**
+
+---
+
 # PUBLIC RELEASE: PASS
 
 Audited 2026-09-08 against `../docs/public_repository_policy.md`. First audit: all 24 items pass,
@@ -366,5 +403,6 @@ pass. Third audit (EXP-0010): all items pass; one deliberate publication decisio
 result surface). Fourth audit (EXP-0011): all items pass; one portability defect found and fixed
 (Windows path separators in a published index). Fifth audit (EXP-0012): all items pass; one
 overstating word reworded. Sixth audit (cumulative review): all items pass; **two prior published
-claims corrected**, both in the direction less favourable to the project. No blocking issues in
-audits two through six.
+claims corrected**, both in the direction less favourable to the project. Seventh audit (TV-N1
+novelty audit): all items pass; **the project failed its own blocking novelty gate and published the
+failure**. No blocking issues in audits two through seven.

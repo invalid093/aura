@@ -16,7 +16,18 @@ misdiagnosis arising from a wrong hypothesis space — but most of it is solvabl
 learning**, and **AURA cannot presently claim novelty for any of it**, because the systematic
 literature search Phase 0 declared a blocking gate has never been performed.
 
-**Next action is not an experiment.** `EXP-0013 DECISION: DEFER` · `ML PHASE: NOT JUSTIFIED`.
+**That next action has now been taken, and AURA did not pass it.** The
+[TV-N1 blocking literature and novelty audit](research/literature/TV-N1_LITERATURE_AUDIT.md) found
+that every substantive finding here has established prior art — confident misdiagnosis under
+hypothesis-space mismatch is a 1966 theorem (Berk); the χ² residual is the classical model-based FDI
+consistency test; the detectability threshold is the classical *minimum detectable fault*; and the
+direction proposed next was published in 2025 with proofs (Kong, McMahon & Lahijanian, arXiv:2509.04708).
+
+**`NOVELTY GATE: FAIL` · `EXP-0013: CANCEL` · `ML PHASE: NOT JUSTIFIED`**
+
+A failed novelty gate is a valid scientific outcome, and it is published here rather than quietly
+absorbed. **This branch of AURA is complete and redundant.** The experiments were, as far as this
+project can determine, correctly executed; they reproduce results the field already holds.
 
 ---
 
