@@ -5,9 +5,10 @@
 > Independent computational research into uncertainty-aware fault diagnosis and autonomous health
 > management for high-performance uncrewed aircraft.
 
-**AURA is an ongoing independent research project.** Phase 0 is complete and the first gate
-experiment has run. There is **one validated result** (EXP-0002) and **no result yet bearing on the
-central hypothesis**, which remains untested.
+**AURA is an ongoing independent research project.** Phase 0 is complete and two experiments have
+run. There are **two validated results**, and **no result yet bearing on the central hypothesis**,
+which remains untested. The most recent result **weakens one of the project's own premises** — see
+Validated findings.
 
 ---
 
@@ -74,16 +75,42 @@ falsification condition. Replacing it is recorded in
 | 1d | External validity check, sensitivity analyses, reporting | Blocked on 1c |
 | 2 | Only if Phase 1 findings warrant it | — |
 
-Experiments run: **1** (EXP-0002, 90 simulation runs + 5 sensitivity sweeps). Datasets: **1**
-(DS-0001, regenerable, not published — see Data policy).
+Experiments run: **2** (EXP-0002: 90 simulation runs + 5 sensitivity sweeps; EXP-0010: 130 M
+classification trials reusing the same trajectories). Datasets: **1** (DS-0001, regenerable, not
+published — see Data policy).
 
-EXP-0002 was the decisive gate: does fault distinguishability actually vary with flight condition?
-**It does, but less than the design assumed.** No learning component, uncertainty estimator or
-decision layer is built until EXP-0010 establishes how much of that survives measurement noise.
+EXP-0002 asked whether fault distinguishability varies with flight condition — it does, modestly.
+EXP-0010 then asked whether that survives measurement uncertainty, and found that **at realistic
+sensor noise there is no ambiguity to be uncertain about at all**. No learning component, uncertainty
+estimator or decision layer is built until two remaining assumptions are relaxed, because both can
+only increase ambiguity and either could restore the motivation on evidence rather than assumption.
 
 ## Validated findings
 
-**One.** [**EXP-0002**](reports/technical/EXP-0002_STRUCTURAL_ISOLABILITY.md) — response-based fault
+**Two.** The more recent one is uncomfortable for the project, and is stated first.
+
+### [EXP-0010](reports/technical/EXP-0010_MEASUREMENT_UNCERTAINTY.md) — measurement uncertainty
+
+- **At the reference sensor specification, fault isolation is perfect.** Probability of correct
+  18-way isolation is **1.000** at every valid flight condition, with **zero** of 153 pairs
+  practically ambiguous. EXP-0002's five-member ambiguity group dissolves — its per-sample threshold
+  was conservative by a factor of sqrt(K*N) ~ 153.
+- **But isolation takes about 5 seconds.** Even with perfect sensors, P_iso = 0.45 at 0.05 s and does
+  not reach 0.95 until ~5 s. **The binding constraint is time, not noise.** None of the five
+  pre-declared decision-gate outcomes anticipated this.
+- Ambiguity requires 10-19x the reference uncertainty to appear. Condition dependence is real but
+  modest (1.83x spread, fixed ordering, robust to fault magnitude).
+- Temporally correlated noise costs a further 21% — *quantitatively* predicted by
+  sqrt((1+rho)/(1-rho)) at r = 0.9993, so it is a limitation with a correction rather than an unknown.
+- **Every probability is an upper bound**: the classifier knows the fault templates and magnitudes
+  exactly. No real system does (threat TV-M5).
+
+**What this means for AURA:** the case for uncertainty-aware *isolation* at realistic sensor noise is
+**weak in this configuration**. The problem relocates to the transient — *what should an aircraft do
+during the several seconds in which isolation is impossible?* — which is a better-grounded question
+because it was measured rather than assumed.
+
+### [EXP-0002](reports/technical/EXP-0002_STRUCTURAL_ISOLABILITY.md) — response-based fault
 distinguishability in a nonlinear 6-DOF fixed-wing model (deterministic, noise-free):
 
 - A **stable five-member ambiguity group** persists at all four valid flight conditions: nominal, a
@@ -150,11 +177,15 @@ secondary one supported.** The design is built so that combination is a publisha
 
 ## Open questions
 
-1. **How much of the measured distinguishability survives measurement noise** on a single
-   realisation? EXP-0002 is noise-free, so its distances are upper bounds. (EXP-0010)
-2. **Is one verdict flip in 153 pairs enough condition-dependence** to justify a condition-dependent
-   ambiguity model, rather than a single condition-independent ambiguity group? This is the open
-   question that most threatens the design.
+1. **How much ambiguity does unknown fault magnitude create?** EXP-0010 assumed it known; with free
+   magnitude, bias and scale faults on one channel intersect exactly. Probably the dominant
+   unmeasured effect. (EXP-0011)
+2. **How much does template/model error raise the effective uncertainty?** If it reaches ~10x the
+   sensor spec, the ambiguity EXP-0010 found only under stress becomes the realistic regime — and
+   AURA's motivation returns on evidence.
+3. **What is actually knowable during the ~5 s before isolation is possible?** (EXP-0012)
+4. **Is one verdict flip in 153 pairs enough condition-dependence** to justify a condition-dependent
+   ambiguity model? Still open, and still the question that most threatens the design.
 3. Does a systematic database search close the identified gaps? (still outstanding)
 4. Does the result reproduce on an **independently sourced** aircraft model? (TV-D10)
 5. Does excitation change the ambiguity matrix more than flight condition does?

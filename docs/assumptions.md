@@ -51,6 +51,8 @@ An assumption that is later tested moves to `VALIDATED` or `REFUTED` — it is n
 | A-UNC-01 | Aleatoric noise levels are known | `OPEN` (deliberate) | See A-SEN-04 | Intentional |
 | A-UNC-02 | Ensemble disagreement is a usable proxy for epistemic uncertainty | `OPEN` | $N$ would be poorly grounded | LIT-0005/0009 support; H2 tests it empirically |
 | A-UNC-03 | **Amended 2026-09-08 (`ADR-0008`).** H2's reference is **response-based distinguishability at the current flight condition**, not structural isolability. Structural isolability remains a valid *outer bound* (necessary, not sufficient) but is flight-condition-invariant by construction and so cannot serve as the condition-dependent ground truth on its own | `OPEN` | H2's ground truth would be invalid | Response-based distinguishability measured in EXP-0002; structural analysis deferred as an outer-bound cross-check |
+| A-UNC-05 | **New (EXP-0010).** A diagnoser knows the fault template trajectories exactly | `OPEN` — **the largest optimism in EXP-0010** (threat TV-M5) | Every probability EXP-0010 reports is an upper bound of unknown tightness. Template error acts exactly like elevated effective noise | Relax in a later experiment; it may restore the motivating ambiguity |
+| A-UNC-06 | **New (EXP-0010).** Fault magnitude is known to the diagnoser | `OPEN` — **probably the dominant unmeasured source of ambiguity** | With free magnitude, bias and scale faults on one channel intersect exactly at $V^*$, so the hypothesis classes genuinely overlap | **EXP-0011** |
 | A-UNC-04 | Calibration on the validation split transfers to in-distribution test data | `OPEN` | ID calibration numbers would be optimistic | Standard practice; ID/OOD reported separately |
 
 ## Data and infrastructure

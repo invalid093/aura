@@ -16,15 +16,22 @@ Policy: `infrastructure/experiment_management.md`.
 | EXP-0007 | **Primary confirmatory**: H1 at shift axis S6 on the frozen test set | **confirmatory** | H1 (with H2, H4, H5 secondary) | `PLANNED` | — | — |
 | EXP-0008 | ALFA external validity check (detection sub-problem only) | exploratory | — | `PLANNED` | — | — |
 | EXP-0009 | Sensitivity: GPS included; cost-ratio sweep; independent-implementation test | exploratory | — | `PLANNED` | — | — |
-| EXP-0010 | **Distinguishability under measurement noise, repeated realisations** | exploratory | H2, prerequisite for H3 | `PLANNED` | **Yes — next gate** | — |
+| EXP-0010 | **Practical diagnosability under measurement uncertainty** | exploratory | H2, prerequisite for H3 | **`COMPLETED`** | Decision gate | `results/validation/EXP-0010/` · [report](../reports/technical/EXP-0010_MEASUREMENT_UNCERTAINTY.md) |
+| EXP-0011 | **Isolation with unknown fault magnitude (composite hypotheses)** | exploratory | H2 | `PLANNED` | **Yes — next** | — |
+| EXP-0012 | Characterise the pre-isolation transient (first ~5 s) | exploratory | — | `PLANNED` | — | — |
 
 Note: H3 (shift/fault confounding) is evaluated from EXP-0007 data but is **method-independent** —
 it is a property of novelty gating in general, and its result stands whether or not H1 holds.
 
-**Sequencing changed after EXP-0002.** EXP-0010 (distinguishability under measurement noise) is
-inserted before EXP-0003 onward. EXP-0002 was deterministic and noise-free, so every distance it
-reports is an upper bound on what an estimator could achieve from one noisy realisation. Building an
-estimator or a decision layer on an upper bound would be premature.
+**Sequencing changed after EXP-0002.** EXP-0010 was inserted before EXP-0003 onward, because
+EXP-0002 was noise-free and its distances were upper bounds.
+
+**Sequencing changed again after EXP-0010.** EXP-0010 found that at realistic sensor noise there is
+*no* ambiguity to be uncertain about ($P_{iso} = 1.000$) — the motivating problem is absent under its
+assumptions. Two assumptions must be relaxed before any estimator or decision layer is justified,
+because both can only increase ambiguity: **unknown fault magnitude** (EXP-0011) and template/model
+error. EXP-0012 characterises the ~5 s transient during which isolation is impossible even with
+perfect sensors, which is where EXP-0010 relocated the problem.
 
 ## Failures
 

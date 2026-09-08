@@ -1,0 +1,55 @@
+experiment_id: EXP-0010
+title: Practical fault diagnosability under measurement uncertainty
+hypothesis: H2
+purpose: >
+  Determine whether the deterministic distinguishability structure found in EXP-0002
+  survives contact with measurement uncertainty: which fault hypotheses remain
+  practically distinguishable, which become statistically ambiguous, and whether the
+  boundary depends on flight condition. EXP-0002 was noise-free, so its distances were
+  an idealised upper bound.
+type: exploratory
+status: COMPLETED
+is_gate: false          # a decision gate on research direction, not a pass/fail gate
+gate_criterion: null
+primary_metric: >
+  P_iso -- probability of correct 18-way fault isolation under the Bayes-optimal
+  classifier with KNOWN templates and known Gaussian noise, equal priors, estimated by
+  Monte Carlo. An UPPER BOUND on any real diagnoser.
+analysis_plan: experiments/EXP-0010/experiment_spec.md
+configuration: experiments/EXP-0010/config/exp0010.yaml
+configuration_sha256: null      # recorded in results/validation/EXP-0010/exp0010_results.json
+git_commit: null                # recorded in the results payload at run time
+dataset_ids: [DS-0001]          # reused from EXP-0002; no new simulation for the main study
+random_seeds:
+  base: 20261008
+  policy: per-cell seeds derived deterministically by SHA-256 of (base, condition, window, eta)
+  alt_base_for_seed_attack: 771013
+parameters:
+  flight_conditions: 4          # FC-1, FC-2, FC-3, FC-5; FC-4 excluded (FAIL-0001)
+  fault_modes: 18
+  eta_levels: 10
+  observation_windows: 9
+  replications_per_cell: 20000
+  total_classification_trials: 130000000
+methods: [bayes_optimal_known_template_classifier]
+date_planned: 2026-09-08
+date_started: 2026-09-08
+date_completed: 2026-09-08
+results_location: results/validation/EXP-0010/
+analysis_version: analysis/practical_diagnosability.py @ aura 0.3.0
+runtime_seconds: 355
+storage_bytes: 0                # no new bulk data; DS-0001 reused
+failure_ids: []
+supersedes: null
+superseded_by: null
+notes: >
+  Two things worth flagging to a reader. (1) A design constraint was derived BEFORE running:
+  EXP-0002's per-sample metric relates to the optimal-detection deflection by exactly
+  sqrt(K*N) = 153, which showed that a noise-only sweep at the reference sigma would measure
+  nothing, and forced observation window into the design as a second axis. (2) A claim in the
+  first draft of the report -- that EXP-0002's ambiguity group "predicted" statistical
+  difficulty -- was DOWNGRADED after an explicit circularity test showed rank correlation of
+  0.77-0.98 rather than independence. The test is saved at
+  results/validation/EXP-0010/circularity_test.json.
+  New threat recorded: TV-M5 (known templates and known fault magnitude make every reported
+  probability an upper bound of unknown tightness).

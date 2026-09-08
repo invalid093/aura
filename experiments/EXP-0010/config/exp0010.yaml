@@ -1,0 +1,63 @@
+# EXP-0010 configuration -- measurement uncertainty and practical diagnosability.
+# Pre-registered: see ../experiment_spec.md. Do not edit after results are produced.
+
+experiment_id: EXP-0010
+config_version: 1
+extends: EXP-0002
+source_dataset: DS-0001          # deterministic trajectories, reused without re-simulation
+source_config: experiments/EXP-0002/config/exp0002.yaml
+
+# Only conditions that passed the EXP-0002 validity gate. FC-4 remains INVALID
+# (FAIL-0001) and is not resurrected.
+flight_conditions: [FC-1, FC-2, FC-3, FC-5]
+
+noise:
+  distribution: gaussian         # primary; t and AR(1) tested in validity attack V-B
+  spectrum: white
+  independent_across_channels: true
+  independent_across_time: true
+  zero_mean: true
+  # Per-channel sigma is inherited from the EXP-0002 sensor specification.
+  # PROVENANCE: synthetic, representative of MEMS-grade instruments. NOT from any
+  # datasheet and NOT a claim about a real sensor.
+  sigma_source: exp0002_sensor_spec
+  # Effective-uncertainty multiplier. eta = 1 is the reference specification.
+  # eta >= 10 are EXPERIMENTAL STRESS LEVELS, not sensor claims -- they stand in for
+  # total effective uncertainty (model mismatch, turbulence, template error), all of
+  # which reduce the deflection identically.
+  eta_levels: [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000]
+  eta_realistic_max: 5           # above this, results are labelled stress levels
+  seed_base: 20261008
+
+# Observation window after fault onset, seconds. 100 Hz -> 5 to 1801 samples.
+observation_windows: [0.05, 0.1, 0.25, 0.5, 1.0, 2.0, 5.0, 10.0, 18.0]
+
+monte_carlo:
+  # Binomial SE at the worst case P=0.5 is sqrt(0.25/N) = 0.0035 -> 95% CI +/-0.007,
+  # enough to resolve the 0.95 contour. Fixed before results; not adjusted afterwards.
+  replications: 20000
+  method: gram_exact             # exact 18-dim reduction; verified against direct simulation
+  bootstrap_resamples: 1000
+
+metrics:
+  primary: P_iso                 # 18-way correct isolation, Bayes-optimal, known templates
+  secondary: [P_disc, P_det, P_FA]
+  practical_ambiguity_threshold: 0.95   # reading aid on a continuous quantity, not a claim
+  # Every P reported is an UPPER BOUND: the classifier knows all templates exactly.
+
+validity_attacks:
+  alt_seed_base: 771013
+  t_distribution_df: 4
+  ar1_rho: 0.5
+  direct_sim_trials: 4000        # for V-B and V-C, full-dimensional
+  magnitude_scales: [0.5, 2.0]
+  # cells used for the expensive direct-simulation attacks
+  attack_cells:
+    conditions: [FC-1, FC-5]
+    eta: [10, 50, 200]
+    windows: [0.5, 2.0]
+
+analysis:
+  # The pair singled out by EXP-0002's closed-form prediction. Tested, NOT refitted.
+  analytic_pair: [F1_Vt, F2_Vt]
+  ambiguity_group_exp0002: [F0, F2_q, F2_alpha, F4_alpha, F4_Vt]

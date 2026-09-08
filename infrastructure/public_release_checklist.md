@@ -222,8 +222,44 @@ measurements that support them (ρ ≥ 0.9992 across step sizes; magnitude and d
 
 ---
 
+## 2026-09-08 — Third audit: EXP-0010 (analysis code, results, figures)
+
+| Area | Result |
+|---|---|
+| Privacy / machine paths | **PASS** — clean in tree, history and commit metadata |
+| Secrets | **PASS** |
+| Licence | **PASS** — no licence file; no licence claim in any source file |
+| Raw data | **PASS** — 0 bulk trajectory files committed; DS-0001 (90 files, 18 MB) stays unpublished and regenerable. **EXP-0010 generated no new bulk data at all** — it reused DS-0001 |
+| **Compact derived data — a deliberate exception** | The 3.4 KB `P_iso_surface.npz` (360 values: the central result surface) was being excluded by a `.gitignore` rule written for *large* arrays. It is now **published**, with the exception documented in `.gitignore`: it lets a reader reproduce the figures without re-running the experiment, which is exactly what the data policy asks for |
+| Code | **PASS** — 4 new files, 857 lines: analysis module, pilot verification, runner, figures. All methodology or reproducibility code |
+| Scientific claims | **PASS** — see note |
+| Preliminary vs validated | **PASS** — README states two validated results and leads with the one that *weakens* a project premise |
+| Failures / corrections published | **PASS** — the circularity self-correction is published in the report, FINDINGS, the handoff and as a machine-readable artefact |
+| Provenance | **PASS** — figures carry sidecars; results record config SHA-256 and commit; registry entry created |
+| Internal links | **PASS** |
+| Total staged | ~800 KiB |
+
+**Scientific-claims note.** Substantive occurrences of `demonstrates`, `solves`, `unprecedented`,
+`superior`, `significantly improves`: **zero**. `guarantees`: one, describing conformal prediction
+with its caveat. `proves`: six — four are the idiom "proves intractable", one is the epistemically
+correct code comment about trim, and two state that a closed form *proves* two fault classes
+intersect, which is an algebraic identity and therefore correct usage. `robust`: every use is
+attached to the measurement supporting it (Δ ≤ 0.01 for heavy tails; ordering preserved across
+magnitudes; 1.83× spread).
+
+**Claims specifically checked against evidence:**
+- Every probability is labelled an **upper bound** wherever it appears, because the classifier knows
+  the templates exactly.
+- η ≥ 10 is labelled an **experimental stress level**, not a sensor claim, in the spec, config,
+  report and figures.
+- The result that *weakens* AURA's premise leads the README and FINDINGS rather than being buried.
+- A claim from the first draft was **downgraded after testing it**, and the downgrade is published.
+
+---
+
 # PUBLIC RELEASE: PASS
 
 Audited 2026-09-08 against `../docs/public_repository_policy.md`. First audit: all 24 items pass,
 both blocking issues corrected before publication. Second audit (code + data + results): all items
-pass, no blocking issues found. Repository approved for public GitHub.
+pass. Third audit (EXP-0010): all items pass; one deliberate publication decision made (compact
+derived result surface). No blocking issues in the second or third audit.

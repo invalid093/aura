@@ -16,6 +16,11 @@ data/derived/**
 results/exploratory/**
 !results/exploratory/.gitkeep
 results/**/*.npz
+# Exception: compact DERIVED result surfaces are scientific evidence, not bulk data.
+# The rule above targets large arrays; a few-hundred-value summary that lets a reader
+# reproduce the figures without re-running the experiment should be published
+# (public repository policy: publish compact derived datasets when appropriate).
+!results/validation/*/P_iso_surface.npz
 results/**/*.parquet
 results/**/*.h5
 results/**/*.pkl

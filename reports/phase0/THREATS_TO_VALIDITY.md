@@ -140,6 +140,19 @@ If the development condition box is drawn wide enough, "OOD" test conditions may
 and test feature distributions) alongside the nominal axis level. **If measured shift is small, the
 OOD claim is dropped regardless of the nominal design.**
 
+### TV-M5 — Known-template and known-magnitude assumptions make EXP-0010 an upper bound
+**Severity: HIGH. Unmitigated. Added 2026-09-08.**
+EXP-0010's classifier knows all 18 fault template trajectories exactly and knows the fault magnitude.
+No real diagnoser does either. Every probability it reports is therefore an **upper bound of unknown
+tightness**, and its central negative finding — that ambiguity is absent at realistic sensor noise —
+holds only under those assumptions.
+**Why it cuts both ways:** template error acts exactly like elevated effective noise, so the realistic
+operating regime may sit where EXP-0010 *does* find ambiguity (η ≥ 10). This threat could therefore
+restore AURA's motivation rather than undermine it — which is precisely why it must be measured
+rather than assumed in either direction.
+**Mitigation planned:** EXP-0011 relaxes known magnitude; a later experiment must relax known
+templates.
+
 ### TV-M4 — A simpler method might produce the same result
 **Severity: HIGH — and this is the question worth asking.**
 **Mitigation:** B0 (fixed threshold) and B1 (MMAE) are in the baseline set precisely so this can be

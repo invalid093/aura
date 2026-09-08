@@ -1,0 +1,12 @@
+{
+  "figure": "FIG-004-isolation-vs-noise-and-window",
+  "question_answered": "What limits fault isolation: noise level or observation window?",
+  "experiment_id": "EXP-0010",
+  "results_file": "results/validation/EXP-0010/exp0010_results.json",
+  "dataset_ids": [
+    "DS-0001"
+  ],
+  "script": "visualization/plot_exp0010.py",
+  "git_commit": "c8c4f4698a3fcbf980249a4b501277d26da1a008",
+  "generated_from_results_utc": "2026-09-08T10:47:46.154950+00:00"
+}

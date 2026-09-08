@@ -1,0 +1,99 @@
+{
+  "test": "circularity of the EXP-0002 ambiguity-group claim",
+  "question": "Is per-fault statistical difficulty simply the deterministic nearest-neighbour distance ranking?",
+  "verdict": "Substantially implied but not identical: rank correlation 0.77-0.98, 8-9 of 18 ranks differ, max shift 10 positions. Number of close neighbours carries independent information.",
+  "by_condition": {
+    "FC-1": {
+      "10.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.7667698658410733,
+        "n_ranks_differing": 9,
+        "max_rank_shift": 10,
+        "corr_Piso_minDistance": 0.42044617485062175,
+        "corr_Piso_n_close_neighbours": -0.32635937231493184
+      },
+      "50.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.981424148606811,
+        "n_ranks_differing": 9,
+        "max_rank_shift": 2,
+        "corr_Piso_minDistance": 0.6358864286405616,
+        "corr_Piso_n_close_neighbours": -0.4700500089148872
+      },
+      "200.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.9422084623323013,
+        "n_ranks_differing": 8,
+        "max_rank_shift": 5,
+        "corr_Piso_minDistance": 0.902195414319046,
+        "corr_Piso_n_close_neighbours": -0.9287824900974184
+      }
+    },
+    "FC-2": {
+      "10.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.7750257997936018,
+        "n_ranks_differing": 12,
+        "max_rank_shift": 8,
+        "corr_Piso_minDistance": 0.4611235732879891,
+        "corr_Piso_n_close_neighbours": -0.32508346240054614
+      },
+      "50.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.977296181630547,
+        "n_ranks_differing": 10,
+        "max_rank_shift": 2,
+        "corr_Piso_minDistance": 0.6911129751940569,
+        "corr_Piso_n_close_neighbours": -0.5684977459884205
+      },
+      "200.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.9195046439628484,
+        "n_ranks_differing": 8,
+        "max_rank_shift": 5,
+        "corr_Piso_minDistance": 0.8743341638532235,
+        "corr_Piso_n_close_neighbours": -0.8929543288955777
+      }
+    },
+    "FC-3": {
+      "10.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.8410732714138286,
+        "n_ranks_differing": 11,
+        "max_rank_shift": 8,
+        "corr_Piso_minDistance": 0.4474442734273752,
+        "corr_Piso_n_close_neighbours": -0.310313420905541
+      },
+      "50.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.9876160990712075,
+        "n_ranks_differing": 6,
+        "max_rank_shift": 2,
+        "corr_Piso_minDistance": 0.6741523495091457,
+        "corr_Piso_n_close_neighbours": -0.5150484237995282
+      },
+      "200.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.8761609907120743,
+        "n_ranks_differing": 11,
+        "max_rank_shift": 6,
+        "corr_Piso_minDistance": 0.876348045723021,
+        "corr_Piso_n_close_neighbours": -0.8655548676022758
+      }
+    },
+    "FC-5": {
+      "10.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.7316821465428276,
+        "n_ranks_differing": 12,
+        "max_rank_shift": 11,
+        "corr_Piso_minDistance": 0.4512288788610057,
+        "corr_Piso_n_close_neighbours": -0.3928396626965383
+      },
+      "50.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.9834881320949431,
+        "n_ranks_differing": 7,
+        "max_rank_shift": 2,
+        "corr_Piso_minDistance": 0.6705989962157288,
+        "corr_Piso_n_close_neighbours": -0.6430376150423817
+      },
+      "200.0": {
+        "spearman_rank_Piso_vs_minDistance": 0.8575851393188855,
+        "n_ranks_differing": 11,
+        "max_rank_shift": 8,
+        "corr_Piso_minDistance": 0.8701756600794804,
+        "corr_Piso_n_close_neighbours": -0.8761434283263565
+      }
+    }
+  }
+}
