@@ -17,6 +17,29 @@ coverage than the best single-scalar confidence gate. Untested; gated on H2.
 H2's ground-truth premise has now been tested by EXP-0002.
 → `docs/hypotheses.md`
 
+**PROJECT DISPOSITION (2026-09-08): AURA is now a research-engineering project.**
+The scientific branch is closed (see below). Per ADR-0009, AURA is redefined as *a
+reproducible and auditable computational research framework for aerospace engineering
+experiments*. The contribution is the infrastructure and methodology, **not** a
+fault-diagnosis algorithm, and explicitly not an ML system.
+
+`RESEARCH BRANCH: TERMINATED` · `RESEARCH-ENGINEERING PLATFORM: ACTIVE`
+
+Built: a 21-module framework (`aura/`) with 10 validity gates, deterministic seeding,
+a reusable Monte Carlo engine, statistical sufficiency checks, provenance tracking, a
+failure registry, evidence classification, report and handoff generation, experiment
+comparison, retention policy and a CLI — with **82 tests** on the standard library alone.
+Two demonstrations ship with it: `DEMO-0001` passes all ten gates and recovers a
+closed-form probability to within its declared precision; `DEMO-0002` is **deliberately
+invalid** and is rejected automatically with no scientific conclusion emitted.
+
+**Every major research failure became an engineering test.** FAIL-0001 (a flight condition
+that departed controlled flight while producing the study's most favourable-looking
+numbers) is now the `model_validity_envelope` gate plus three regression tests and a live
+demonstration. Two bugs in the framework itself were found by its own tests during the
+conversion and are recorded rather than quietly fixed.
+→ `docs/RESEARCH_ENGINEERING_MISSION.md` · `docs/CASE_STUDY_AURA_RESEARCH_TERMINATION.md`
+
 **TV-N1 NOVELTY GATE (2026-09-08): FAIL. This supersedes every open question below.**
 The blocking literature audit Phase 0 required has now been performed, and AURA did not pass it.
 Every substantive finding has established prior art: confident misdiagnosis when the true fault is

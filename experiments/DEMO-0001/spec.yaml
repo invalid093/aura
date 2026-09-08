@@ -1,0 +1,81 @@
+assumptions:
+- Trials are independent and identically distributed; the Monte Carlo interval is
+  valid only under this assumption.
+- The detector statistic is exactly Gaussian with unit variance, so the closed-form
+  prediction Phi(d - z) is exact rather than approximate.
+- The pseudo-random generator (numpy PCG64) is an adequate source of independent normal
+  variates at this sample size.
+- Detection is defined as the statistic strictly exceeding the threshold; ties have
+  probability zero in continuous noise and are not handled specially.
+datasets:
+- identifier: DS-DEMO-0001
+  role: output
+  version: '1.0'
+experiment_id: DEMO-0001
+frozen_test:
+  checksum_file: null
+  enabled: false
+  path: null
+gates:
+- provenance_complete
+- seed_policy_declared
+- frozen_test_integrity
+- model_validity_envelope
+- numerical_validity
+- data_completeness
+- reproducibility
+- raw_data_immutable
+- statistical_precision
+- convergence
+hypothesis: A Monte Carlo estimate of detection probability produced by this framework
+  agrees with the exact closed-form value Phi(d - z), to within the pre-declared statistical
+  precision, with no refitting of any kind.
+kind: infrastructure
+metrics:
+- detection_probability
+- absolute_error_vs_closed_form
+model:
+  identifier: threshold-detector
+  validity_envelope:
+    deflection:
+    - 0.0
+    - 6.0
+  version: '1.0'
+notes: 'Framework demonstration, not aerospace research. Chosen because the exact
+  answer is known in closed form, so the framework''s statistics are checked against
+  truth rather than against another simulation. Completes in under a second on an
+  ordinary computer.
+
+  '
+output_dir: results/DEMO-0001
+prediction: With deflection d = 2.0 and threshold z = Phi^-1(0.95) = 1.6449, the exact
+  detection probability is Phi(0.3551) = 0.63875. The Monte Carlo estimate will lie
+  within the declared half-width of 0.01 of that value, and the 95% confidence interval
+  will contain it.
+randomisation:
+  base_seed: 20260908
+  enabled: true
+  label_fields:
+  - deflection
+  - threshold
+  - trial
+  repetitions: null
+research_question: Does the AURA Monte Carlo and statistics pipeline recover a known
+  closed-form probability to its declared precision, and do its confidence intervals
+  cover the true value?
+statistical_precision:
+  confidence: 0.95
+  half_width: 0.01
+  metric: proportion
+  planning_value: 0.64
+status: COMPLETED
+title: Monte Carlo recovery of a closed-form detection probability
+variables:
+  controlled:
+    estimator: proportion
+    noise_variance: 1.0
+    threshold: 1.6448536269514722
+  dependent:
+  - detection_probability
+  independent:
+    deflection: 2.0

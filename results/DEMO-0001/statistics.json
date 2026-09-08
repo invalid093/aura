@@ -1,0 +1,84 @@
+{
+  "absolute_error_vs_closed_form": {
+    "closed_form": 0.6387600313123353,
+    "interval_covers_closed_form": true,
+    "monte_carlo": 0.6442209919783075,
+    "value": 0.0054609606659722365
+  },
+  "detection_probability": {
+    "base_seed": 20260908,
+    "convergence": [
+      {
+        "half_width": 0.03139205155639979,
+        "n": 885,
+        "point": 0.6485875706214689
+      },
+      {
+        "half_width": 0.022322508322705437,
+        "n": 1770,
+        "point": 0.6412429378531074
+      },
+      {
+        "half_width": 0.01829605227566733,
+        "n": 2655,
+        "point": 0.6354048964218456
+      },
+      {
+        "half_width": 0.015764554166457723,
+        "n": 3540,
+        "point": 0.6440677966101694
+      },
+      {
+        "half_width": 0.01408321163024262,
+        "n": 4426,
+        "point": 0.6459557162223226
+      },
+      {
+        "half_width": 0.012899126396201943,
+        "n": 5311,
+        "point": 0.6407456222933534
+      },
+      {
+        "half_width": 0.011916800614673151,
+        "n": 6196,
+        "point": 0.6442866365397031
+      },
+      {
+        "half_width": 0.011151795934653097,
+        "n": 7081,
+        "point": 0.6436943934472532
+      },
+      {
+        "half_width": 0.01051576352827488,
+        "n": 7966,
+        "point": 0.6434848104443887
+      },
+      {
+        "half_width": 0.009971806462895971,
+        "n": 8851,
+        "point": 0.6442209919783075
+      }
+    ],
+    "estimator": "proportion",
+    "failures": [],
+    "interval": {
+      "confidence": 0.95,
+      "half_width": 0.009971806462895971,
+      "high": 0.654130231651686,
+      "low": 0.6341866187258941,
+      "method": "wilson-score",
+      "n": 8851,
+      "point": 0.6442209919783075
+    },
+    "label_fields": [
+      "deflection",
+      "threshold",
+      "trial"
+    ],
+    "n_completed": 8851,
+    "n_failed": 0,
+    "n_requested": 8851,
+    "required_n": null,
+    "runtime_seconds": 0.120272
+  }
+}

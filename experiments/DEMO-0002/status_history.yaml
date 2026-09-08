@@ -1,0 +1,10 @@
+- from_status: PLANNED
+  to_status: RUNNING
+  timestamp_utc: '2026-09-08T15:07:48.648741+00:00'
+  reason: execution started
+  actor: aura
+- from_status: RUNNING
+  to_status: INVALID
+  timestamp_utc: '2026-09-08T15:07:48.660197+00:00'
+  reason: gates returned INVALID; recorded as FAIL-0002
+  actor: aura

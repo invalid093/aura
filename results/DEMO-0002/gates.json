@@ -1,0 +1,105 @@
+{
+  "blocks_conclusion": true,
+  "counts": {
+    "INVALID": 1,
+    "PASS": 6
+  },
+  "overall": "INVALID",
+  "results": [
+    {
+      "checked_utc": "2026-09-08T15:07:48.441054+00:00",
+      "detail": "provenance chain complete (WARNING: working tree dirty; commit alone does not reproduce this run)",
+      "evidence": {
+        "git_dirty": true
+      },
+      "name": "provenance_complete",
+      "outcome": "PASS",
+      "phase": "PREFLIGHT"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:48.441082+00:00",
+      "detail": "seeds derived from base 20260908 over ['deflection', 'threshold', 'trial']",
+      "evidence": {
+        "base_seed": 20260908,
+        "label_fields": [
+          "deflection",
+          "threshold",
+          "trial"
+        ]
+      },
+      "name": "seed_policy_declared",
+      "outcome": "PASS",
+      "phase": "PREFLIGHT"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:48.624662+00:00",
+      "detail": "1 envelope violation(s); results must not be interpreted",
+      "evidence": {
+        "violations": [
+          {
+            "allowed": [
+              0.0,
+              6.0
+            ],
+            "observed": [
+              9.0,
+              9.0
+            ],
+            "variable": "deflection"
+          }
+        ]
+      },
+      "name": "model_validity_envelope",
+      "outcome": "INVALID",
+      "phase": "RUNTIME"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:48.624692+00:00",
+      "detail": "no non-finite values; timing self-consistent",
+      "evidence": {
+        "estimator": "proportion",
+        "n_nonfinite": 0
+      },
+      "name": "numerical_validity",
+      "outcome": "PASS",
+      "phase": "RUNTIME"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:48.624707+00:00",
+      "detail": "all 9604 trials recorded",
+      "evidence": {
+        "actual": 9604,
+        "planned": 9604
+      },
+      "name": "data_completeness",
+      "outcome": "PASS",
+      "phase": "POST"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:48.624737+00:00",
+      "detail": "achieved half-width 0.00019991 vs target 0.01 at 95% confidence (required N 9604, actual N 9604)",
+      "evidence": {
+        "achieved_half_width": 0.0001999126878372559,
+        "actual_n": 9604,
+        "confidence": 0.95,
+        "note": "Precision only; says nothing about whether the modelled system is correct.",
+        "required_n": 9604,
+        "target_half_width": 0.01
+      },
+      "name": "statistical_precision",
+      "outcome": "PASS",
+      "phase": "STATISTICAL"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:48.624748+00:00",
+      "detail": "half-width changed 10.0% over the final checkpoint",
+      "evidence": {
+        "final_shrink": 0.09991838480213032,
+        "limit": 0.25
+      },
+      "name": "convergence",
+      "outcome": "PASS",
+      "phase": "STATISTICAL"
+    }
+  ]
+}

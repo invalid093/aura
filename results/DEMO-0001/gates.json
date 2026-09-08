@@ -1,0 +1,126 @@
+{
+  "blocks_conclusion": false,
+  "counts": {
+    "PASS": 10
+  },
+  "overall": "PASS",
+  "results": [
+    {
+      "checked_utc": "2026-09-08T15:07:47.567043+00:00",
+      "detail": "provenance chain complete (WARNING: working tree dirty; commit alone does not reproduce this run)",
+      "evidence": {
+        "git_dirty": true
+      },
+      "name": "provenance_complete",
+      "outcome": "PASS",
+      "phase": "PREFLIGHT"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:47.567068+00:00",
+      "detail": "seeds derived from base 20260908 over ['deflection', 'threshold', 'trial']",
+      "evidence": {
+        "base_seed": 20260908,
+        "label_fields": [
+          "deflection",
+          "threshold",
+          "trial"
+        ]
+      },
+      "name": "seed_policy_declared",
+      "outcome": "PASS",
+      "phase": "PREFLIGHT"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:47.567075+00:00",
+      "detail": "no frozen test declared for this experiment",
+      "evidence": {
+        "applicable": false
+      },
+      "name": "frozen_test_integrity",
+      "outcome": "PASS",
+      "phase": "PREFLIGHT"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:47.850096+00:00",
+      "detail": "all 1 envelope variable(s) within declared bounds",
+      "evidence": {
+        "observed": {
+          "deflection": [
+            2.0,
+            2.0
+          ]
+        }
+      },
+      "name": "model_validity_envelope",
+      "outcome": "PASS",
+      "phase": "RUNTIME"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:47.850122+00:00",
+      "detail": "no non-finite values; timing self-consistent",
+      "evidence": {
+        "estimator": "proportion",
+        "n_nonfinite": 0
+      },
+      "name": "numerical_validity",
+      "outcome": "PASS",
+      "phase": "RUNTIME"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:47.850134+00:00",
+      "detail": "all 8851 trials recorded",
+      "evidence": {
+        "actual": 8851,
+        "planned": 8851
+      },
+      "name": "data_completeness",
+      "outcome": "PASS",
+      "phase": "POST"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:47.850142+00:00",
+      "detail": "repeat execution was bit-identical",
+      "evidence": {
+        "identical": true,
+        "mode": "bitwise"
+      },
+      "name": "reproducibility",
+      "outcome": "PASS",
+      "phase": "POST"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:47.850149+00:00",
+      "detail": "0 raw artefact(s) unchanged",
+      "evidence": {},
+      "name": "raw_data_immutable",
+      "outcome": "PASS",
+      "phase": "POST"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:47.850175+00:00",
+      "detail": "achieved half-width 0.0099718 vs target 0.01 at 95% confidence (required N 8851, actual N 8851)",
+      "evidence": {
+        "achieved_half_width": 0.009971806462895971,
+        "actual_n": 8851,
+        "confidence": 0.95,
+        "note": "Precision only; says nothing about whether the modelled system is correct.",
+        "required_n": 8851,
+        "target_half_width": 0.01
+      },
+      "name": "statistical_precision",
+      "outcome": "PASS",
+      "phase": "STATISTICAL"
+    },
+    {
+      "checked_utc": "2026-09-08T15:07:47.850185+00:00",
+      "detail": "half-width changed 5.2% over the final checkpoint",
+      "evidence": {
+        "final_shrink": 0.05172777648682492,
+        "limit": 0.25
+      },
+      "name": "convergence",
+      "outcome": "PASS",
+      "phase": "STATISTICAL"
+    }
+  ]
+}

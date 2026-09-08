@@ -1,407 +1,207 @@
 # AURA
 
-**Autonomous Uncertainty & Reliability Architecture**
+**Auditable computational research infrastructure for aerospace engineering.**
 
-> Independent computational research into uncertainty-aware fault diagnosis and autonomous health
-> management for high-performance uncrewed aircraft.
-
-**AURA is an ongoing independent research project.** Phase 0 is complete, four experiments have run,
-and a [cumulative scientific review](research/cumulative_review/EXP_0002_0012_CUMULATIVE_REVIEW.md)
-of all four is complete.
-
-**That review found the project's original premise unsupported, and the programme substantially
-goalpost-shifting.** Four experiments looked for diagnostic ambiguity under progressively weaker
-assumptions and did not find it. A different problem *is* supported by measurement — confident
-misdiagnosis arising from a wrong hypothesis space — but most of it is solvable **without machine
-learning**, and **AURA cannot presently claim novelty for any of it**, because the systematic
-literature search Phase 0 declared a blocking gate has never been performed.
-
-**That next action has now been taken, and AURA did not pass it.** The
-[TV-N1 blocking literature and novelty audit](research/literature/TV-N1_LITERATURE_AUDIT.md) found
-that every substantive finding here has established prior art — confident misdiagnosis under
-hypothesis-space mismatch is a 1966 theorem (Berk); the χ² residual is the classical model-based FDI
-consistency test; the detectability threshold is the classical *minimum detectable fault*; and the
-direction proposed next was published in 2025 with proofs (Kong, McMahon & Lahijanian, arXiv:2509.04708).
-
-**`NOVELTY GATE: FAIL` · `EXP-0013: CANCEL` · `ML PHASE: NOT JUSTIFIED`**
-
-A failed novelty gate is a valid scientific outcome, and it is published here rather than quietly
-absorbed. **This branch of AURA is complete and redundant.** The experiments were, as far as this
-project can determine, correctly executed; they reproduce results the field already holds.
+`RESEARCH BRANCH: TERMINATED` · `RESEARCH-ENGINEERING PLATFORM: ACTIVE`
 
 ---
 
-## What AURA is investigating
+## What it does
 
-An autonomous aircraft that detects a fault must decide what to do about it. That decision depends
-on how much it can trust its own diagnosis — and there are two structurally different reasons a
-diagnosis might not be trustworthy:
+AURA is a framework for designing, executing, validating, analysing and documenting
+computational research experiments, so that assumptions, failures, uncertainty, provenance
+and scientific decisions are **explicit rather than implicit**.
 
-- **Evidential ambiguity.** Two or more fault hypotheses explain the measurements equally well. The
-  information is not present in the available sensors at this flight condition. More confidence
-  would not help.
-- **Competence loss.** The flight condition has moved outside the envelope the diagnostic system was
-  developed for, so its outputs are unreliable even when they look clean.
+You write a pre-registered specification. AURA validates it before anything runs, executes
+it with recorded provenance and deterministic seeds, checks it against automatic validity
+gates, computes statistical uncertainty against a precision target you declared in advance,
+packages the evidence, and generates a research report and an independent-review handoff.
 
-These call for **opposite responses**. Ambiguity means acting on what the candidate hypotheses
-share — escalating would hand a human no more information than the aircraft has. Competence loss
-means escalating or degrading, because a confident-looking answer is exactly the dangerous case.
+If a gate rejects the run, AURA marks it `INVALID`, writes a failure record, and **emits no
+scientific conclusion** — however good the numbers look.
 
-A single scalar confidence score cannot tell them apart. Whether separating them actually changes
-what an aircraft does is the research question.
+```bash
+python -m aura validate DEMO-0001    # reject a bad specification before computing
+python -m aura run      DEMO-0001    # execute with gates, provenance, packaging
+python -m aura provenance DEMO-0001  # where did this number come from?
+python -m aura verify   DEMO-0001    # is the evidence package unmodified?
+python -m aura failures              # what has gone wrong, and what now prevents it
+```
 
-## Why the problem matters
+Requires Python 3.11+, numpy and PyYAML. Nothing else — no scipy, no pytest.
 
-Air data sensor faults — pitot blockage, static obstruction, angle-of-attack vane sticking — are a
-documented, physically-modelled failure class that has caused transport-category accidents. Run-time
-assurance (ASTM F3269) is the standardised architecture for bounding functions that cannot be
-conventionally verified: it switches control based on a monitor's output. That architecture assumes
-the monitor is trustworthy. **The reliability of the monitor under conditions it was not developed
-for is the assumption nobody has tested.**
+## Why it exists
 
-A false escalation costs mission capability. An unsafe continuation costs the aircraft. The
-distinction is where the safety value sits, and it is where a scalar confidence is weakest.
+Computational engineering projects fail in characteristic ways: undocumented assumptions,
+irreproducible runs, uncontrolled parameter changes, test-set contamination, invalid
+simulation conditions, poor provenance, silent methodological changes, observations
+promoted to conclusions, insufficient statistical power, failed experiments that quietly
+disappear, and novelty claimed before the literature was checked.
 
----
+AURA has a specific mechanism for each. Most of them exist because **this project committed
+that failure first** — see the [case study](docs/CASE_STUDY_AURA_RESEARCH_TERMINATION.md).
 
-## Current research question
+## Core capabilities
 
-> **When an autonomous aircraft's operating regime departs from the conditions under which its
-> diagnostic system was developed, does representing evidential ambiguity separately from
-> competence loss produce better act / abstain / escalate decisions than a single scalar
-> confidence — and does that separation survive when regime shift and fault onset occur
-> simultaneously?**
-
-> **Status of this question (2026-09-08).** The cumulative review found RQ-1's motivating premise
-> — that diagnosis is limited by ambiguity among plausible fault hypotheses under realistic
-> uncertainty — **unsupported**. At the reference sensor specification, fault isolation is perfect
-> (P_iso = 1.000); unknown fault magnitude costs 0.0001 at full observation; and what ambiguity
-> exists is transient. RQ-1 is retained here **unedited and marked**, rather than rewritten, so the
-> record of what was asked and what was found stays legible.
-
-Full statement and definitions: [`docs/research_question.md`](docs/research_question.md)
-Hypotheses and falsification criteria: [`docs/hypotheses.md`](docs/hypotheses.md)
-
-The project's original framing — *"how can an autonomous aircraft detect, isolate and respond to
-degradation when human intervention is unavailable?"* — was assessed as **not testable**: it
-contained at least four separable research programmes, specified no comparison, and had no
-falsification condition. Replacing it is recorded in
-[`ADR-0002`](docs/decisions/ADR-0002-research-question.md).
-
-## Current research status
-
-**Phase 0 complete. EXP-0002 (the design gate) complete and PASSED — with qualifications.**
-
-| Phase | Content | Status |
+| Capability | Module | Notes |
 |---|---|---|
-| 0 | Reconnaissance, scientific definition, infrastructure | **Complete** |
-| 1a | **Gates:** licence verification ✔ (GPL-3.0, [ADR-0007](docs/decisions/ADR-0007-aircraft-model-licence-substitution.md)); runtime measurement ✔; **EXP-0002 distinguishability ✔ PASS**; systematic literature search — **still outstanding** | Mostly complete |
-| 1b | Simulation, fault injection, estimator, residuals, baselines | Blocked on EXP-0010 |
-| 1c | Pilot → medium → frozen test | Blocked on 1b |
-| 1d | External validity check, sensitivity analyses, reporting | Blocked on 1c |
-| 2 | Only if Phase 1 findings warrant it | — |
+| Experiment registry & pre-registration | `aura.registry`, `aura.spec` | Content-hashed; no silent overwrite; enumerated status transitions each requiring a reason |
+| Specification validation | `aura.validation` | Runs before any computation; reports every problem at once |
+| Reproducible execution | `aura.runner`, `aura.provenance` | Records code version, config hashes, dataset versions, environment, seed policy |
+| Deterministic seeding | `aura.seeds` | `SHA-256(base ‖ labels) mod 2⁶³`; order-independent; no global RNG |
+| Monte Carlo | `aura.montecarlo` | Failed trials recorded not dropped; zero surviving samples raises |
+| Statistical analysis | `aura.statistics` | Wilson / normal / order-statistic intervals; required-N derived from a declared precision target |
+| Validity gates | `aura.gates` | 10 built-in across 4 phases; **a gate that cannot be evaluated raises and never returns PASS** |
+| Failure tracking | `aura.failures` | Append-oriented; automatic on rejection; `RESOLVED` requires recorded verification |
+| Evidence classification | `aura.evidence` | 7 classes; measured and inferred content kept structurally separate |
+| Research reports | `aura.report` | Never converts a number into a conclusion |
+| Cross-AI handoffs | `aura.handoff` | Self-contained; ends with *"what should another researcher try to prove wrong?"* |
+| Experiment comparison | `aura.compare` | Blocks comparison of scientifically incompatible experiments |
+| Retention policy | `aura.retention` | 4 classes over RAW / PROCESSED / DERIVED / RESULTS; plans cleanup, never performs it |
 
-Experiments run: **2** (EXP-0002: 90 simulation runs + 5 sensitivity sweeps; EXP-0010: 130 M
-classification trials reusing the same trajectories). Datasets: **1** (DS-0001, regenerable, not
-published — see Data policy).
+## Demonstrations
 
-EXP-0002 asked whether fault distinguishability varies with flight condition — it does, modestly.
-EXP-0010 asked whether that survives measurement uncertainty — at realistic sensor noise there is no
-ambiguity to be uncertain about. EXP-0011 relaxed the largest remaining assumption, unknown fault
-magnitude — it costs almost nothing. **The motivating ambiguity has not been found.** What has been
-found, repeatedly and by measurement, is *misplaced confidence*. No learning component, uncertainty
-estimator or decision layer is built until that mechanism is tested directly.
+Both paths ship with the framework, because a framework that only demonstrates its
+successes demonstrates nothing.
 
-## Validated findings
+**`DEMO-0001` — the passing path.** Monte Carlo recovery of a closed-form detection
+probability. All ten gates PASS.
 
-**Four.** Newest first, because each has narrowed the project's premise.
+| Quantity | Value |
+|---|---|
+| Closed form Φ(2.0 − 1.6449) | 0.638760 |
+| Monte Carlo (n = 8,851, derived from the precision target) | 0.644221 |
+| Absolute error | 0.005461 (target half-width 0.01) |
+| 95% CI | [0.63419, 0.65413] — contains the exact value |
+| Repeat execution | bit-identical |
 
-### [EXP-0012](reports/technical/EXP-0012_UNSEEN_FAULTS.md) — unseen faults
-
-What happens when the true fault is **absent from the diagnostic library**?
-
-- **A reliability problem finally appears.** In **5.8% of cells (16.7% at full observation)** the
-  system is confidently wrong *and the goodness-of-fit test stays silent*. **23 cells remain
-  confidently wrong at the full 18 s window** (range **14–32** across defensible confidence and
-  rejection thresholds — see the cumulative review), covering all six unseen faults — **12 of them
-  diagnose a genuinely faulted aircraft as healthy**.
-- **Sharpest case:** a partially blocked pitot line is diagnosed as **"no fault"**, with confidence
-  rising from **0.133 to 0.993** as more data arrives while the χ² test rejects only 14%.
-- **But a simple non-learning test catches most of it.** A χ² residual — added to the framework in
-  this experiment, not inherited from earlier ones — catches
-  47–83% of mismatch, **exactly when a closed-form threshold predicts — 1502 of 1512 cells
-  (99.3%)** — from a prediction registered before the run and not refitted.
-- A structural fact established before running: the posterior is *mathematically incapable* of
-  expressing hypothesis-space mismatch, because a uniform lack of fit cancels in the softmax.
-- Control: **56/56** known faults correctly diagnosed, normalised residual 1.000.
-
-**What this means for AURA:** the dangerous cases are exactly the *near-manifold* ones, where the
-residual is provably blind — and they are enumerable at design time from the closed-form threshold.
-That is a narrower and more auditable target than "build an uncertainty estimator".
-
-### [EXP-0011](reports/technical/EXP-0011_UNKNOWN_FAULT_MAGNITUDE.md) — unknown fault magnitude
-
-- **Not knowing the fault magnitude costs almost nothing.** Widening the prior to a 16x range costs
-  at most **3.3 points** of class-isolation accuracy, and **0.0001** at the full observation window.
-- **Being *wrong* about it costs 4–1000x more — and the penalty grows with more data.** A prior that
-  excludes the true magnitude costs 0.065 at 0.25 s, worsening monotonically to **0.133 at 18 s**.
-  Every other effect measured in this project shrinks with observation; this one does not, because a
-  sharpening likelihood over a wrong support cannot self-correct.
-- **All magnitude-induced ambiguity is transient.** Every overlapping class pair resolves by 18 s.
-  Where overlap exists it is always bias-versus-scale on the same channel, at essentially chance
-  (P = 0.52–0.57), and only *before* the aircraft manoeuvres.
-- **Before the manoeuvre, some faults are *exactly* unobservable** — in trim, pitch rate is
-  identically zero, so a scale error on it changes nothing at all. A mathematical identity.
-- A closed-form prediction made before simulating was confirmed at **r = 0.973**, not refitted.
-
-**What this means for AURA:** the composite-hypothesis rescue fails. But across EXP-0010 and
-EXP-0011 the recurring, measured finding is that the problem is not *uncertainty* — it is *misplaced
-confidence*. That is a better-grounded motivation for abstention than ambiguity ever was.
-
-### [EXP-0010](reports/technical/EXP-0010_MEASUREMENT_UNCERTAINTY.md) — measurement uncertainty
-
-- **At the reference sensor specification, fault isolation is perfect.** Probability of correct
-  18-way isolation is **1.000** at every valid flight condition, with **zero** of 153 pairs
-  practically ambiguous. EXP-0002's five-member ambiguity group dissolves — its per-sample threshold
-  was conservative by a factor of sqrt(K*N) ~ 153.
-- **But isolation takes about 5 seconds.** Even with perfect sensors, P_iso = 0.45 at 0.05 s and does
-  not reach 0.95 until ~5 s. **The binding constraint is time, not noise.** None of the five
-  pre-declared decision-gate outcomes anticipated this.
-- Ambiguity requires 10-19x the reference uncertainty to appear. Condition dependence is real but
-  modest (1.83x spread, fixed ordering, robust to fault magnitude).
-- Temporally correlated noise costs a further 21% — *quantitatively* predicted by
-  sqrt((1+rho)/(1-rho)) at r = 0.9993, so it is a limitation with a correction rather than an unknown.
-- **Every probability is an upper bound**: the classifier knows the fault templates and magnitudes
-  exactly. No real system does (threat TV-M5).
-
-**What this means for AURA:** the case for uncertainty-aware *isolation* at realistic sensor noise is
-**weak in this configuration**. The problem relocates to the transient — *what should an aircraft do
-during the several seconds in which isolation is impossible?* — which is a better-grounded question
-because it was measured rather than assumed.
-
-### [EXP-0002](reports/technical/EXP-0002_STRUCTURAL_ISOLABILITY.md) — response-based fault
-distinguishability in a nonlinear 6-DOF fixed-wing model (deterministic, noise-free):
-
-- A **stable five-member ambiguity group** persists at all four valid flight conditions: nominal, a
-  scale error on pitch rate, a scale error on angle of attack, a stuck angle-of-attack sensor and a
-  stuck airspeed sensor are mutually indistinguishable (10–11 ambiguous pairs of 153 at each
-  condition). The mechanism is textbook: a scale-factor fault is unobservable when the true signal
-  is near zero, and a stuck fault is nearly inert on a regulated channel.
-- **Distinguishability depends on operating condition, monotonically.** Cross-condition rank
-  correlation of the pairwise distances runs from 0.984 for the designed control pair (matched
-  dynamic pressure, different altitude and airspeed) down to 0.658 for the most separated pair —
-  6 of 6 condition pairs in strict rank order of operating-point separation.
-- **One ambiguity was predicted in closed form before the simulation and confirmed at r = 0.979.**
-  A bias fault and a scale fault on a regulated channel become identical at V\* = b/(k−1) = 50 m/s.
-
-Evidence: EXP-0002 → DS-0001 → `experiments/EXP-0002/config/exp0002.yaml` → commit recorded in
-`results/validation/EXP-0002/exp0002_results.json`. Robust to integration step, fault magnitude and
-run duration; all 90 runs bitwise reproducible.
-
-**What this does not show:** it says nothing about whether uncertainty-aware diagnosis works. It
-establishes only that ambiguity and condition-dependent diagnosability are real phenomena in this
-model — the substrate the research question presumes.
-
-## Preliminary findings
-
-**From experiment.** One Phase 0 assumption was **refuted in its specifics**: A-FLT-03 named a
-pitch-rate scale error and an elevator effectiveness loss as the flight-condition-dependent
-ambiguity pair. They are distinguishable at every valid condition. The pair that actually behaves
-that way is bias-versus-scale on airspeed. The assumption was right in general and wrong in detail.
-
-**From literature.** The following are *reconnaissance observations* from Phase 0 — they
-characterise the state of the field, not AURA's results, and rest on abstract-level reading of most
-sources:
-
-- The uncertainty-quantification-under-distribution-shift literature is mature but concentrated in
-  rotating machinery. It has not been transferred to flight dynamics with a state estimator in the
-  loop.
-- Recent machine-learning aircraft fault-diagnosis papers report accuracy only, in-distribution,
-  with a forced single-class output — no calibration, no abstention, no shift protocol.
-- Classical multiple-model / Kalman-filter-bank diagnosers produce a principled fault posterior
-  with a known lock-in failure mode, but no retrieved source evaluates that posterior as a
-  *calibrated* probability.
-- Structural diagnosability analysis is used at design time and, as far as this reconnaissance
-  found, never as ground truth for evaluating a learned uncertainty estimate.
-
-Full synthesis: [`reports/phase0/LITERATURE_REVIEW.md`](reports/phase0/LITERATURE_REVIEW.md)
-
-## Why this might not work
-
-There is direct published evidence against AURA's central hypothesis. A 2026 study of
-confidence-gated robot autonomy compared seven uncertainty estimators and found their act/defer
-decisions agreed more than 97.8% of the time; the *threshold* dominated, not the estimator, and
-out-of-distribution detection performed near chance.
-
-AURA's stated reason for expecting a different outcome is that its two components read
-*structurally different evidence* — ambiguity from residual likelihood structure, competence loss
-from operating-point position — rather than being transformations of the same softmax output.
-
-**That is an argument, not a result.** It has been adopted as the falsification condition rather
-than argued around. If the equivalence reproduces, that is the finding, and it would be a stronger
-and more general result than the original.
-
-**Stated in advance: the most likely outcome is that the primary hypothesis is falsified and the
-secondary one supported.** The design is built so that combination is a publishable result.
-
-## Open questions
-
-1. **Does support misspecification generalise from magnitude to the fault taxonomy?** A class the
-   model has never seen should be misassigned with *growing* confidence. Same mechanism as
-   EXP-0011's headline at a much larger scale, and the assumption every diagnostic system in this
-   literature makes. (EXP-0012)
-2. **How much does template/model error raise the effective uncertainty?** If it reaches ~10x the
-   sensor spec, the ambiguity EXP-0010 found only under stress becomes the realistic regime — and
-   AURA's motivation returns on evidence.
-3. **What is actually knowable during the ~5 s before isolation is possible?** (EXP-0012)
-4. **Is one verdict flip in 153 pairs enough condition-dependence** to justify a condition-dependent
-   ambiguity model? Still open, and still the question that most threatens the design.
-3. Does a systematic database search close the identified gaps? (still outstanding)
-4. Does the result reproduce on an **independently sourced** aircraft model? (TV-D10)
-5. Does excitation change the ambiguity matrix more than flight condition does?
-6. Is expected decision cost the right primary metric for the decision layer?
-
-## Known limitations
-
-Twenty-three threats to validity are catalogued in
-[`reports/phase0/THREATS_TO_VALIDITY.md`](reports/phase0/THREATS_TO_VALIDITY.md). **Three are
-unmitigated:**
-
-- **Novelty is unverified.** The gap analysis rests on a non-systematic, search-engine-mediated
-  review. Absence of evidence is not evidence of absence. A systematic database search is a hard
-  gate before any novelty claim.
-- **Residual simulation bias.** Even the strongest out-of-distribution axis stays within one
-  aerodynamic data lineage. Whether real sensor faults resemble the injected fault models is not
-  verifiable within scope.
-- **Single airframe, single sensor suite** — and the airframe is now **self-implemented**, its
-  parameters chosen by the experimenter, after the intended model was found to be GPL-3.0 (TV-D10,
-  HIGH). Reproduction on an independently sourced model is required before EXP-0002's result becomes
-  load-bearing.
-- **EXP-0002 is deterministic and noise-free.** Every distance it reports is an upper bound on what
-  an estimator could achieve from one noisy realisation.
-- **One flight condition was invalidated** ([FAIL-0001](experiments/failures/FAIL-0001.md)) after it
-  produced the most favourable-looking numbers in the experiment by stalling.
-
-Further, of 70 indexed literature sources, **only 3 were read in full**. The literature index records
-the verification level of every entry, and sources with unconfirmed authorship are marked as such
-rather than being given plausible-looking citations.
-
----
-
-## Research philosophy
-
-> Maximise scientific information gained per unit of computation, time, storage and researcher
-> attention.
-
-- More simulations, more algorithms and more plots do not automatically produce better research.
-- Model fidelity is a cost. AURA needs *analysable* equations, not accurate ones.
-- A negative result is a result, and is reported with the same prominence as a positive one.
-- Nothing is claimed beyond what the evidence supports.
-
-## Conceptual architecture
+**`DEMO-0002` — the failure path.** The same model at an operating point outside its
+declared validity envelope. The estimate looks essentially perfect; AURA rejects it anyway.
 
 ```
-                     Aircraft sensors (13 channels)
-                                │
-                        State estimation  ──────►  Σx
-                                │
-                        Residual generation
-                                │
-                ┌───────────────┴───────────────┐
-                ▼                               ▼
-   Evidential ambiguity  A              Competence loss  N
-   (which hypotheses are            (is this operating point
-    indistinguishable here?)         outside development?)
-                └───────────────┬───────────────┘
-                                ▼
-                        Decision policy
-                                │
-        ┌───────────────┬───────┴────────┬──────────────────┐
-        ▼               ▼                ▼                  ▼
-    CONTINUE      Act on set      DEGRADED MODE        ESCALATE
-                  intersection
+[INVALID] model_validity_envelope (RUNTIME): 1 envelope violation(s);
+                                             results must not be interpreted
+failure recorded: FAIL-0002
+scientific conclusion emitted: False
 ```
 
-Ground truth for ambiguity comes from structural isolability analysis computed per flight
-condition. This is unusual: uncertainty research rarely has an analytic reference for what the
-uncertainty *should* be.
+Run both: `python -m aura run DEMO-0001 && python -m aura run DEMO-0002`
 
-## Repository structure
+## Research case study
 
-```
-docs/            Research question, hypotheses, assumptions, scope, methodology, decisions (ADRs)
-research/        Reconnaissance log, literature index, gap matrix, candidate questions, research log
-infrastructure/  Data management, experiment management, reproducibility, reporting, schemas
-aircraft/ sensors/ faults/ estimation/ diagnosis/ autonomy/ simulation/   (implementation, Phase 1)
-experiments/     Experiment registry, frozen-test-set access log, failure records
-analysis/ visualization/
-data/            raw / processed / derived / manifests   (bulk data not published — see below)
-results/         exploratory / validation / final / figures
-reports/         phase0 / technical / research
-handoffs/        Self-contained reports written for independent critical review
-archive/         Superseded and retired work, retained with provenance
-tests/
-```
+Before becoming a framework, AURA was a scientific investigation into uncertainty-aware
+fault diagnosis for uncrewed aircraft. Four pre-registered experiments (EXP-0002, EXP-0010,
+EXP-0011, EXP-0012) tested whether diagnosis is limited by ambiguity among plausible fault
+hypotheses under realistic uncertainty. Each derived a closed-form prediction before
+simulating and tested it unrefitted (agreement r = 0.979, 0.9993, 0.973, and 99.3%).
+
+The record includes a flight condition that departed controlled flight while producing the
+study's most favourable-looking numbers, two corrections to the project's own published
+claims, and a cumulative review that judged the programme substantially goalpost-shifting.
+
+Full history: [`docs/CASE_STUDY_AURA_RESEARCH_TERMINATION.md`](docs/CASE_STUDY_AURA_RESEARCH_TERMINATION.md)
+
+## Scientific outcome
+
+> **The original fault-diagnosis research hypothesis was not supported, and the subsequent
+> novelty audit found no defensible novel contribution in the investigated branch.**
+
+At the reference sensor specification, fault isolation was perfect (P_iso = 1.000) — the
+motivating ambiguity was absent. Unknown fault magnitude cost 0.0001 at full observation.
+The one real failure mode found, confident misdiagnosis when the true fault lies outside
+the hypothesis library, turned out to be Berk's 1966 theorem on posterior concentration
+under misspecification, detected by the classical FDI residual test, bounded by the
+classical minimum detectable fault, with the proposed follow-up experiment already answered
+by theorems in the active-fault-diagnosis literature.
+
+`NOVELTY GATE: FAIL` · `EXP-0013: CANCEL` · `ML PHASE: NOT JUSTIFIED`
+
+Audit: [`research/literature/TV-N1_LITERATURE_AUDIT.md`](research/literature/TV-N1_LITERATURE_AUDIT.md)
+
+A failed gate is a valid scientific outcome. It is published here rather than quietly
+absorbed, and RQ-1 is retained verbatim with a dated status note rather than rewritten to
+match the result.
+
+## Engineering outcome
+
+What was built despite — and partly because of — the scientific termination:
+
+- a 21-module framework with a clean CLI and no dependency beyond numpy and PyYAML;
+- 82 tests running on the standard library alone, including regression tests derived from
+  real research failures;
+- ten validity gates, each traceable to a specific way research goes wrong;
+- an evidence-package format small enough that people actually read it (21.5 kB, 8 files);
+- documentation answering practical questions rather than describing structure.
+
+Every major research failure in the historical record is now an engineering test:
+
+| Research failure | Now prevented by |
+|---|---|
+| A flight condition that departed controlled flight while looking best (FAIL-0001) | `model_validity_envelope` gate + 3 tests + `DEMO-0002` |
+| A silent patch that left nine duplicate templates | `assert_distinct`, `assert_patch_applied` |
+| A label claiming 72 runs while 90 were checked | `assert_reported_n`, `data_completeness` gate |
+| A timestep that did not divide the sample interval | `assert_divides`, `numerical_validity` gate |
+| Comparing cases with differently-shaped hypothesis sets | `assert_symmetric_sets`, `aura compare` |
+
+Two bugs in the framework itself were found by its own tests during this conversion and are
+recorded in the failure registry rather than quietly fixed.
+
+## Status
+
+| Track | Status |
+|---|---|
+| **Research branch** (RQ-1, aircraft fault diagnosis) | **`TERMINATED`** — premise unsupported, novelty gate FAIL, EXP-0013 cancelled, ML not justified |
+| **Research-engineering platform** | **`ACTIVE`** — M0–M6 complete; 82 tests passing |
+
+The historical research record is preserved unedited. It is not rewritten to make the
+platform look successful; the sequence *hypothesis → experiment → falsification → audit →
+termination* is the evidence for the methodology.
 
 ## Reproducibility
 
-Parameters live in version-controlled configuration, not in code. Every run records its commit,
-configuration hash, dataset IDs, per-component seeds, environment lockfile and runtime. Determinism
-is *verified*, not assumed. Figures are generated by committed scripts and never hand-edited.
+```bash
+python -m unittest discover -s tests -t .   # 82 tests
+python -m aura run DEMO-0001                # ~0.8 s
+python -m aura verify DEMO-0001             # checksum every artefact
+```
 
-The frozen test set is generated once, hashed and committed before any method is trained. Every
-evaluation against it is logged — welcome or not.
+- **Deterministic experiments** are expected to be bit-identical; the `reproducibility`
+  gate asserts exact equality.
+- **Stochastic experiments** require deterministic seed generation, recorded seeds,
+  reproducible aggregation, and a documented tolerance.
+- **Cross-platform bitwise identity is not claimed**; python, platform and numpy versions
+  are recorded so a difference can be attributed.
 
-See [`infrastructure/reproducibility.md`](infrastructure/reproducibility.md).
+Details: [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md)
 
-## Data policy
+## Documentation
 
-This repository publishes **the scientific record, not the entire laboratory**. It contains dataset
-descriptions, IDs, manifests, provenance, checksums, generation procedures and configurations —
-the recipe and the evidence — rather than bulk simulation output. Projected raw data is ~28 GB and
-regenerable from committed configurations and seeds.
+| Document | Answers |
+|---|---|
+| [Research engineering mission](docs/RESEARCH_ENGINEERING_MISSION.md) | Why AURA exists now; non-goals; roadmap; completion criteria |
+| [Architecture](docs/ARCHITECTURE.md) | What the pieces are and why |
+| [Experiment schema](docs/EXPERIMENT_SCHEMA.md) | What goes in `spec.yaml`, and why each field is required |
+| [Research workflow](docs/RESEARCH_WORKFLOW.md) | Step by step, from question to reviewed result |
+| [Validity gates](docs/VALIDITY_GATES.md) | What is checked automatically, and what each outcome means |
+| [Monte Carlo](docs/MONTE_CARLO.md) | Running trials; how many; what the intervals mean |
+| [Provenance](docs/PROVENANCE.md) | Where a number came from; where each file belongs |
+| [Reproducibility](docs/REPRODUCIBILITY.md) | What is promised, and what is explicitly not |
+| [Failure management](docs/FAILURE_MANAGEMENT.md) | What happens when things go wrong |
+| [Case study](docs/CASE_STUDY_AURA_RESEARCH_TERMINATION.md) | How the research branch ended, and what it taught the framework |
 
-Small datasets are published only where they are necessary to reproduce a central figure, cannot
-reasonably be regenerated, or constitute a benchmark artefact.
+## What AURA does not claim
 
-See [`infrastructure/data_management.md`](infrastructure/data_management.md).
+- It is **not** a novel aircraft fault-diagnosis method.
+- It is **not** an ML-based uncertainty-aware health-management system. There is no ML in
+  it, by design.
+- It does **not** demonstrate safe autonomous aircraft operation, and makes no claim of
+  real-aircraft, operational, or safety-certification applicability.
+- The aircraft model (GFW-1) is self-implemented and has never been validated against
+  flight data (TV-D10). It is a historical artefact and a realistic workload, not a
+  validated aerospace model.
 
-## Scope and limits
+## Licence
 
-Simulation-based. The aircraft model is a *representative* nonlinear high-performance aircraft built
-from 1979 public NASA wind-tunnel data — **no result licenses any claim about a real F-16**
-(assumption A-SIM-01). All sources are public and unclassified. Defence relevance is not treated as
-a research contribution.
-
-What is deliberately **not** being built, and why, is in [`docs/scope.md`](docs/scope.md).
-
-## Licensing
-
-**Not yet determined.** No licence is offered at this stage, so no permission to reuse this code,
-data or documentation should be inferred. Source-code, dataset and documentation licensing will be
-decided deliberately at a later phase — see
-[`ADR-0006`](docs/decisions/ADR-0006-licensing-deferred.md).
-
-External datasets, models and code retain their own licences, recorded in
-[`data/manifests/EXTERNAL_SOURCES.md`](data/manifests/EXTERNAL_SOURCES.md). No external artefact is
-adopted before its licence is verified.
-
----
-
-## How this repository is maintained
-
-AURA publishes the scientific record, not the whole laboratory. What gets published, what stays
-local, and the privacy, security, data, literature and scientific-honesty rules that govern that
-decision are set out in [`docs/public_repository_policy.md`](docs/public_repository_policy.md).
-Every push runs the audit in
-[`infrastructure/public_release_checklist.md`](infrastructure/public_release_checklist.md), which
-carries a dated record of what was checked and what was found.
-
-## Reading order for a new reader
-
-1. This README.
-2. [`FINDINGS.md`](FINDINGS.md) — one-page current state.
-3. [`reports/phase0/PHASE0_RESEARCH_REPORT.md`](reports/phase0/PHASE0_RESEARCH_REPORT.md) — the full
-   Phase 0 argument, including whether AURA is worth building.
-4. [`reports/phase0/THREATS_TO_VALIDITY.md`](reports/phase0/THREATS_TO_VALIDITY.md) — read this
-   before believing anything above.
+**None.** No licence has been applied. All rights reserved by the author; this repository
+is published as a research record, not as reusable software. Contact the author before
+reuse.

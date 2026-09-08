@@ -1,0 +1,51 @@
+{
+  "code": {
+    "framework_version": "0.8.0",
+    "git_commit": "ce8a9a6368984318ef382555c92cefe45b5dfd2b",
+    "git_dirty": true,
+    "trustworthy": false
+  },
+  "config_hashes": {
+    "specification": "f5c680578b51c768113461398d70a9146177b67db7c72b32ed1b63e11211fa15"
+  },
+  "dataset_versions": {
+    "DS-DEMO-0001": "1.0"
+  },
+  "environment": {
+    "numpy_version": "2.5.2",
+    "platform_machine": "AMD64",
+    "platform_system": "Windows",
+    "python_version": "3.13.15"
+  },
+  "experiment_id": "DEMO-0001",
+  "finished_utc": "2026-09-08T15:07:47.850281+00:00",
+  "inputs": {},
+  "model": {
+    "identifier": "threshold-detector",
+    "validity_envelope": {
+      "deflection": [
+        0.0,
+        6.0
+      ]
+    },
+    "version": "1.0"
+  },
+  "notes": [],
+  "outputs": {},
+  "run_id": "98c047b361ef55d9",
+  "runtime_seconds": 0.283166,
+  "seed_policy": {
+    "base_seed": 20260908,
+    "global_rng_used": false,
+    "label_fields": [
+      "deflection",
+      "threshold",
+      "trial"
+    ],
+    "repetitions": null,
+    "scheme": "sha256(repr(base_seed) || 0x1f || repr(label)...) mod 2**63"
+  },
+  "spec_hash": "00255c940ca336d12aa5620abac70ec0886dbcc56f3e63a45adbdf2f0c3e868e",
+  "spec_path": "experiments/DEMO-0001/spec.yaml",
+  "started_utc": "2026-09-08T15:07:47.401889+00:00"
+}

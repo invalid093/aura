@@ -395,6 +395,61 @@ is published prominently rather than absorbed quietly:**
 
 ---
 
+## 2026-09-08 — Eighth audit: research-engineering portfolio conversion
+
+**Scope:** a new `aura/` framework package (21 modules), `models/detector.py`, two
+demonstration experiments with their evidence packages, a test suite (`tests/`, 82 tests),
+ten new documents, ADR-0009, the portfolio handoff, a rewritten README, and updates to
+`FINDINGS.md`, `experiments/REGISTRY.md` and `CLAUDE.md`.
+
+**No historical research artefact was altered.** EXP-0002 → EXP-0012, the cumulative
+review, the TV-N1 audit, FAIL-0001 and ADR-0001–0008 are unchanged except for one
+*addition* to `FAIL-0001.md` recording which regression tests now enforce its lesson.
+
+| # | Check | Result |
+|---|---|---|
+| 1 | Personal / identifying information | **PASS** — scans of source, docs, specs and published evidence packages return only policy prose |
+| 2 | Credentials and secrets | **PASS** — none |
+| 3 | Git identity | **PASS** — `avni a <228505230+invalid093@users.noreply.github.com>`, sole author |
+| 4 | Machine-specific paths | **PASS** — none in `aura/`, `models/`, `tests/`, `experiments/`. Provenance records are machine-independent *by construction* (no hostname, username, absolute path or CPU model); `validate` rejects an absolute `output_dir`, with a regression test |
+| 5 | No licence added | **PASS** — no LICENSE/LICENCE file; policy §16 upheld. The README states plainly that no licence is applied |
+| 6 | No bulk raw data | **PASS** — published evidence packages total 41 kB across 16 small JSON/Markdown files. No `.npz`, no trajectories |
+| 7 | No copyrighted material | **PASS** — unchanged from the seventh audit |
+| 8 | Generated files are scientifically useful | **PASS** — 8 files per package, one per question a reader asks; `__pycache__` is git-ignored |
+| 9 | Claims match evidence | **PASS**, see below |
+| 10 | Identity change documented, not silent | **PASS** — ADR-0009 records the disposition, alternatives considered, new scope and explicit non-goals |
+| 11 | Reproducibility instructions published | **PASS** — `docs/REPRODUCIBILITY.md`; `python -m aura verify <ID>` re-checks every artefact |
+
+**Claims specifically checked:**
+
+- The README states the scientific outcome plainly — *"the original fault-diagnosis
+  research hypothesis was not supported, and the subsequent novelty audit found no
+  defensible novel contribution"* — above the engineering outcome, not below it.
+- The portfolio handoff carries an explicit **"Claims that must NOT be made"** section:
+  no novel FDI method, no ML system, no safe-autonomous-operation claim, no
+  real-aircraft or certification applicability, no claim that the aircraft model is
+  validated, and no claim that passing gates implies correctness.
+- Both framework bugs found during the conversion (failure-id collision with a
+  historical record; a crashed run reporting `conclusion_emitted: true`) are recorded in
+  the failure-management documentation and the case study rather than quietly fixed.
+- The TV-N1 literature-search limitation is restated in the case study.
+- Performance figures in `docs/ARCHITECTURE.md` are measured, not estimated.
+
+**Engineering/reproducibility audit (specification §21):**
+
+| Check | Result |
+|---|---|
+| Full test suite | **82 passed**, standard library only, ~1.7 s |
+| Clean-room lifecycle | Both demonstrations reset to `PLANNED` and re-run from scratch: `DEMO-0001` → `COMPLETED` (10/10 gates), `DEMO-0002` → `INVALID` with `FAIL-0002` written automatically |
+| Evidence package integrity | `aura verify` passes for both packages |
+| Statistical calculations independently verified | Probit at p = 0.975/0.995 and required-N against published values; χ² against reference quantiles; Wilson coverage by simulation |
+| Provenance traces to source | `aura provenance DEMO-0001` walks result → spec → config → dataset → model → code → seed |
+| Any gate producing a false PASS? | **None found.** A gate that cannot be evaluated raises; three tests assert this |
+
+**Blocking issues: none.**
+
+---
+
 # PUBLIC RELEASE: PASS
 
 Audited 2026-09-08 against `../docs/public_repository_policy.md`. First audit: all 24 items pass,
@@ -405,4 +460,6 @@ result surface). Fourth audit (EXP-0011): all items pass; one portability defect
 overstating word reworded. Sixth audit (cumulative review): all items pass; **two prior published
 claims corrected**, both in the direction less favourable to the project. Seventh audit (TV-N1
 novelty audit): all items pass; **the project failed its own blocking novelty gate and published the
-failure**. No blocking issues in audits two through seven.
+failure**. Eighth audit (research-engineering portfolio conversion): all items pass; a framework,
+test suite and two demonstrations added, with the historical research record left unaltered. No
+blocking issues in audits two through eight.

@@ -1,0 +1,82 @@
+{
+  "closed_form_reference": {
+    "note": "Computed for completeness. Outside the declared envelope this comparison is not informative: both numbers saturate at 1.",
+    "value": 0.9999999999999046
+  },
+  "detection_probability": {
+    "base_seed": 20260908,
+    "convergence": [
+      {
+        "half_width": 0.0019927856316713233,
+        "n": 960,
+        "point": 1.0
+      },
+      {
+        "half_width": 0.0009978636949786734,
+        "n": 1921,
+        "point": 1.0
+      },
+      {
+        "half_width": 0.000665800681862172,
+        "n": 2881,
+        "point": 1.0
+      },
+      {
+        "half_width": 0.0004994302107648174,
+        "n": 3842,
+        "point": 1.0
+      },
+      {
+        "half_width": 0.0003996655792340986,
+        "n": 4802,
+        "point": 1.0
+      },
+      {
+        "half_width": 0.00033312213387493017,
+        "n": 5762,
+        "point": 1.0
+      },
+      {
+        "half_width": 0.0002855321360113461,
+        "n": 6723,
+        "point": 1.0
+      },
+      {
+        "half_width": 0.0002498723852490947,
+        "n": 7683,
+        "point": 1.0
+      },
+      {
+        "half_width": 0.00022210506743136627,
+        "n": 8644,
+        "point": 1.0
+      },
+      {
+        "half_width": 0.0001999126878372559,
+        "n": 9604,
+        "point": 1.0
+      }
+    ],
+    "estimator": "proportion",
+    "failures": [],
+    "interval": {
+      "confidence": 0.95,
+      "half_width": 0.0001999126878372559,
+      "high": 1.0,
+      "low": 0.9996001746243255,
+      "method": "wilson-score",
+      "n": 9604,
+      "point": 1.0
+    },
+    "label_fields": [
+      "deflection",
+      "threshold",
+      "trial"
+    ],
+    "n_completed": 9604,
+    "n_failed": 0,
+    "n_requested": 9604,
+    "required_n": null,
+    "runtime_seconds": 0.167943
+  }
+}

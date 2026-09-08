@@ -1,0 +1,81 @@
+assumptions:
+- Trials are independent and identically distributed.
+- The detector statistic is exactly Gaussian with unit variance.
+- 'DELIBERATE DEFECT: this specification asserts that a deflection of 9.0 is a legitimate
+  operating point for the threshold-detector model. It is not. The model''s declared
+  validity envelope is [0.0, 6.0], and this experiment exists to demonstrate that
+  AURA rejects the run automatically rather than relying on a reviewer to notice.'
+datasets:
+- identifier: DS-DEMO-0002
+  role: output
+  version: '1.0'
+experiment_id: DEMO-0002
+frozen_test:
+  checksum_file: null
+  enabled: false
+  path: null
+gates:
+- provenance_complete
+- seed_policy_declared
+- model_validity_envelope
+- numerical_validity
+- data_completeness
+- statistical_precision
+- convergence
+hypothesis: At a deflection of 9.0 the detection probability is estimable by Monte
+  Carlo to the same declared precision as at any other operating point.
+kind: infrastructure
+metrics:
+- detection_probability
+model:
+  identifier: threshold-detector
+  validity_envelope:
+    deflection:
+    - 0.0
+    - 6.0
+  version: '1.0'
+notes: 'DELIBERATELY INVALID DEMONSTRATION. This experiment is designed to fail. Its
+  purpose is to show that a declared validity envelope is enforced automatically at
+  runtime, that the run is marked INVALID rather than COMPLETED, that a failure record
+  is written without human intervention, and that NO scientific conclusion is emitted
+  from the numbers it produced. A framework that only demonstrates its successes demonstrates
+  nothing.
+
+  The defect is a single, specific, documented one: the operating point lies outside
+  the model''s declared validity envelope. Every other aspect of the experiment is
+  sound, so the demonstration isolates the gate under test. This mirrors the real
+  research failure FAIL-0001, in which a flight condition that had departed controlled
+  flight produced the most favourable-looking numbers in the study.
+
+  '
+output_dir: results/DEMO-0002
+prediction: 'The estimate will approach 1.0 and appear excellent. That apparent quality
+  is exactly the hazard: the run is outside the envelope in which the model means
+  anything, so AURA must reject it despite the attractive numbers.'
+randomisation:
+  base_seed: 20260908
+  enabled: true
+  label_fields:
+  - deflection
+  - threshold
+  - trial
+  repetitions: null
+research_question: Does AURA automatically reject an experiment whose operating point
+  lies outside the declared validity envelope of its model, even when the resulting
+  numbers look good?
+statistical_precision:
+  confidence: 0.95
+  half_width: 0.01
+  metric: proportion
+  planning_value: 0.5
+status: INVALID
+title: Deliberately invalid run - operating point outside the model validity envelope
+variables:
+  controlled:
+    estimator: proportion
+    noise_variance: 1.0
+    threshold: 1.6448536269514722
+  dependent:
+  - detection_probability
+  independent:
+    deflection: 9.0

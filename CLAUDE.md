@@ -135,7 +135,31 @@ unresolved.
 
 ---
 
-## Current project state
+## Project disposition (2026-09-08)
+
+**AURA is now a research-engineering project**, not a scientific one (ADR-0009). It is
+*a reproducible and auditable computational research framework for aerospace engineering
+experiments*. The framework lives in `aura/`; run `python -m aura --help`.
+
+- Do **not** describe AURA as a novel fault-diagnosis algorithm, an ML system, an
+  autonomous aircraft, an operational health-management system, or a safety-critical
+  system.
+- **ML remains out of scope.** AURA may one day host an ML experiment as a generic
+  experiment type; it must not require or contain one.
+- Do not add aerospace complexity (higher-fidelity models, more aircraft, CFD, HIL, real
+  flight data) unless it is required to demonstrate a research-engineering capability.
+- The historical research record (EXP-0002 -> EXP-0012, the cumulative review, the TV-N1
+  audit, FAIL-0001, ADR-0001..0008) is **frozen**. Do not rewrite it to make the platform
+  look successful.
+- Before touching the framework: `python -m unittest discover -s tests -t .` (82 tests,
+  standard library only). Dependencies are Python + numpy + PyYAML; do not add more
+  without justification.
+- Key invariant: **a gate that cannot be evaluated must raise, never return PASS.**
+
+See `docs/RESEARCH_ENGINEERING_MISSION.md`, `docs/ARCHITECTURE.md`, and
+`handoffs/AURA_RESEARCH_ENGINEERING_PORTFOLIO_HANDOFF.md`.
+
+## Historical project state
 
 Phase 0 complete (2026-09-08). Four experiments run (EXP-0002, 0010, 0011, 0012), followed by a
 cumulative review and the TV-N1 novelty audit.

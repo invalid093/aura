@@ -1,0 +1,15 @@
+{
+  "conclusion_emitted": false,
+  "deviations": [],
+  "experiment_id": "DEMO-0002",
+  "finished_utc": "2026-09-08T15:07:48.624855+00:00",
+  "framework_version": "0.8.0",
+  "gates_overall": "INVALID",
+  "kind": "infrastructure",
+  "run_id": "020a13c34997fcfb",
+  "runtime_seconds": 0.183748,
+  "spec_hash": "5f13ae592837b44b54d9875e43c7b19ebcc443d107725a91d289977b18879a58",
+  "started_utc": "2026-09-08T15:07:48.296749+00:00",
+  "status": "INVALID",
+  "title": "Deliberately invalid run - operating point outside the model validity envelope"
+}

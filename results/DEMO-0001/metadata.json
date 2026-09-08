@@ -1,0 +1,15 @@
+{
+  "conclusion_emitted": true,
+  "deviations": [],
+  "experiment_id": "DEMO-0001",
+  "finished_utc": "2026-09-08T15:07:47.850281+00:00",
+  "framework_version": "0.8.0",
+  "gates_overall": "PASS",
+  "kind": "infrastructure",
+  "run_id": "98c047b361ef55d9",
+  "runtime_seconds": 0.283166,
+  "spec_hash": "00255c940ca336d12aa5620abac70ec0886dbcc56f3e63a45adbdf2f0c3e868e",
+  "started_utc": "2026-09-08T15:07:47.401889+00:00",
+  "status": "COMPLETED",
+  "title": "Monte Carlo recovery of a closed-form detection probability"
+}

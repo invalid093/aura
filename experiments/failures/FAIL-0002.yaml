@@ -1,0 +1,24 @@
+affected_results:
+- DEMO-0002
+became_test: tests/test_pipeline.py::TestRunLifecycle::test_envelope_violation_invalidates_and_records_failure
+computational_impact: Run completed; outputs retained as evidence of the rejection.
+correction: None required. This record IS the intended output. The run is retained
+  as evidence that the runtime envelope gate works, and its evidence package contains
+  no scientific conclusion.
+description: 1 envelope violation(s); results must not be interpreted
+detection_mechanism: 'automatic validity gate: model_validity_envelope (RUNTIME phase)'
+discovered_utc: '2026-09-08T15:07:48.639932+00:00'
+experiment_id: DEMO-0002
+failure_id: FAIL-0002
+root_cause: Deliberate. DEMO-0002 specifies a deflection of 9.0 for the threshold-detector
+  model, whose declared validity envelope is [0.0, 6.0]. The experiment exists to
+  demonstrate that AURA rejects such a run automatically rather than relying on a
+  reviewer to notice.
+scientific_impact: None. No claim is drawn from this run; the report emits no conclusion
+  section. This mirrors FAIL-0001, where an out-of-envelope flight condition produced
+  the most favourable-looking numbers in the study.
+status: ACCEPTED
+title: 'DEMO-0002 rejected: operating point outside the model validity envelope'
+verification: 'Verified two ways: the run''s metadata.json records status INVALID
+  with conclusion_emitted false, and tests/test_pipeline.py::TestRunLifecycle::test_envelope_violation_invalidates_and_records_failure
+  asserts the same behaviour on a synthetic fixture.'
