@@ -140,6 +140,19 @@ If the development condition box is drawn wide enough, "OOD" test conditions may
 and test feature distributions) alongside the nominal axis level. **If measured shift is small, the
 OOD claim is dropped regardless of the nominal design.**
 
+### TV-M6 — Support misspecification: a wrong hypothesis set gets worse with more data
+**Severity: HIGH. Unmitigated. Added 2026-09-08 (EXP-0011).**
+Every diagnostic system in this project marginalises over a declared hypothesis support: a magnitude
+range, and a fault taxonomy. EXP-0011 measured what happens when that support excludes the truth: the
+cost is 6.5-13.3 percentage points of class-isolation accuracy, and — uniquely among every effect
+measured in this project — **it grows monotonically with observation length** (-0.065 at 0.25 s to
+-0.133 at 18 s). More evidence sharpens the likelihood onto a set that does not contain the answer,
+so confidence in a wrong class increases rather than correcting.
+**Why this is worse than it sounds:** it was measured for a magnitude sub-range, which is the mildest
+possible version. The taxonomy version — a fault class the model has never seen — is the same
+mechanism at a much larger scale, and no experiment here has tested it.
+**Mitigation:** none yet. **EXP-0012 is designed to measure it.**
+
 ### TV-M5 — Known-template and known-magnitude assumptions make EXP-0010 an upper bound
 **Severity: HIGH. Unmitigated. Added 2026-09-08.**
 EXP-0010's classifier knows all 18 fault template trajectories exactly and knows the fault magnitude.

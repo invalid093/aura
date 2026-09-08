@@ -1,0 +1,13 @@
+{
+  "figure": "FIG-011-manifold-overlap-transient",
+  "question_answered": "Do fault families overlap when magnitude is free, which pairs, and is the overlap persistent or transient?",
+  "experiment_id": "EXP-0011",
+  "results_file": "results/validation/EXP-0011/exp0011_results.json",
+  "dataset_ids": [
+    "DS-0001",
+    "DS-0002"
+  ],
+  "script": "visualization/plot_exp0011.py",
+  "git_commit": "73009c151b3ba1671bf4741ec9160424dc335fb1",
+  "generated_from_results_utc": "2026-09-08T12:30:52.897928+00:00"
+}

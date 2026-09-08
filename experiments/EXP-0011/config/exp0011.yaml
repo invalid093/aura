@@ -1,0 +1,88 @@
+# EXP-0011 configuration -- unknown fault magnitude as a nuisance parameter.
+# Pre-registered: see ../experiment_spec.md. Do not edit after results are produced.
+
+experiment_id: EXP-0011
+config_version: 1
+extends: EXP-0010
+source_config: experiments/EXP-0002/config/exp0002.yaml
+reuse_dataset: DS-0001          # the m = 1.0 slice is reused; other magnitudes are new (DS-0002)
+
+# FC-4 remains INVALID (FAIL-0001) and is not resurrected.
+flight_conditions: [FC-1, FC-2, FC-3, FC-5]
+
+magnitude:
+  # Multipliers on the EXP-0002 nominal magnitude. sqrt(2)-spaced, 9 levels, spanning
+  # a factor of 16 centred on the nominal.
+  # RANGE LABEL: EXPERIMENTAL. Physical bounds for these fault mechanisms are not
+  # available, so this range is NOT claimed to be physically calibrated.
+  grid: [0.25, 0.35355339, 0.5, 0.70710678, 1.0, 1.41421356, 2.0, 2.82842712, 4.0]
+  sign: positive_only           # negative magnitudes excluded -- a stated limitation
+  zero_excluded: true           # at m -> 0 every class collapses to nominal; an artefact of the limit
+  constant_within_run: true
+  same_grid_for_all_classes: true   # no class is advantaged
+  onset_s: 2.0
+
+# Detectability floor: a (class, magnitude) template counts only if it is detectable.
+# d' = 4.65 is the deflection giving 99% detection for the optimal test.
+# Prevents "two faults look alike" from being an artefact of both being invisible.
+detectability:
+  min_deflection: 4.65
+  evaluated_at_eta: 1.0
+  evaluated_at_window: 18.0
+
+# Diagnostic knowledge conditions (experiment_spec.md 5)
+knowledge_conditions:
+  A_known:    {label: "magnitude known exactly", grid_indices: null}       # point mass at truth
+  B_bounded:  {label: "m in [0.5, 2] x nominal", grid_indices: [2,3,4,5,6]}
+  C_broad:    {label: "m in [0.25, 4] x nominal", grid_indices: [0,1,2,3,4,5,6,7,8]}
+
+# Template validity (declared BEFORE generation, following the FAIL-0001 precedent).
+# Two physical facts force this:
+#  (1) F4 "stuck" has NO magnitude parameter -- freezing a signal is the same fault
+#      whatever the nominal magnitude. F4 therefore contributes ONE template per
+#      channel, not nine. Duplicating it would waste computation and make the Gram
+#      matrix singular.
+#  (2) F6 elevator effectiveness is lambda = 1 - s*(1-0.70); at s >= 3.34 lambda goes
+#      NEGATIVE, i.e. the elevator reverses. That is a different physical fault, and
+#      the aircraft may depart. Such templates are excluded and reported, not silently
+#      kept.
+template_validity:
+  magnitude_invariant_classes: [F4]     # one template per channel, at m = 1
+  exclude_if_diverged: true
+  exclude_if_max_alpha_deg_above: 25.0  # model aero blend is centred at 20 deg; beyond 25 it extrapolates
+  report_excluded: true
+
+observation_windows: [0.25, 0.5, 1.0, 2.0, 5.0, 10.0, 18.0]
+
+noise:
+  eta_levels: [0.1, 1.0, 10.0]  # low / reference / elevated -- gives the 2x2 comparison
+  sigma_source: exp0002_sensor_spec
+  distribution: gaussian
+  spectrum: white
+  seed_base: 20261109
+
+monte_carlo:
+  replications: 20000
+  method: gram_exact
+  # Key efficiency property: t = z.w ~ N(0, M) is INDEPENDENT of the true template,
+  # so one sample serves all 154 true templates in a cell.
+
+metrics:
+  primary: P_class              # correct fault-CLASS identification, magnitude marginalised
+  secondary: [D_min_manifold, P_disc_worst, magnitude_estimation_error]
+  overlap_bands:                # on P_disc_worst at eta=1, full window
+    clearly_separated: 0.99
+    partially_overlapping: 0.75
+    strongly_overlapping: 0.55
+    # below strongly_overlapping -> STRUCTURALLY INTERSECTING
+
+validity_attacks:
+  coarse_grid_indices: [0, 2, 4, 6, 8]     # W-A: 2x-spaced subgrid
+  linearity_check_classes: [F1_Vt, F2_Vt, F1_q, F6]
+  alt_metric: per_channel_max              # W-F
+  detectability_floor_off: true            # W-G
+
+analysis:
+  analytic_pair: [F1_Vt, F2_Vt]
+  # P4 from the spec: additive-constant-like classes on a regulated channel should also collapse
+  predicted_additional_collapse: [[F1_Vt, F4_Vt], [F1_alpha, F4_alpha]]

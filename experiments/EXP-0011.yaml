@@ -1,0 +1,66 @@
+experiment_id: EXP-0011
+title: Fault-class isolation with unknown fault magnitude (composite hypotheses)
+hypothesis: H2
+purpose: >
+  Relax EXP-0010's largest assumption. Treat fault magnitude as an unknown nuisance
+  parameter and measure fault-CLASS isolation with magnitude marginalised out, to
+  determine whether magnitude uncertainty creates the diagnostic ambiguity that
+  measurement noise did not.
+type: exploratory
+status: COMPLETED
+is_gate: false
+gate_criterion: null
+primary_metric: >
+  P_class -- probability of correct fault-class identification with magnitude
+  marginalised over a declared prior, under the Bayes-optimal classifier with known
+  template FAMILIES. An upper bound on any real diagnoser (TV-M5).
+analysis_plan: experiments/EXP-0011/experiment_spec.md
+configuration: experiments/EXP-0011/config/exp0011.yaml
+configuration_sha256: null      # recorded in results/validation/EXP-0011/exp0011_results.json
+git_commit: null                # recorded in the results payload at run time
+dataset_ids: [DS-0001, DS-0002]
+random_seeds:
+  base: 20261109
+  policy: per-cell seeds derived deterministically by SHA-256 of (base, condition, window)
+parameters:
+  flight_conditions: 4          # FC-4 excluded (FAIL-0001), not resurrected
+  fault_classes: 18
+  magnitude_levels: 9           # sqrt(2)-spaced, 0.25x to 4x nominal
+  observation_windows: 7
+  noise_levels: 3
+  knowledge_conditions: 4       # A, B, C pre-registered; B-prime exploratory
+  replications_per_cell: 20000
+  new_simulations: 416
+methods: [bayes_optimal_marginal_likelihood_classifier, continuous_manifold_intersection]
+date_planned: 2026-09-08
+date_started: 2026-09-08
+date_completed: 2026-09-08
+results_location: results/validation/EXP-0011/
+analysis_version: analysis/magnitude_ambiguity.py @ aura 0.5.0
+runtime_seconds: 1515
+storage_bytes: 43297000         # DS-0002, git-ignored
+failure_ids: []
+supersedes: null
+superseded_by: null
+notes: >
+  Headline: not knowing the fault magnitude costs at most 3.3 points of class-isolation
+  accuracy and 0.0001 at the full window -- the composite-hypothesis rescue of AURA's
+  motivation FAILS. But a prior that EXCLUDES the true magnitude costs 6.5-13.3 points
+  and the penalty GROWS monotonically with observation length, which is the only effect
+  measured anywhere in this project that worsens with more data.
+
+  Three defects in our own design were found by testing and corrected. (1) A code bug
+  excluded the nominal class F0 from the admissible set, which biased precisely the
+  known-vs-unknown-magnitude comparison the experiment exists to make; the first run was
+  discarded and the experiment re-run. (2) The pre-registered detectability floor is
+  evaluated at the full window, so at short windows it conflates non-detection with
+  mis-isolation; a window-local analysis was added post-hoc and labelled. (3) Case B as
+  pre-registered measures prior MISSPECIFICATION rather than bounded knowledge, because
+  truths span the full grid while the prior does not -- it was kept, reported
+  prominently, and supplemented with an exploratory Case B-prime.
+
+  Methodological note: the PRIMARY manifold measure is the continuous minimum over
+  magnitude, not the grid minimum, because a discrete grid overstates near-intersection
+  separation by up to 19.9x -- for exactly the pairs that matter.
+
+  New threat recorded: TV-M6 (support misspecification).

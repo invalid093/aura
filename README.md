@@ -5,10 +5,11 @@
 > Independent computational research into uncertainty-aware fault diagnosis and autonomous health
 > management for high-performance uncrewed aircraft.
 
-**AURA is an ongoing independent research project.** Phase 0 is complete and two experiments have
-run. There are **two validated results**, and **no result yet bearing on the central hypothesis**,
-which remains untested. The most recent result **weakens one of the project's own premises** — see
-Validated findings.
+**AURA is an ongoing independent research project.** Phase 0 is complete and three experiments have
+run. There are **three validated results**, and **no result yet bearing on the central hypothesis**,
+which remains untested. **Three experiments have now failed to find the diagnostic ambiguity the
+project was designed around** — and have surfaced a different, better-evidenced problem instead.
+See Validated findings.
 
 ---
 
@@ -80,14 +81,34 @@ classification trials reusing the same trajectories). Datasets: **1** (DS-0001, 
 published — see Data policy).
 
 EXP-0002 asked whether fault distinguishability varies with flight condition — it does, modestly.
-EXP-0010 then asked whether that survives measurement uncertainty, and found that **at realistic
-sensor noise there is no ambiguity to be uncertain about at all**. No learning component, uncertainty
-estimator or decision layer is built until two remaining assumptions are relaxed, because both can
-only increase ambiguity and either could restore the motivation on evidence rather than assumption.
+EXP-0010 asked whether that survives measurement uncertainty — at realistic sensor noise there is no
+ambiguity to be uncertain about. EXP-0011 relaxed the largest remaining assumption, unknown fault
+magnitude — it costs almost nothing. **The motivating ambiguity has not been found.** What has been
+found, repeatedly and by measurement, is *misplaced confidence*. No learning component, uncertainty
+estimator or decision layer is built until that mechanism is tested directly.
 
 ## Validated findings
 
-**Two.** The more recent one is uncomfortable for the project, and is stated first.
+**Three.** They are stated newest first, because each has narrowed the project's premise.
+
+### [EXP-0011](reports/technical/EXP-0011_UNKNOWN_FAULT_MAGNITUDE.md) — unknown fault magnitude
+
+- **Not knowing the fault magnitude costs almost nothing.** Widening the prior to a 16x range costs
+  at most **3.3 points** of class-isolation accuracy, and **0.0001** at the full observation window.
+- **Being *wrong* about it costs 4–1000x more — and the penalty grows with more data.** A prior that
+  excludes the true magnitude costs 0.065 at 0.25 s, worsening monotonically to **0.133 at 18 s**.
+  Every other effect measured in this project shrinks with observation; this one does not, because a
+  sharpening likelihood over a wrong support cannot self-correct.
+- **All magnitude-induced ambiguity is transient.** Every overlapping class pair resolves by 18 s.
+  Where overlap exists it is always bias-versus-scale on the same channel, at essentially chance
+  (P = 0.52–0.57), and only *before* the aircraft manoeuvres.
+- **Before the manoeuvre, some faults are *exactly* unobservable** — in trim, pitch rate is
+  identically zero, so a scale error on it changes nothing at all. A mathematical identity.
+- A closed-form prediction made before simulating was confirmed at **r = 0.973**, not refitted.
+
+**What this means for AURA:** the composite-hypothesis rescue fails. But across EXP-0010 and
+EXP-0011 the recurring, measured finding is that the problem is not *uncertainty* — it is *misplaced
+confidence*. That is a better-grounded motivation for abstention than ambiguity ever was.
 
 ### [EXP-0010](reports/technical/EXP-0010_MEASUREMENT_UNCERTAINTY.md) — measurement uncertainty
 
@@ -177,9 +198,10 @@ secondary one supported.** The design is built so that combination is a publisha
 
 ## Open questions
 
-1. **How much ambiguity does unknown fault magnitude create?** EXP-0010 assumed it known; with free
-   magnitude, bias and scale faults on one channel intersect exactly. Probably the dominant
-   unmeasured effect. (EXP-0011)
+1. **Does support misspecification generalise from magnitude to the fault taxonomy?** A class the
+   model has never seen should be misassigned with *growing* confidence. Same mechanism as
+   EXP-0011's headline at a much larger scale, and the assumption every diagnostic system in this
+   literature makes. (EXP-0012)
 2. **How much does template/model error raise the effective uncertainty?** If it reaches ~10x the
    sensor spec, the ambiguity EXP-0010 found only under stress becomes the realistic regime — and
    AURA's motivation returns on evidence.

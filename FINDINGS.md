@@ -1,7 +1,7 @@
 # AURA — Current State
 
 *Kept short by design. Updated whenever any line below changes.*
-*Last updated: 2026-09-08 (EXP-0010 complete)*
+*Last updated: 2026-09-08 (EXP-0011 complete)*
 
 ---
 
@@ -18,6 +18,19 @@ H2's ground-truth premise has now been tested by EXP-0002.
 → `docs/hypotheses.md`
 
 **BEST VALIDATED RESULT:**
+**EXP-0011 — being *wrong* about a fault is far worse than being *uncertain* about it, and
+uniquely gets worse with more data.** Not knowing the fault magnitude (a 16x range) costs at most
+3.3 points of class-isolation accuracy and **0.0001** at the full window. A prior that *excludes*
+the true magnitude costs 6.5-13.3 points, and the penalty **grows monotonically** with observation
+length (-0.065 at 0.25 s to -0.133 at 18 s). Every other effect measured in this project shrinks
+with more data; this one does not, because a sharpening likelihood over a wrong support cannot
+self-correct.
+All magnitude-induced ambiguity is **transient**: every overlapping class pair resolves by 18 s.
+Where overlap exists it is always bias-vs-scale on the same channel, at chance (P = 0.52-0.57),
+and only before the aircraft manoeuvres. Closed-form prediction confirmed at r = 0.973, not refitted.
+-> `reports/technical/EXP-0011_UNKNOWN_FAULT_MAGNITUDE.md`
+
+**PRIOR RESULT:**
 **EXP-0010 — at realistic sensor noise there is no ambiguity to be uncertain about.** With an
 optimal classifier and the full observation window, probability of correct 18-way fault isolation is
 **1.000** at every valid flight condition, and **zero** of 153 fault pairs are practically ambiguous.
@@ -45,7 +58,17 @@ noise-free, fault distinguishability is non-trivial and does depend on operating
   reproducible.
 → `reports/technical/EXP-0002_STRUCTURAL_ISOLABILITY.md`
 
-**KEY CORRECTION MADE TO OUR OWN WORK:**
+**KEY CORRECTIONS MADE TO OUR OWN WORK:**
+EXP-0011: three defects found by testing and corrected. A code bug excluded the nominal class F0
+from the admissible set, biasing precisely the known-vs-unknown-magnitude comparison the experiment
+exists to make -- the first run was discarded and the experiment re-run. The pre-registered
+detectability floor conflates non-detection with mis-isolation at short windows. Case B as
+pre-registered measures prior *misspecification* rather than bounded knowledge; it was kept and
+reported, because it produced the experiment's most important finding.
+Also: a discrete magnitude grid overstates near-intersection separation by up to 19.9x, so the
+primary manifold measure is the continuous minimum over magnitude.
+
+EXP-0010: 
 The claim that EXP-0002's ambiguity group "predicted" statistical difficulty was **downgraded after
 testing it for circularity**. Per-fault difficulty and deterministic nearest-neighbour distance rank
 at Spearman 0.77-0.98, not 1.0 — substantially implied, not independent. Deterministic analysis is a
@@ -72,15 +95,17 @@ closed-loop boundedness at one condition only and mistook trim convergence for f
 4. Novelty remains unverified (TV-N1) — a systematic literature search is still outstanding.
 
 **NEXT SCIENTIFIC QUESTION:**
-**EXP-0011 — how much ambiguity does *unknown fault magnitude* create?** EXP-0010 assumed the
-diagnoser knows both the fault templates and the fault magnitude exactly, so every probability it
-reports is an upper bound. With free magnitude, a bias fault and a scale fault on one channel
-intersect *exactly* at the crossover airspeed — the classes genuinely overlap. This is the largest
-untested assumption and can only increase ambiguity.
+**EXP-0012 — does support misspecification generalise from magnitude to the fault *taxonomy*?**
+Hold out a fault class the model has never seen, present it, and measure how confidently it is
+misassigned as the observation window grows. This is the same mechanism as EXP-0011's headline at a
+much larger scale, it is the assumption every diagnostic system in this literature makes, and it is
+the first experiment in the sequence whose expected outcome would genuinely support AURA's premise
+-- which is a reason to design it adversarially rather than optimistically.
 
-Still no learning component, uncertainty estimator or decision layer. EXP-0010 has just shown the
-motivating ambiguity is **absent** at realistic sensor noise under its assumptions; building the
-architecture now would build it on the weakest version of its own case.
+**Three experiments have now failed to find the diagnostic ambiguity AURA was designed around.**
+It is absent at realistic sensor noise, absent with unknown magnitude, and transient where it exists
+at all. What they *have* repeatedly surfaced is a different and better-evidenced problem: misplaced
+confidence. Still no learning component, uncertainty estimator or decision layer.
 
 **AWAITING RESEARCHER DECISION:**
 - **Licensing (ADR-0007):** accept GPL-3.0 and use AeroBench, source a permissive airframe, or keep

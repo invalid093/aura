@@ -1,0 +1,24 @@
+dataset_id: DS-0002
+name: exp0011-fault-magnitude-grid
+layer: derived
+source: simulation
+generation_date: '2026-09-08'
+generation_method: experiments/EXP-0011/generate_magnitudes.py
+software_version: aura 0.4.0
+git_commit: 73009c151b3ba1671bf4741ec9160424dc335fb1
+configuration: experiments/EXP-0011/config/exp0011.yaml
+configuration_sha256: ec814010137eed91bac66cacb1a18a311ee435d2706a8f930b227c687709d30d
+random_seed_base: null
+n_runs: 416
+parent_dataset: DS-0001
+checksum_manifest: data/manifests/DS-0002.sha256
+units: SI; angles in radians; altitude in metres positive up
+sampling_rate_hz: 100.0
+frozen: false
+license: internal
+total_bytes: 40481020
+n_excluded_templates: 7
+description: 'Fault-magnitude grid for EXP-0011: 4 flight conditions x 13 magnitude-varying
+  fault classes x 9 magnitudes, on GFW-1. The m=1.0 slice is reused from DS-0001 rather
+  than regenerated. Deterministic and fully regenerable; not published in Git per
+  the data policy.'

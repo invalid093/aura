@@ -257,9 +257,40 @@ magnitudes; 1.83× spread).
 
 ---
 
+## 2026-09-08 — Fourth audit: EXP-0011 (magnitude grid, analysis, results)
+
+| Area | Result |
+|---|---|
+| Privacy / machine paths | **PASS** |
+| Secrets | **PASS** |
+| Licence | **PASS** — no licence file; no licence claim in source |
+| Raw data | **PASS** — DS-0002 is 416 files / 40 MB, **0 committed**; manifest + per-file SHA-256 + generation script published instead. DS-0001 (18 MB) likewise unpublished |
+| Compact derived data | The 2.8 KB `P_class_surface.npz` is published, under the same documented `.gitignore` exception as EXP-0010's surface: it lets a reader reproduce the figures without re-running |
+| **Cross-platform portability (caught in this audit)** | `template_index.json` recorded 488 paths with Windows backslashes, which would not resolve on Linux or macOS. Normalised to POSIX separators and the generator patched so future runs are portable. Not a privacy issue, but it would have broken reproduction on any other machine |
+| Code | **PASS** — 4 new files, 1047 lines: analysis module, magnitude-grid generator, runner, figures. All methodology or reproducibility code |
+| Scientific claims | **PASS** — `demonstrates`, `solves`, `unprecedented`, `superior`, `significantly improves`: zero substantive occurrences |
+| Preliminary vs validated | **PASS** — README leads with the fact that three experiments have now failed to find the motivating ambiguity |
+| Failures and self-corrections published | **PASS** — all three EXP-0011 design defects are published in the report, the registry entry, FINDINGS and the handoff, including the bug that forced a full re-run |
+| Provenance | **PASS** — figures carry sidecars; results record config SHA-256 and commit; DS-0002 manifest links to parent DS-0001 |
+| Internal links | **PASS** |
+| Total staged | ~853 KiB |
+
+**Claims specifically checked against evidence:**
+- Every probability is labelled an upper bound (template families still assumed known, TV-M5).
+- The magnitude range is labelled **experimental**, not physically calibrated, in the spec, config
+  and report.
+- The headline finding — that being wrong about magnitude is worse than being uncertain — is
+  reported together with the fact that Case B measures this **because of a flaw in the
+  pre-registration**, not by design.
+- Post-hoc analyses (window-local detectability, Case B′) are labelled post-hoc wherever they appear,
+  and the pre-registered versions are still reported.
+
+---
+
 # PUBLIC RELEASE: PASS
 
 Audited 2026-09-08 against `../docs/public_repository_policy.md`. First audit: all 24 items pass,
 both blocking issues corrected before publication. Second audit (code + data + results): all items
-pass. Third audit (EXP-0010): all items pass; one deliberate publication decision made (compact
-derived result surface). No blocking issues in the second or third audit.
+pass. Third audit (EXP-0010): all items pass; one deliberate publication decision (compact derived
+result surface). Fourth audit (EXP-0011): all items pass; one portability defect found and fixed
+(Windows path separators in a published index). No blocking issues in audits two through four.

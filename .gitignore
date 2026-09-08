@@ -21,6 +21,7 @@ results/**/*.npz
 # reproduce the figures without re-running the experiment should be published
 # (public repository policy: publish compact derived datasets when appropriate).
 !results/validation/*/P_iso_surface.npz
+!results/validation/*/P_class_surface.npz
 results/**/*.parquet
 results/**/*.h5
 results/**/*.pkl

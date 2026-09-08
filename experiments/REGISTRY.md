@@ -17,8 +17,9 @@ Policy: `infrastructure/experiment_management.md`.
 | EXP-0008 | ALFA external validity check (detection sub-problem only) | exploratory | — | `PLANNED` | — | — |
 | EXP-0009 | Sensitivity: GPS included; cost-ratio sweep; independent-implementation test | exploratory | — | `PLANNED` | — | — |
 | EXP-0010 | **Practical diagnosability under measurement uncertainty** | exploratory | H2, prerequisite for H3 | **`COMPLETED`** | Decision gate | `results/validation/EXP-0010/` · [report](../reports/technical/EXP-0010_MEASUREMENT_UNCERTAINTY.md) |
-| EXP-0011 | **Isolation with unknown fault magnitude (composite hypotheses)** | exploratory | H2 | `PLANNED` | **Yes — next** | — |
-| EXP-0012 | Characterise the pre-isolation transient (first ~5 s) | exploratory | — | `PLANNED` | — | — |
+| EXP-0011 | **Isolation with unknown fault magnitude (composite hypotheses)** | exploratory | H2 | **`COMPLETED`** | Decision gate | `results/validation/EXP-0011/` · [report](../reports/technical/EXP-0011_UNKNOWN_FAULT_MAGNITUDE.md) |
+| EXP-0012 | **Unmodelled fault class (support misspecification of the taxonomy)** | exploratory | H2 | `PLANNED` | **Yes — next** | — |
+| EXP-0013 | Characterise the pre-isolation transient (first ~5 s) | exploratory | — | `PLANNED` | — | — |
 
 Note: H3 (shift/fault confounding) is evaluated from EXP-0007 data but is **method-independent** —
 it is a property of novelty gating in general, and its result stands whether or not H1 holds.
