@@ -5,11 +5,11 @@
 > Independent computational research into uncertainty-aware fault diagnosis and autonomous health
 > management for high-performance uncrewed aircraft.
 
-**AURA is an ongoing independent research project.** Phase 0 is complete and three experiments have
-run. There are **three validated results**, and **no result yet bearing on the central hypothesis**,
-which remains untested. **Three experiments have now failed to find the diagnostic ambiguity the
-project was designed around** — and have surfaced a different, better-evidenced problem instead.
-See Validated findings.
+**AURA is an ongoing independent research project.** Phase 0 is complete and four experiments have
+run. **Four experiments have now failed to find the diagnostic ambiguity the project was designed
+around.** A different problem *is* now supported by measurement — confident misdiagnosis arising
+from a wrong hypothesis space — but most of it turns out to be solvable **without machine
+learning**, which is the reason none has been built. See Validated findings.
 
 ---
 
@@ -89,7 +89,28 @@ estimator or decision layer is built until that mechanism is tested directly.
 
 ## Validated findings
 
-**Three.** They are stated newest first, because each has narrowed the project's premise.
+**Four.** Newest first, because each has narrowed the project's premise.
+
+### [EXP-0012](reports/technical/EXP-0012_UNSEEN_FAULTS.md) — unseen faults
+
+What happens when the true fault is **absent from the diagnostic library**?
+
+- **A reliability problem finally appears.** In **5.8% of cells (16.7% at full observation)** the
+  system is confidently wrong *and the goodness-of-fit test stays silent*. **23 cells remain
+  confidently wrong at the full 18 s window**, covering all six unseen faults — **12 of them
+  diagnose a genuinely faulted aircraft as healthy**.
+- **Sharpest case:** a partially blocked pitot line is diagnosed as **"no fault"**, with confidence
+  rising from **0.133 to 0.993** as more data arrives while the χ² test rejects only 14%.
+- **But the framework mostly protects itself, with no machine learning.** The χ² residual catches
+  47–83% of mismatch, **exactly when a closed-form threshold predicts — 1502 of 1512 cells
+  (99.3%)** — from a prediction registered before the run and not refitted.
+- A structural fact established before running: the posterior is *mathematically incapable* of
+  expressing hypothesis-space mismatch, because a uniform lack of fit cancels in the softmax.
+- Control: **56/56** known faults correctly diagnosed, normalised residual 1.000.
+
+**What this means for AURA:** the dangerous cases are exactly the *near-manifold* ones, where the
+residual is provably blind — and they are enumerable at design time from the closed-form threshold.
+That is a narrower and more auditable target than "build an uncertainty estimator".
 
 ### [EXP-0011](reports/technical/EXP-0011_UNKNOWN_FAULT_MAGNITUDE.md) — unknown fault magnitude
 

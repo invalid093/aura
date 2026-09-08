@@ -1,7 +1,7 @@
 # AURA — Current State
 
 *Kept short by design. Updated whenever any line below changes.*
-*Last updated: 2026-09-08 (EXP-0011 complete)*
+*Last updated: 2026-09-08 (EXP-0012 complete)*
 
 ---
 
@@ -18,6 +18,22 @@ H2's ground-truth premise has now been tested by EXP-0002.
 → `docs/hypotheses.md`
 
 **BEST VALIDATED RESULT:**
+**EXP-0012 — a reliability problem finally appears, and it is not the one AURA was designed
+around.** When the true fault is absent from the diagnostic library, the system is *confidently
+wrong and the goodness-of-fit test stays silent* in **5.8% of all cells and 16.7% at full
+observation**. **23 cells remain confidently wrong at the full 18 s window**, covering all six
+unseen faults; **12 of them diagnose a genuinely faulted aircraft as healthy.** Sharpest case: a
+partially blocked pitot line is diagnosed as "no fault" with confidence rising **0.133 -> 0.993**
+as more data arrives.
+
+**But the framework mostly protects itself, without any machine learning.** The chi-square residual
+catches 47-83% of mismatch, and does so **exactly when a closed-form threshold predicts -- 1502 of
+1512 cells (99.3%)**, from a prediction registered before the run and not refitted. Control: 56/56
+known faults correct, normalised residual 1.000.
+Decision gate: **A and D simultaneously.**
+-> `reports/technical/EXP-0012_UNSEEN_FAULTS.md`
+
+**PRIOR RESULT:**
 **EXP-0011 — being *wrong* about a fault is far worse than being *uncertain* about it, and
 uniquely gets worse with more data.** Not knowing the fault magnitude (a 16x range) costs at most
 3.3 points of class-isolation accuracy and **0.0001** at the full window. A prior that *excludes*
@@ -95,17 +111,18 @@ closed-loop boundedness at one condition only and mistook trim convergence for f
 4. Novelty remains unverified (TV-N1) — a systematic literature search is still outstanding.
 
 **NEXT SCIENTIFIC QUESTION:**
-**EXP-0012 — does support misspecification generalise from magnitude to the fault *taxonomy*?**
-Hold out a fault class the model has never seen, present it, and measure how confidently it is
-misassigned as the observation window grows. This is the same mechanism as EXP-0011's headline at a
-much larger scale, it is the assumption every diagnostic system in this literature makes, and it is
-the first experiment in the sequence whose expected outcome would genuinely support AURA's premise
--- which is a reason to design it adversarially rather than optimistically.
+**EXP-0013 — can a non-learning method fix the residue, before any ML is considered?** The dangerous
+cases are exactly those whose nearest-known distance falls below the chi-square detection threshold,
+where the residual is *provably* blind. Isolation has been excitation-driven in every experiment so
+far, so the obvious lever is a second excitation designed to increase separation: cheap, auditable,
+and non-learning. **Only if that fails is an ML/uncertainty approach scientifically justified** --
+and the target would then be precisely defined rather than assumed.
 
-**Three experiments have now failed to find the diagnostic ambiguity AURA was designed around.**
-It is absent at realistic sensor noise, absent with unknown magnitude, and transient where it exists
-at all. What they *have* repeatedly surfaced is a different and better-evidenced problem: misplaced
-confidence. Still no learning component, uncertainty estimator or decision layer.
+**Four experiments in, AURA's original premise remains unsupported.** Diagnostic ambiguity is absent
+at realistic noise, absent under unknown magnitude, and transient where it exists. A *different*
+problem is now supported by measurement: misplaced confidence from a wrong hypothesis support. Still
+no learning component, uncertainty estimator or decision layer -- and EXP-0012 is the reason not to
+build one yet, since most of the problem is already solved without learning.
 
 **AWAITING RESEARCHER DECISION:**
 - **Licensing (ADR-0007):** accept GPL-3.0 and use AeroBench, source a permissive airframe, or keep

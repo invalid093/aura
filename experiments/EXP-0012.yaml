@@ -1,0 +1,76 @@
+experiment_id: EXP-0012
+title: Unseen faults and hypothesis-space mismatch
+hypothesis: H2
+purpose: >
+  Adversarial test of whether the physics-based diagnostic framework becomes
+  CONFIDENTLY wrong when the true fault lies outside its hypothesis library, and
+  whether any non-learning statistic already supplies the missing "none of the above"
+  signal.
+type: exploratory
+status: COMPLETED
+is_gate: true
+gate_criterion: >
+  Gate A (strong support) if a physically meaningful unseen fault produces high
+  confidence in a wrong known fault with sufficient observable evidence, surviving the
+  validity attacks. Gate D (negative) if the framework already indicates poor fit.
+  Both were permitted; both are supported.
+primary_metric: >
+  FC(t) = P(posterior confidence >= 0.95) when no correct hypothesis exists, reported
+  alongside the chi-square residual goodness-of-fit test. The two are reported
+  SEPARATELY because they carry different information.
+analysis_plan: experiments/EXP-0012/experiment_spec.md
+configuration: experiments/EXP-0012/config/exp0012.yaml
+configuration_sha256: null       # recorded in results/validation/EXP-0012/exp0012_results.json
+git_commit: null                 # recorded in the results payload at run time
+dataset_ids: [DS-0001, DS-0002, DS-0003]
+random_seeds:
+  base: 20261210
+  policy: per-cell seeds derived deterministically by SHA-256 of (base, condition, window, fault, magnitude, eta)
+parameters:
+  flight_conditions: 4           # FC-4 excluded (FAIL-0001), not resurrected
+  unseen_faults: 6
+  magnitudes: 3
+  observation_windows: 7
+  noise_levels: 3
+  total_cells: 1512
+  replications_per_cell: 10000   # chosen in the pilot from measured variance, not assumed
+  new_simulations: 72
+methods: [bayes_optimal_marginal_likelihood_classifier, chi2_goodness_of_fit,
+          continuous_manifold_intersection]
+date_planned: 2026-09-08
+date_started: 2026-09-08
+date_completed: 2026-09-08
+results_location: results/validation/EXP-0012/
+analysis_version: analysis/hypothesis_mismatch.py @ aura 0.7.0
+runtime_seconds: 520
+storage_bytes: 6600000           # DS-0003, git-ignored
+failure_ids: []
+supersedes: null
+superseded_by: null
+notes: >
+  DECISION GATE: A and D simultaneously. The framework catches 47-83% of
+  hypothesis-space mismatch using a statistic it already computes (the chi-square
+  residual), and does so exactly when a closed-form threshold predicts -- 1502 of 1512
+  cells, 99.3%, from a prediction registered before the run and not refitted. But 5.8%
+  of all cells, and 16.7% at full observation, are CONFIDENTLY WRONG with the residual
+  silent. 23 cells remain so at the full 18 s window, covering all six unseen faults;
+  12 of them diagnose a faulted aircraft as HEALTHY.
+
+  Sharpest cases: a partially blocked pitot line is diagnosed as "no fault" with
+  confidence rising from 0.133 to 0.993 as more data arrives (chi2 rejects 14%); a
+  pitch-stability loss is diagnosed as an elevator-effectiveness loss at confidence
+  1.0000 (chi2 rejects 2-5% for the first 2 s).
+
+  Established analytically BEFORE running: the posterior is structurally incapable of
+  expressing hypothesis-space mismatch, because a uniform misfit cancels in the
+  softmax. Verified numerically (confidence 1.0000 unchanged while the residual rose
+  2637 -> 7634). That is why the experiment was built around the residual rather than
+  around the near-tautological "confidently wrong" result.
+
+  Control: 56/56 known faults correct, normalised residual 1.000. Extending the shared
+  simulation harness left all prior experiments bit-identical. Two pilot checks failed
+  and both were bugs in the CHECKS, not the design.
+
+  Recommendation: do NOT build an ML OOD detector. Most of the problem is already
+  solved without learning; the residue is narrow and has not been shown beyond
+  non-learning methods.

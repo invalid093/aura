@@ -22,12 +22,18 @@ from simulation.controller import Controller
 
 def simulate(model: GFW1, cfg: dict, x0: np.ndarray, trim_ctrl: np.ndarray,
              trim_info: dict, fault: Fault, dt: float | None = None,
-             duration: float | None = None):
+             duration: float | None = None, unseen=None):
     """Run one closed-loop scenario.
 
     Returns dict with sampled time, measurements, states and controls.
     Measurements are recorded at the configured sensor rate; the integrator runs
     faster, so the recorded signal is a decimation of the continuous one.
+
+    `unseen` (EXP-0012) optionally applies an UNSEEN fault -- a mechanism absent from
+    the diagnostic hypothesis library. It is applied AFTER the library fault, and may
+    act on the measurements or on the plant's aerodynamic coefficients. The parameter
+    defaults to None, so this code path is inert and every prior experiment reproduces
+    bit-for-bit; that is verified explicitly in EXP-0012's pilot.
     """
     sim = cfg["simulation"]
     dt = float(sim["dt"] if dt is None else dt)
@@ -48,6 +54,8 @@ def simulate(model: GFW1, cfg: dict, x0: np.ndarray, trim_ctrl: np.ndarray,
 
     ctrl = Controller(cfg, trim_ctrl, trim_info)
     fault.reset()
+    if unseen is not None:
+        unseen.reset()
 
     x = x0.astype(np.float64).copy()
     u_applied = trim_ctrl.astype(np.float64).copy()
@@ -57,9 +65,16 @@ def simulate(model: GFW1, cfg: dict, x0: np.ndarray, trim_ctrl: np.ndarray,
     for n in range(n_steps + 1):
         t = n * dt
 
+        # --- an unseen PLANT fault changes the aircraft itself, before forces are computed
+        if unseen is not None:
+            unseen.apply_plant(model, t)
+
         # --- measure (fault corrupts what the flight computer sees)
         y_true = model.true_outputs(x, u_applied)
         y_meas = fault.corrupt(y_true, t)
+        if unseen is not None:
+            y_meas = unseen.corrupt(y_meas, t,
+                                    {"rho": model.density(x[11]), "g": model.g})
 
         # --- control from the faulted measurement, then actuator limits
         u_cmd, v_err = ctrl(t, y_meas, x)

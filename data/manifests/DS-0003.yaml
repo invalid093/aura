@@ -1,0 +1,24 @@
+dataset_id: DS-0003
+name: exp0012-unseen-fault-trajectories
+layer: derived
+source: simulation
+generation_date: '2026-09-08'
+generation_method: experiments/EXP-0012/generate_unseen.py
+software_version: aura 0.6.0
+git_commit: 5af82ffba144bf72b9328c95df610bb9d4bba40a
+configuration: experiments/EXP-0012/config/exp0012.yaml
+configuration_sha256: 6eb80ec7f851b241a96b02b7069182ba6d21c3933654c2dfc9bac7064cb8e19f
+random_seed_base: null
+n_runs: 72
+parent_dataset: null
+checksum_manifest: data/manifests/DS-0003.sha256
+units: SI; angles in radians; altitude in metres positive up
+sampling_rate_hz: 100.0
+frozen: false
+license: internal
+total_bytes: 6604909
+n_excluded: 0
+description: 'Unseen-fault trajectories for EXP-0012: 4 flight conditions x 6 unseen
+  fault mechanisms x 3 magnitudes on GFW-1. These faults are deliberately ABSENT from
+  the diagnostic hypothesis library. Deterministic and fully regenerable; not published
+  in Git per the data policy.'

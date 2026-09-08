@@ -1,0 +1,583 @@
+{
+  "index": {
+    "FC-1|UF-001|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-001_m0.500000.npz",
+      "max_abs_alpha_deg": 2.186984691906706,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-1|UF-001|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-001_m1.000000.npz",
+      "max_abs_alpha_deg": 1.950870631853053,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-1|UF-001|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-001_m2.000000.npz",
+      "max_abs_alpha_deg": 1.4836267670383938,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-1|UF-002|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-002_m0.500000.npz",
+      "max_abs_alpha_deg": 2.434905967692442,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-1|UF-002|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-002_m1.000000.npz",
+      "max_abs_alpha_deg": 3.0744953642645667,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-1|UF-002|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-002_m2.000000.npz",
+      "max_abs_alpha_deg": 3.604146724901626,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-1|UF-003|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-003_m0.500000.npz",
+      "max_abs_alpha_deg": 2.4322494857963726,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-1|UF-003|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-003_m1.000000.npz",
+      "max_abs_alpha_deg": 2.4301300259492207,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-1|UF-003|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-003_m2.000000.npz",
+      "max_abs_alpha_deg": 2.427302440714181,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-1|UF-004|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-004_m0.500000.npz",
+      "max_abs_alpha_deg": 2.386347262599424,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-1|UF-004|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-004_m1.000000.npz",
+      "max_abs_alpha_deg": 2.3363119660270177,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-1|UF-004|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-004_m2.000000.npz",
+      "max_abs_alpha_deg": 2.2311820376124376,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-1|UF-005|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-005_m0.500000.npz",
+      "max_abs_alpha_deg": 2.4517559793389436,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-1|UF-005|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-005_m1.000000.npz",
+      "max_abs_alpha_deg": 2.4695574623081242,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-1|UF-005|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-005_m2.000000.npz",
+      "max_abs_alpha_deg": 2.5075258685408297,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-1|UF-006|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-006_m0.500000.npz",
+      "max_abs_alpha_deg": 2.1838700822853165,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-1|UF-006|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-006_m1.000000.npz",
+      "max_abs_alpha_deg": 1.9328853884657535,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-1|UF-006|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-1_UF-006_m2.000000.npz",
+      "max_abs_alpha_deg": 1.434925388214433,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-2|UF-001|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-001_m0.500000.npz",
+      "max_abs_alpha_deg": 6.1640959417043,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-2|UF-001|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-001_m1.000000.npz",
+      "max_abs_alpha_deg": 5.928852114268369,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-2|UF-001|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-001_m2.000000.npz",
+      "max_abs_alpha_deg": 5.452405294448266,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-2|UF-002|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-002_m0.500000.npz",
+      "max_abs_alpha_deg": 6.398069894349943,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-2|UF-002|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-002_m1.000000.npz",
+      "max_abs_alpha_deg": 6.398069894349943,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-2|UF-002|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-002_m2.000000.npz",
+      "max_abs_alpha_deg": 6.629453378345726,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-2|UF-003|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-003_m0.500000.npz",
+      "max_abs_alpha_deg": 6.398102451144161,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-2|UF-003|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-003_m1.000000.npz",
+      "max_abs_alpha_deg": 6.398106182890474,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-2|UF-003|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-003_m2.000000.npz",
+      "max_abs_alpha_deg": 6.398108305505515,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-2|UF-004|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-004_m0.500000.npz",
+      "max_abs_alpha_deg": 6.635004167860352,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-2|UF-004|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-004_m1.000000.npz",
+      "max_abs_alpha_deg": 7.1942884061909655,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-2|UF-004|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-004_m2.000000.npz",
+      "max_abs_alpha_deg": 8.322861947304764,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-2|UF-005|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-005_m0.500000.npz",
+      "max_abs_alpha_deg": 6.428926304553589,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-2|UF-005|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-005_m1.000000.npz",
+      "max_abs_alpha_deg": 6.460736180924528,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-2|UF-005|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-005_m2.000000.npz",
+      "max_abs_alpha_deg": 6.528130208911191,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-2|UF-006|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-006_m0.500000.npz",
+      "max_abs_alpha_deg": 6.643696563673175,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-2|UF-006|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-006_m1.000000.npz",
+      "max_abs_alpha_deg": 6.889243732944476,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-2|UF-006|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-2_UF-006_m2.000000.npz",
+      "max_abs_alpha_deg": 7.379836893385404,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-3|UF-001|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-001_m0.500000.npz",
+      "max_abs_alpha_deg": 5.893371156805037,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-3|UF-001|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-001_m1.000000.npz",
+      "max_abs_alpha_deg": 5.658838998478559,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-3|UF-001|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-001_m2.000000.npz",
+      "max_abs_alpha_deg": 5.184030585707774,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-3|UF-002|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-002_m0.500000.npz",
+      "max_abs_alpha_deg": 6.126771976943056,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-3|UF-002|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-002_m1.000000.npz",
+      "max_abs_alpha_deg": 6.126771976943056,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-3|UF-002|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-002_m2.000000.npz",
+      "max_abs_alpha_deg": 6.37439843244135,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-3|UF-003|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-003_m0.500000.npz",
+      "max_abs_alpha_deg": 6.126796440608568,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-3|UF-003|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-003_m1.000000.npz",
+      "max_abs_alpha_deg": 6.126799371357656,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-3|UF-003|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-003_m2.000000.npz",
+      "max_abs_alpha_deg": 6.12680105198489,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-3|UF-004|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-004_m0.500000.npz",
+      "max_abs_alpha_deg": 6.399205197878652,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-3|UF-004|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-004_m1.000000.npz",
+      "max_abs_alpha_deg": 6.979462064769686,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-3|UF-004|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-004_m2.000000.npz",
+      "max_abs_alpha_deg": 7.955871855086152,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-3|UF-005|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-005_m0.500000.npz",
+      "max_abs_alpha_deg": 6.15760369626335,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-3|UF-005|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-005_m1.000000.npz",
+      "max_abs_alpha_deg": 6.188354081151835,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-3|UF-005|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-005_m2.000000.npz",
+      "max_abs_alpha_deg": 6.248780830049188,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-3|UF-006|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-006_m0.500000.npz",
+      "max_abs_alpha_deg": 6.318713376193425,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-3|UF-006|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-006_m1.000000.npz",
+      "max_abs_alpha_deg": 6.510572481358607,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-3|UF-006|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-3_UF-006_m2.000000.npz",
+      "max_abs_alpha_deg": 6.998873656883669,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-5|UF-001|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-001_m0.500000.npz",
+      "max_abs_alpha_deg": 11.416356306691398,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-5|UF-001|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-001_m1.000000.npz",
+      "max_abs_alpha_deg": 11.18423860459619,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-5|UF-001|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-001_m2.000000.npz",
+      "max_abs_alpha_deg": 10.714269657097827,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-5|UF-002|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-002_m0.500000.npz",
+      "max_abs_alpha_deg": 11.647210165571693,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-5|UF-002|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-002_m1.000000.npz",
+      "max_abs_alpha_deg": 11.647210165571693,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-5|UF-002|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-002_m2.000000.npz",
+      "max_abs_alpha_deg": 11.816976406675732,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "MODERATE"
+    },
+    "FC-5|UF-003|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-003_m0.500000.npz",
+      "max_abs_alpha_deg": 11.647303319237224,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-5|UF-003|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-003_m1.000000.npz",
+      "max_abs_alpha_deg": 11.647317647196958,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-5|UF-003|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-003_m2.000000.npz",
+      "max_abs_alpha_deg": 11.647326200144258,
+      "valid": true,
+      "diverged": false,
+      "category": "A",
+      "predicted_position": "NEAR"
+    },
+    "FC-5|UF-004|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-004_m0.500000.npz",
+      "max_abs_alpha_deg": 12.297924413458285,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-5|UF-004|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-004_m1.000000.npz",
+      "max_abs_alpha_deg": 13.390359009704245,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-5|UF-004|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-004_m2.000000.npz",
+      "max_abs_alpha_deg": 13.556811458755314,
+      "valid": true,
+      "diverged": false,
+      "category": "B",
+      "predicted_position": "DISTANT"
+    },
+    "FC-5|UF-005|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-005_m0.500000.npz",
+      "max_abs_alpha_deg": 11.764677281736773,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-5|UF-005|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-005_m1.000000.npz",
+      "max_abs_alpha_deg": 11.883941055990892,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-5|UF-005|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-005_m2.000000.npz",
+      "max_abs_alpha_deg": 12.402998545377857,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "NEAR"
+    },
+    "FC-5|UF-006|0.50000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-006_m0.500000.npz",
+      "max_abs_alpha_deg": 11.85881251908128,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-5|UF-006|1.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-006_m1.000000.npz",
+      "max_abs_alpha_deg": 12.070245149149434,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    },
+    "FC-5|UF-006|2.00000000": {
+      "path": "data/derived/EXP-0012/FC-5_UF-006_m2.000000.npz",
+      "max_abs_alpha_deg": 12.492635976107502,
+      "valid": true,
+      "diverged": false,
+      "category": "C",
+      "predicted_position": "MODERATE"
+    }
+  },
+  "excluded": [],
+  "n_generated": 72,
+  "runtime_seconds": 167.4888287000067
+}

@@ -287,10 +287,39 @@ magnitudes; 1.83× spread).
 
 ---
 
+## 2026-09-08 — Fifth audit: EXP-0012 (unseen faults)
+
+| Area | Result |
+|---|---|
+| Privacy / machine paths / secrets | **PASS** |
+| Licence | **PASS** — no licence file; no licence claim in source |
+| Raw data | **PASS** — DS-0003 is 72 files / 6.5 MB, **0 committed**. Across all three datasets 578 trajectory files / 65 MB remain unpublished; manifests, per-file SHA-256 and generation scripts published instead |
+| Code | **PASS** — 6 new/modified files: unseen-fault models, mismatch analysis, generator, pilot, runner, figures. All methodology or reproducibility code |
+| **Shared-code change** | `simulation/simulate.py` was extended to support unseen faults. The change is **additive and inert by default**, and prior experiments were verified **bit-identical** afterwards — recorded because modifying shared code used by published results is the riskiest kind of edit in this repository |
+| Scientific claims | **PASS** — one instance of "solves the majority of the problem" was reworded to the measured 47–83% it actually catches. `demonstrates`, `unprecedented`, `superior`, `significantly improves`: zero |
+| Preliminary vs validated | **PASS** — README leads with the fact that four experiments have failed to find the motivating ambiguity, and that the problem found is mostly solvable without ML |
+| Failures and self-corrections | **PASS** — both pilot-check bugs published in the report, registry entry and handoff, including that they were bugs in the *checks* rather than the design |
+| Provenance | **PASS** — figures carry sidecars; results record config SHA-256 and commit; DS-0003 manifest published |
+| Internal links | **PASS** |
+| Total staged | ~1.7 MiB |
+
+**Claims specifically checked against evidence:**
+- The decision gate is reported as **A *and* D simultaneously**, not collapsed to whichever is more
+  favourable to the project.
+- The report states plainly that AURA's *original* premise remains unsupported after four
+  experiments, and that the problem found is a different one.
+- The recommendation is explicitly **not** to build an ML detector, against the project's own
+  narrative momentum.
+- "Confidence" is defined as a posterior conditional on the hypothesis space containing the truth,
+  and is never called the probability that a diagnosis is correct.
+
+---
+
 # PUBLIC RELEASE: PASS
 
 Audited 2026-09-08 against `../docs/public_repository_policy.md`. First audit: all 24 items pass,
 both blocking issues corrected before publication. Second audit (code + data + results): all items
 pass. Third audit (EXP-0010): all items pass; one deliberate publication decision (compact derived
 result surface). Fourth audit (EXP-0011): all items pass; one portability defect found and fixed
-(Windows path separators in a published index). No blocking issues in audits two through four.
+(Windows path separators in a published index). Fifth audit (EXP-0012): all items pass; one
+overstating word reworded. No blocking issues in audits two through five.

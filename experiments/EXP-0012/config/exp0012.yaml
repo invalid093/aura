@@ -1,0 +1,127 @@
+# EXP-0012 configuration -- unseen faults / hypothesis-space mismatch.
+# Pre-registered: see ../experiment_spec.md. Do not edit after results are produced.
+
+experiment_id: EXP-0012
+config_version: 1
+extends: EXP-0011
+source_config: experiments/EXP-0002/config/exp0002.yaml
+reuse_datasets: [DS-0001, DS-0002]   # the KNOWN-fault hypothesis library, reused unchanged
+
+flight_conditions: [FC-1, FC-2, FC-3, FC-5]   # FC-4 remains INVALID (FAIL-0001)
+
+# Same axes as EXP-0010/0011 -- deliberately not reinvented.
+observation_windows: [0.25, 0.5, 1.0, 2.0, 5.0, 10.0, 18.0]
+noise:
+  eta_levels: [0.1, 1.0, 10.0]
+  seed_base: 20261210
+
+# The hypothesis library the classifier may choose from. The unseen faults are NOT in it.
+hypothesis_space:
+  known_classes_from: EXP-0011        # F0 + bias/scale/drift/stuck x {q,az,Vt,alpha} + F6
+  magnitude_prior: C_broad            # marginalise over 0.25x-4x, as EXP-0011 Case C
+  include_unknown_class: false        # primary experiment adds NO "unseen" class
+
+# ---------------------------------------------------------------------------
+# Unseen-fault taxonomy. Every entry has a physical interpretation and a stated
+# reason for being outside the library (experiment_spec.md 5).
+# Magnitudes are swept x{0.5, 1, 2}; the difficulty position of each fault is
+# MEASURED, not assumed.
+# ---------------------------------------------------------------------------
+unseen_faults:
+  UF-001:
+    name: angle-of-attack vane stiction
+    category: A            # new mechanism on an existing channel
+    channel: alpha
+    plant: false
+    delta: 0.0087266       # rad (0.5 deg) of stiction band
+    rationale: >
+      A vane bearing with static friction only updates once the true angle has moved
+      more than delta. The library's "stuck" fault is a TOTAL freeze; this is a
+      partial, signal-dependent freeze, so no library hypothesis represents it.
+    predicted_position: NEAR
+  UF-002:
+    name: rate-gyro saturation
+    category: A
+    channel: q
+    plant: false
+    limit: 0.15            # rad/s; nominal |q| reaches ~0.29 rad/s during the doublet
+    rationale: >
+      The gyro's measurement range is exceeded and the output clips. The library's
+      scale fault is linear; this is a nonlinearity active only at high rate.
+    predicted_position: MODERATE
+  UF-003:
+    name: pitot line partial blockage (pneumatic lag)
+    category: A
+    channel: Vt
+    plant: false
+    tau: 0.5               # s time constant
+    rationale: >
+      A restricted pitot line raises the pneumatic time constant -- a documented air
+      data failure mode. No dynamic or filtering fault exists in the library.
+    predicted_position: NEAR
+  UF-004:
+    name: static-port blockage (cross-channel)
+    category: B            # coupled fault
+    channel: null          # acts on h AND Vt through one physical cause
+    plant: false
+    delta_p: 60.0          # Pa of static-pressure error
+    rationale: >
+      One blocked static port corrupts barometric altitude and airspeed simultaneously.
+      Every library fault is single-channel, and NO library fault acts on altitude at
+      all, so part of this signature is structurally unexplainable.
+    predicted_position: DISTANT
+  UF-005:
+    name: pitch static-stability loss
+    category: C            # model-structure mismatch (plant fault)
+    plant: true
+    coefficients: [Cma]
+    mode: reduce
+    loss: 0.40             # Cma -> 0.6 * Cma
+    rationale: >
+      Partial horizontal-stabiliser damage or an aft CG shift reduces static pitch
+      stiffness. The library's only plant fault (F6) changes CONTROL effectiveness,
+      not STABILITY -- deliberately the hardest plant case, since both have pitch-axis
+      signatures.
+    predicted_position: NEAR
+  UF-006:
+    name: airframe icing drag rise
+    category: C
+    plant: true
+    coefficients: [CD0]
+    mode: increase
+    loss: 1.00             # CD0 -> 2.0 * CD0
+    rationale: >
+      Ice accretion increases parasite drag. No aerodynamic-degradation hypothesis
+      exists in the library.
+    predicted_position: MODERATE
+
+magnitude_scales: [0.5, 1.0, 2.0]
+
+# Envelope validity -- same rule as EXP-0011. Do not repeat the FAIL-0001 mistake.
+template_validity:
+  exclude_if_diverged: true
+  exclude_if_max_alpha_deg_above: 25.0
+  report_excluded: true
+
+metrics:
+  # tau is REUSED from EXP-0010/0011's practical-ambiguity threshold, not chosen here.
+  confidence_threshold: 0.95
+  chi2_alpha: 0.01
+  # "Confidence" is a posterior over H_known under a uniform class prior and the stated
+  # noise model. It is a probability CONDITIONAL on the hypothesis space containing the
+  # truth -- precisely the condition this experiment violates. It is never described as
+  # the probability that the diagnosis is correct.
+  primary: false_confidence_FC
+  secondary: [median_confidence, max_confidence, runner_up_margin,
+              nearest_known_distance, normalised_residual, chi2_pvalue,
+              winning_hypothesis_identity]
+
+monte_carlo:
+  pilot_replications: 2000     # pilot determines the final count; not assumed
+  method: gram_exact_with_residual
+
+validity_attacks:
+  magnitude_scales: [0.5, 1.0, 2.0]
+  eta_levels: [0.1, 1.0, 10.0]
+  known_fault_control: true
+  premanoeuvre_windows: [0.25, 0.5, 1.0, 2.0]

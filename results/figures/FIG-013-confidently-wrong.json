@@ -1,0 +1,14 @@
+{
+  "figure": "FIG-013-confidently-wrong",
+  "question_answered": "Does diagnostic confidence increase with observation while the diagnosis is wrong, and does the goodness-of-fit test catch it?",
+  "experiment_id": "EXP-0012",
+  "results_file": "results/validation/EXP-0012/exp0012_results.json",
+  "dataset_ids": [
+    "DS-0001",
+    "DS-0002",
+    "DS-0003"
+  ],
+  "script": "visualization/plot_exp0012.py",
+  "git_commit": "5af82ffba144bf72b9328c95df610bb9d4bba40a",
+  "generated_from_results_utc": "2026-09-08T13:11:47.523766+00:00"
+}
