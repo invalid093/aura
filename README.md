@@ -1,4 +1,4 @@
-# AURA
+# Autonomous Uncertainty & Reliability Architecture (AURA)
 
 **Auditable computational research infrastructure for aerospace engineering.**
 
