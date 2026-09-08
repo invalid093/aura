@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aura/run_manifest",
+  "title": "AURA run manifest",
+  "description": "Written alongside the output of every significant run. Makes a single run independently reproducible. A run with git_dirty true is non-reproducible and is disqualified from any confirmatory claim.",
+  "type": "object",
+  "required": ["experiment_id", "run_id", "git_commit", "git_dirty", "configuration",
+               "configuration_sha256", "dataset_ids", "random_seeds", "environment", "execution"],
+  "additionalProperties": false,
+  "properties": {
+    "experiment_id": { "type": "string", "pattern": "^EXP-[0-9]{4}$" },
+    "run_id": { "type": "string", "pattern": "^EXP-[0-9]{4}-r[0-9]{5}$" },
+    "git_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "git_dirty": { "type": "boolean" },
+    "configuration": { "type": "string" },
+    "configuration_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "dataset_ids": { "type": "array", "items": { "type": "string", "pattern": "^DS-[0-9]{4}$" } },
+    "random_seeds": {
+      "type": "object",
+      "description": "Explicit per-component seeds. Global RNG state is never relied upon.",
+      "required": ["scenario", "sensor_noise", "init"],
+      "properties": {
+        "scenario": { "type": "integer" },
+        "sensor_noise": { "type": "integer" },
+        "init": { "type": "integer" },
+        "model_init": { "type": "integer" },
+        "ensemble_member": { "type": ["integer", "array"] }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "required": ["python", "lockfile_sha256", "platform"],
+      "properties": {
+        "python": { "type": "string" },
+        "lockfile_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "platform": { "type": "string" },
+        "cpu": { "type": "string" },
+        "blas": { "type": "string", "description": "Implementation and thread count; changes floating-point results" },
+        "thread_count": { "type": "integer" }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "required": ["started_utc", "finished_utc", "wall_seconds", "output_bytes"],
+      "properties": {
+        "started_utc": { "type": "string", "format": "date-time" },
+        "finished_utc": { "type": "string", "format": "date-time" },
+        "wall_seconds": { "type": "number", "minimum": 0 },
+        "output_bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "description": "Ground truth for this run. Written by the generator, never edited afterwards.",
+      "properties": {
+        "flight_condition": { "type": "object" },
+        "fault_mode": { "type": "string", "enum": ["F0","F1","F2","F3","F4","F5","F6"] },
+        "fault_channel": { "type": ["string", "null"] },
+        "fault_magnitude": { "type": "number" },
+        "fault_onset_s": { "type": ["number", "null"] },
+        "shift_axis": { "type": ["string", "null"], "enum": ["S1","S2","S3","S4","S5","S6", null] },
+        "shift_magnitude": { "type": ["number", "null"] },
+        "split": { "type": "string", "enum": ["development", "validation", "test"] }
+      }
+    },
+    "code_version": { "type": "string" }
+  }
+}

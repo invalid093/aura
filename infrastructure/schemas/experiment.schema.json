@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aura/experiment",
+  "title": "AURA experiment registry entry",
+  "description": "One per experiment at experiments/EXP-XXXX.yaml. Created with status PLANNED BEFORE the experiment runs. A confirmatory experiment must have its hypothesis, primary metric and analysis plan fixed and committed before execution.",
+  "type": "object",
+  "required": [
+    "experiment_id", "title", "purpose", "type", "status",
+    "configuration", "git_commit", "dataset_ids", "random_seeds", "date_planned"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "experiment_id": { "type": "string", "pattern": "^EXP-[0-9]{4}$" },
+    "title": { "type": "string" },
+    "hypothesis": {
+      "oneOf": [
+        { "type": "null", "description": "Permitted only when type == exploratory" },
+        { "type": "string", "pattern": "^H[0-9]+" }
+      ]
+    },
+    "purpose": { "type": "string", "minLength": 20 },
+    "type": { "enum": ["exploratory", "confirmatory"] },
+    "status": {
+      "enum": ["PLANNED", "RUNNING", "COMPLETED", "FAILED", "INVALID", "SUPERSEDED", "ARCHIVED"]
+    },
+    "is_gate": { "type": "boolean", "default": false,
+      "description": "If true, a failing outcome blocks subsequent stages" },
+    "gate_criterion": { "type": ["string", "null"],
+      "description": "The pre-declared pass condition. Required when is_gate is true" },
+    "primary_metric": { "type": ["string", "null"] },
+    "analysis_plan": { "type": ["string", "null"] },
+    "configuration": { "type": "string" },
+    "configuration_sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "git_commit": { "type": "string" },
+    "dataset_ids": { "type": "array", "items": { "type": "string", "pattern": "^DS-[0-9]{4}$" } },
+    "random_seeds": { "type": ["array", "object", "string"] },
+    "parameters": { "type": "object" },
+    "methods": { "type": "array", "items": { "type": "string" } },
+    "date_planned": { "type": "string", "format": "date" },
+    "date_started": { "type": ["string", "null"], "format": "date-time" },
+    "date_completed": { "type": ["string", "null"], "format": "date-time" },
+    "results_location": { "type": ["string", "null"] },
+    "analysis_version": { "type": ["string", "null"] },
+    "runtime_seconds": { "type": ["number", "null"] },
+    "storage_bytes": { "type": ["integer", "null"] },
+    "failure_ids": { "type": "array", "items": { "type": "string", "pattern": "^FAIL-[0-9]{4}$" } },
+    "supersedes": { "type": ["string", "null"], "pattern": "^EXP-[0-9]{4}$" },
+    "superseded_by": { "type": ["string", "null"], "pattern": "^EXP-[0-9]{4}$" },
+    "invalidity_reason": { "type": ["string", "null"],
+      "description": "Required when status is INVALID. Records why, and which conclusions are affected" },
+    "notes": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "confirmatory" } } },
+      "then": { "required": ["hypothesis", "primary_metric", "analysis_plan"] }
+    },
+    {
+      "if": { "properties": { "is_gate": { "const": true } } },
+      "then": { "required": ["gate_criterion"] }
+    },
+    {
+      "if": { "properties": { "status": { "const": "INVALID" } } },
+      "then": { "required": ["invalidity_reason"] }
+    },
+    {
+      "if": { "properties": { "status": { "const": "COMPLETED" } } },
+      "then": { "required": ["date_completed", "results_location", "runtime_seconds"] }
+    }
+  ]
+}

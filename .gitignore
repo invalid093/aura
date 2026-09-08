@@ -1,0 +1,68 @@
+# ---- AURA .gitignore ----
+# Principle: Git stores code, configuration, documentation, metadata, manifests,
+# and small reference data. It does NOT store bulk simulation output, caches,
+# or regenerable intermediates. See infrastructure/data_management.md.
+
+# --- Bulk / regenerable research data ---
+data/raw/**
+data/processed/**
+data/derived/**
+!data/**/.gitkeep
+!data/**/README.md
+# Manifests ARE tracked -- they are the provenance record for untracked data.
+!data/manifests/**
+
+# Results: track manifests, metrics, and final figures; not bulk artifacts.
+results/exploratory/**
+!results/exploratory/.gitkeep
+results/**/*.npz
+results/**/*.parquet
+results/**/*.h5
+results/**/*.pkl
+
+# Model checkpoints (justify individually before tracking)
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.joblib
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# --- Secrets (see docs/scope.md and section on security) ---
+.env
+.env.*
+*.key
+*.pem
+secrets.*
+credentials.*
+
+# --- Scratch ---
+scratch/
+tmp/
+*.log
+!research/research_log/*.md
